@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\Comanda;
+use App\Entity\Bebida;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Comanda>
+ * @extends ServiceEntityRepository<Bebida>
  */
-class ComandaRepository extends ServiceEntityRepository
+class BebidaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Comanda::class);
+        parent::__construct($registry, Bebida::class);
     }
 
     //    /**
-    //     * @return Comanda[] Returns an array of Comanda objects
+    //     * @return Bebida[] Returns an array of Bebida objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
+    //        return $this->createQueryBuilder('b')
+    //            ->andWhere('b.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
+    //            ->orderBy('b.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Comanda
+    //    public function findOneBySomeField($value): ?Bebida
     //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
+    //        return $this->createQueryBuilder('b')
+    //            ->andWhere('b.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

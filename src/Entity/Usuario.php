@@ -4,62 +4,129 @@ namespace App\Entity;
 
 use App\Repository\UsuarioRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
-class Usuario
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_NOMBRE', fields: ['nombre'])]
+class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 180)]
+    private ?string $nombre = null;
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Foto = null;
+    private ?string $foto = null;
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $estado = null;
+    /**
+     * @var list<string> The user roles
+     */
+    #[ORM\Column]
+    private array $roles = [];
 
-    #[ORM\Column(length: 255)]
-    private ?string $Contrasenya = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    public function getNombre(): ?string
+    {
+        return $this->nombre;
+    }
+
+    public function setNombre(string $nombre): static
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
     public function getFoto(): ?string
     {
-        return $this->Foto;
+        return $this->foto;
     }
 
-    public function setFoto(?string $Foto): static
+    public function setFoto(string $foto): static
     {
-        $this->Foto = $Foto;
+        $this->foto = $foto;
+
+        return $this;
+    }
+    public function getEstado(): ?bool
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(bool $estado): static
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->nombre;
+    }
+
+    /**
+     * @see UserInterface
+     *
+     * @return list<string>
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * @param list<string> $roles
+     */
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
 
         return $this;
     }
 
-    public function getContrasenya(): ?string
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): ?string
     {
-        return $this->Contrasenya;
+        return $this->password;
     }
 
-    public function setContrasenya(string $Contrasenya): static
+    public function setPassword(string $password): static
     {
-        $this->Contrasenya = $Contrasenya;
+        $this->password = $password;
 
         return $this;
     }
 
-    public function getEmail(): ?string
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
     {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }

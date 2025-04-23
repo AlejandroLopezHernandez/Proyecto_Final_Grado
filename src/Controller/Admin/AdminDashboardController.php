@@ -49,8 +49,5 @@ class AdminDashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
-        yield MenuItem::linkToCrud('Usuarios', 'fas fa-list', Usuario::class);
-        yield MenuItem::linkToCrud('Productos', 'fas fa-list', Producto::class);
-        yield MenuItem::linkToCrud('Comandas', 'fas fa-list', Comanda::class);
     }
 }
