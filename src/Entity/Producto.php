@@ -29,8 +29,8 @@ class Producto
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $Descripcion = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true, enumType: CategoriaProducto::class)]
-    private ?array $Categoria = null;
+    #[ORM\Column(type: 'string', nullable: true, enumType: CategoriaProducto::class)]
+    private ?CategoriaProducto $Categoria = null;
 
     /**
      * @var Collection<int, Comida>
@@ -106,15 +106,12 @@ class Producto
         return $this;
     }
 
-    /**
-     * @return CategoriaProducto[]|null
-     */
-    public function getCategoria(): ?array
+    public function getCategoria(): ?CategoriaProducto
     {
         return $this->Categoria;
     }
 
-    public function setCategoria(?array $Categoria): static
+    public function setCategoria(?CategoriaProducto $Categoria): static
     {
         $this->Categoria = $Categoria;
 

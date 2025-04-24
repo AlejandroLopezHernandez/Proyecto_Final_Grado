@@ -2,8 +2,13 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Comanda;
+use App\Entity\Bebida;
+//use App\Entity\Comanda;
+use App\Entity\Comida;
+use App\Entity\Estilo;
+use App\Entity\Fabricante;
 use App\Entity\Producto;
+use App\Entity\Proveedor;
 use App\Entity\Usuario;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -49,5 +54,12 @@ class AdminDashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+        yield MenuItem::linkToCrud('Productos', 'fas fa-list', Producto::class);
+        yield MenuItem::linkToCrud('Usuario', 'fas fa-list', Usuario::class);
+        yield MenuItem::linkToCrud('Bebidas', 'fas fa-list', Bebida::class);
+        yield MenuItem::linkToCrud('Comida', 'fas fa-list', Comida::class);
+        yield MenuItem::linkToCrud('Fabricantes', 'fas fa-list', Fabricante::class);
+        yield MenuItem::linkToCrud('Estilos', 'fas fa-list', Estilo::class);
+        yield MenuItem::linkToCrud('Proveedores', 'fas fa-list', Proveedor::class);
     }
 }

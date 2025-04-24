@@ -21,8 +21,8 @@ class Bebida
     #[ORM\Column(nullable: true)]
     private ?float $GradoAlcoholico = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true, enumType: FormatoBebida::class)]
-    private ?array $Formato = null;
+    #[ORM\Column(type: 'string', nullable: true, enumType: FormatoBebida::class)]
+    private ?FormatoBebida $Formato = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $Precio = null;
@@ -72,12 +72,12 @@ class Bebida
     /**
      * @return FormatoBebida[]|null
      */
-    public function getFormato(): ?array
+    public function getFormato(): ?FormatoBebida
     {
         return $this->Formato;
     }
 
-    public function setFormato(?array $Formato): static
+    public function setFormato(?FormatoBebida $Formato): static
     {
         $this->Formato = $Formato;
 

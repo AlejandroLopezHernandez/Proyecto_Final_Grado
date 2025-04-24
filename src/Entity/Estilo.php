@@ -20,8 +20,8 @@ class Estilo
     #[ORM\Column(length: 255)]
     private ?string $Nombre = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true, enumType: TipoBebida::class)]
-    private ?array $TipoBebida = null;
+    #[ORM\Column(type: 'string', nullable: true, enumType: TipoBebida::class)]
+    private ?TipoBebida $TipoBebida = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $Descripcion = null;
@@ -57,15 +57,12 @@ class Estilo
         return $this;
     }
 
-    /**
-     * @return TipoBebida[]|null
-     */
-    public function getTipoBebida(): ?array
+    public function getTipoBebida(): ?TipoBebida
     {
         return $this->TipoBebida;
     }
 
-    public function setTipoBebida(?array $TipoBebida): static
+    public function setTipoBebida(?TipoBebida $TipoBebida): static
     {
         $this->TipoBebida = $TipoBebida;
 

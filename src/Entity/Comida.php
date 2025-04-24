@@ -29,8 +29,8 @@ class Comida
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $Ingredientes = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true, enumType: CategoriaComida::class)]
-    private ?array $Categoria = null;
+    #[ORM\Column(type: 'string', nullable: true, enumType: CategoriaComida::class)]
+    private ?CategoriaComida $Categoria = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $Stock = null;
@@ -99,15 +99,12 @@ class Comida
         return $this;
     }
 
-    /**
-     * @return CategoriaComida[]|null
-     */
-    public function getCategoria(): ?array
+    public function getCategoria(): ?CategoriaComida
     {
         return $this->Categoria;
     }
 
-    public function setCategoria(?array $Categoria): static
+    public function setCategoria(?CategoriaComida $Categoria): static
     {
         $this->Categoria = $Categoria;
 

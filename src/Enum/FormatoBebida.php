@@ -6,7 +6,7 @@ enum FormatoBebida: string
 {
     case Pinta = 'pinta';
     case MediaPinta = 'media pinta';
-    case Canya = 'Caña';
+    case Canya = 'caña';
     case CafeLeche = 'café con leche';
     case CafeExpresso = 'café expresso';
 }
