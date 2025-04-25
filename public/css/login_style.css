@@ -1,24 +1,52 @@
+html, body{
+    height: 100%;
+    margin:0;
+    padding: 0;
+}
 body{
-    height: 80%;
-    background-color: rgb(96, 190, 201);
+    display:flex;
+    flex-direction: column;
+    background-color: rgb(82, 184, 195);
+}
+.wrapper{
+    display:flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+main{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 h1{
     text-align: center;
+    margin: 20px 0 10px 0;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 #recuadro{
     text-align: center;
-    height: 200px;
-    width: 200px;
-    min-height: calc(100vh - 120px);
+    height: 250px;
+    width: 400px;
     padding: 20px;
-    background-color: rgb(203, 227, 166);
+    background-color: rgb(207, 233, 169);
+    border: 2px solid #000000;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
 }
-btn_login{
-    color: rgb(123, 185, 123);
+#btn_login{
+    background-color: rgb(154, 227, 125);
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size:16px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid black;
 }
 footer{
-    background-color: rgb(192, 216, 157);
+    background-color: rgb(207, 233, 169);
     padding: 20px;
     font-size: 14px;
     color: black;

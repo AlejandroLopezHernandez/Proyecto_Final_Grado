@@ -15,12 +15,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-#[AdminDashboard(routePath: '/admin', routeName: 'admin')]
+#[AdminDashboard(routePath: '/admin', routeName: 'admin_home')]
 class AdminDashboardController extends AbstractDashboardController
 {
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         //return parent::index();
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
@@ -48,6 +50,12 @@ class AdminDashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
             ->setTitle('Panel del Administrador');
+    }
+    public function createOrEditUser(Usuario $usuario, UserPasswordHasherInterface $PasswordHasher)
+    {
+        $plaintextPassword = $usuario->getPassword();
+        $hashedPassword = $PasswordHasher->hashPassword($usuario, $plaintextPassword);
+        $usuario->setPassword($hashedPassword);
     }
 
     public function configureMenuItems(): iterable
