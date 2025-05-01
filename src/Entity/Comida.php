@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Enum\CategoriaComida;
+use App\Enum\VegetarianoVeganoSeleccion;
 use App\Repository\ComidaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -35,15 +36,25 @@ class Comida
     #[ORM\Column(nullable: true)]
     private ?int $Stock = null;
 
+    // /**
+    //  * @var Collection<int, Producto>
+    //  */
+    // #[ORM\ManyToMany(targetEntity: Producto::class, inversedBy: 'comidas')]
+    // private Collection $Producto;
+
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true, enumType: VegetarianoVeganoSeleccion::class)]
+    private ?array $Dieta = null;
+
     /**
-     * @var Collection<int, Producto>
+     * @var Collection<int, ProductoComida>
      */
-    #[ORM\ManyToMany(targetEntity: Producto::class, inversedBy: 'comidas')]
-    private Collection $Producto;
+    #[ORM\OneToMany(targetEntity: ProductoComida::class, mappedBy: 'Comida', cascade: ['persist'])]
+    private Collection $productoComidas;
 
     public function __construct()
     {
-        $this->Producto = new ArrayCollection();
+        //$this->Producto = new ArrayCollection();
+        $this->productoComidas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -126,24 +137,68 @@ class Comida
     /**
      * @return Collection<int, Producto>
      */
-    public function getProducto(): Collection
+    // public function getProducto(): Collection
+    // {
+    //     return $this->Producto;
+    // }
+
+    // public function addProducto(Producto $producto): static
+    // {
+    //     if (!$this->Producto->contains($producto)) {
+    //         $this->Producto->add($producto);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeProducto(Producto $producto): static
+    // {
+    //     $this->Producto->removeElement($producto);
+
+    //     return $this;
+    // }
+
+    /**
+     * @return VegetarianoVeganoSeleccion[]|null
+     */
+    public function getDieta(): ?array
     {
-        return $this->Producto;
+        return $this->Dieta;
     }
 
-    public function addProducto(Producto $producto): static
+    public function setDieta(?array $Dieta): static
     {
-        if (!$this->Producto->contains($producto)) {
-            $this->Producto->add($producto);
+        $this->Dieta = $Dieta;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductoComida>
+     */
+    public function getProductoComidas(): Collection
+    {
+        return $this->productoComidas;
+    }
+
+    public function addProductoComida(ProductoComida $productoComida): static
+    {
+        if (!$this->productoComidas->contains($productoComida)) {
+            $this->productoComidas->add($productoComida);
+            $productoComida->setComida($this);
         }
 
         return $this;
     }
 
-    public function removeProducto(Producto $producto): static
+    public function removeProductoComida(ProductoComida $productoComida): static
     {
-        $this->Producto->removeElement($producto);
-
+        if ($this->productoComidas->removeElement($productoComida)) {
+            // set the owning side to null (unless already changed)
+            if ($productoComida->getComida() === $this) {
+                $productoComida->setComida(null);
+            }
+        }
         return $this;
     }
 }
