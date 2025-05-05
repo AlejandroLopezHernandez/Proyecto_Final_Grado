@@ -32,6 +32,7 @@ class BebidaCrudController extends AbstractCrudController
                     'Pinta' => FormatoBebida::Pinta,
                     'MediaPinta' => FormatoBebida::MediaPinta,
                     'Canya' => FormatoBebida::Canya,
+                    'Copa' => FormatoBebida::Copa,
                     'CafeLeche' => FormatoBebida::CafeLeche,
                     'CafeExpresso' => FormatoBebida::CafeExpresso
                 ])

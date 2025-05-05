@@ -6,6 +6,7 @@ use App\Enum\FormatoBebida;
 use App\Repository\BebidaRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\MapsId;
 
 #[ORM\Entity(repositoryClass: BebidaRepository::class)]
 class Bebida
@@ -29,9 +30,10 @@ class Bebida
 
     #[ORM\Column(nullable: true)]
     private ?int $Stock = null;
-
+    //#[ORM\Id]
     #[ORM\OneToOne(inversedBy: 'Bebida')]
     #[ORM\JoinColumn(name: 'id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    //#[ORM\MapsId]
     private ?Producto $producto = null;
 
     #[ORM\ManyToOne(inversedBy: 'bebidas')]

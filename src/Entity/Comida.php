@@ -42,8 +42,9 @@ class Comida
     // #[ORM\ManyToMany(targetEntity: Producto::class, inversedBy: 'comidas')]
     // private Collection $Producto;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true, enumType: VegetarianoVeganoSeleccion::class)]
-    private ?array $Dieta = null;
+    #[ORM\Column(type: 'string', nullable: true, enumType: VegetarianoVeganoSeleccion::class)]
+    private ?VegetarianoVeganoSeleccion $Dieta = null;
+    //private ?array $Dieta = null;
 
     /**
      * @var Collection<int, ProductoComida>
@@ -161,12 +162,12 @@ class Comida
     /**
      * @return VegetarianoVeganoSeleccion[]|null
      */
-    public function getDieta(): ?array
+    public function getDieta(): ?VegetarianoVeganoSeleccion
     {
         return $this->Dieta;
     }
 
-    public function setDieta(?array $Dieta): static
+    public function setDieta(VegetarianoVeganoSeleccion $Dieta): static
     {
         $this->Dieta = $Dieta;
 
