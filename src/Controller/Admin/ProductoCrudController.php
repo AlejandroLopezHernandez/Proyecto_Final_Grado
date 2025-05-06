@@ -7,6 +7,7 @@ use App\Entity\Producto;
 use App\Enum\CategoriaProducto;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -26,6 +27,7 @@ class ProductoCrudController extends AbstractCrudController
             TextField::new('nombre'),
             NumberField::new('coste'),
             NumberField::new('stock'),
+            TextField::new('medida'),
             TextField::new('descripcion'),
             ChoiceField::new('categoria')
                 ->setChoices([

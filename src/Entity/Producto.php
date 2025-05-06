@@ -32,12 +32,11 @@ class Producto
     #[ORM\Column(type: 'string', nullable: true, enumType: CategoriaProducto::class)]
     private ?CategoriaProducto $Categoria = null;
 
-    /**
-     * @var Collection<int, Comida>
-     */
-    #[ORM\ManyToMany(targetEntity: Comida::class, mappedBy: 'Producto')]
-    private Collection $comidas;
-
+    // /**
+    //  * @var Collection<int, Comida>
+    //  */
+    // #[ORM\ManyToMany(targetEntity: Comida::class, mappedBy: 'Producto')]
+    // private Collection $comidas;
     /**
      * @var Collection<int, Proveedor>
      */
@@ -47,10 +46,20 @@ class Producto
     #[ORM\OneToOne(mappedBy: 'producto', targetEntity: Bebida::class, cascade: ['persist', 'remove'])]
     private ?Bebida $Bebida = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Medida = null;
+
+    /**
+     * @var Collection<int, ProductoComida>
+     */
+    #[ORM\OneToMany(targetEntity: ProductoComida::class, mappedBy: 'Producto')]
+    private Collection $productoComidas;
+
     public function __construct()
     {
-        $this->comidas = new ArrayCollection();
+        //$this->comidas = new ArrayCollection();
         $this->Proveedor = new ArrayCollection();
+        $this->productoComidas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -118,32 +127,32 @@ class Producto
         return $this;
     }
 
-    /**
-     * @return Collection<int, Comida>
-     */
-    public function getComidas(): Collection
-    {
-        return $this->comidas;
-    }
+    // /**
+    //  * @return Collection<int, Comida>
+    //  */
+    // public function getComidas(): Collection
+    // {
+    //     return $this->comidas;
+    // }
 
-    public function addComida(Comida $comida): static
-    {
-        if (!$this->comidas->contains($comida)) {
-            $this->comidas->add($comida);
-            $comida->addProducto($this);
-        }
+    // public function addComida(Comida $comida): static
+    // {
+    //     if (!$this->comidas->contains($comida)) {
+    //         $this->comidas->add($comida);
+    //         $comida->addProducto($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeComida(Comida $comida): static
-    {
-        if ($this->comidas->removeElement($comida)) {
-            $comida->removeProducto($this);
-        }
+    // public function removeComida(Comida $comida): static
+    // {
+    //     if ($this->comidas->removeElement($comida)) {
+    //         $comida->removeProducto($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, Proveedor>
@@ -181,5 +190,51 @@ class Producto
             $bebida->setProducto($this);
         }
         return $this;
+    }
+
+    public function getMedida(): ?string
+    {
+        return $this->Medida;
+    }
+
+    public function setMedida(?string $Medida): static
+    {
+        $this->Medida = $Medida;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductoComida>
+     */
+    public function getProductoComidas(): Collection
+    {
+        return $this->productoComidas;
+    }
+
+    public function addProductoComida(ProductoComida $productoComida): static
+    {
+        if (!$this->productoComidas->contains($productoComida)) {
+            $this->productoComidas->add($productoComida);
+            $productoComida->setProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductoComida(ProductoComida $productoComida): static
+    {
+        if ($this->productoComidas->removeElement($productoComida)) {
+            // set the owning side to null (unless already changed)
+            if ($productoComida->getProducto() === $this) {
+                $productoComida->setProducto(null);
+            }
+        }
+
+        return $this;
+    }
+    public function __tostring(): string
+    {
+        return $this->getNombre();
     }
 }
