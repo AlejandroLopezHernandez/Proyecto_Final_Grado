@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Interfaz de Producto{% endblock %}
+{% block stylesheets %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ asset('css/productoDetalle.css')}}">
+{% endblock %}
+{% block body %}
+    <div id="productoContenedor" class="container mt-4">
+    <h1 class="mb-6">Gestión de Productos</h1>
+    <label>Nombre: </label>
+    <input  readonly class ="form-control mb-1" value="{{producto.nombre}}"></input><br>
+    <label>Coste: </label>
+    <input  readonly class ="form-control mb-1" value="{{producto.coste}}"></input><br>
+    <label>Medida: </label>
+    <input  readonly class ="form-control mb-1" value="{{producto.medida}}"></input><br>
+    <label>Stock: </label>
+    <input  readonly class ="form-control mb-1" value="{{producto.stock}}"></input><br>
+    <label>Descripción: </label>
+    <input  readonly class ="form-control mb-1" value="{{producto.descripcion}}"></input><br>
+    <label>Categoría: </label>
+    <input  readonly class ="form-control mb-1" value="{{producto.categoria.value}}"></input><br>
+    </div>
+{% endblock %}
+{% block javascripts %}
+ <script src="{{ asset('js/scriptProductoDetalle.js')}}" ></script>
+{% endblock %}
