@@ -1,0 +1,37 @@
+/* Contenedor principal de las categorías */
+body {
+    background: rgb(179, 179, 158) ;
+}
+
+.card-categorias {
+    background-color: #e22828;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+/* Estilo de cada botón de categoría */
+.categoria-btn {
+    font-size:smaller;
+    flex: 1 1 calc(33.333% - 1rem); /* 3 columnas automáticas con espacio entre ellas */
+    min-width: 150px;
+    padding: 1.2rem;
+    font-size: 1.2rem;
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.categoria-btn:hover {
+    background-color: #c62d2d;
+    color: white;
+}
+
+.categoria-btn:active {
+    transform: scale(0.98);
+}

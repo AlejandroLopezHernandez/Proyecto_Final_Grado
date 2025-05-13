@@ -2,6 +2,10 @@
 
 namespace App\Entity;
 
+use App\Enum\OpcionesQuitar;
+use App\Enum\OpcionesAnadir;
+use App\Enum\PuntoCoccion;
+use App\Dto\OpcionesComida;
 use App\Enum\CategoriaComida;
 use App\Enum\VegetarianoVeganoSeleccion;
 use App\Repository\ComidaRepository;
@@ -19,44 +23,42 @@ class Comida
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Nombre = null;
+    private ?string $nombre = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $Precio = null;
+    private ?float $precio = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Descripcion = null;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $descripcion = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Ingredientes = null;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $receta = null;
 
-    #[ORM\Column(type: 'string', nullable: true, enumType: CategoriaComida::class)]
-    private ?CategoriaComida $Categoria = null;
+    #[ORM\Column(type: Types::JSON)]
+    private array $categoria = [];
 
     #[ORM\Column(nullable: true)]
-    private ?int $Stock = null;
-
-    // /**
-    //  * @var Collection<int, Producto>
-    //  */
-    // #[ORM\ManyToMany(targetEntity: Producto::class, inversedBy: 'comidas')]
-    // private Collection $Producto;
+    private ?int $stock = null;
 
     #[ORM\Column(type: 'string', nullable: true, enumType: VegetarianoVeganoSeleccion::class)]
-    private ?VegetarianoVeganoSeleccion $Dieta = null;
-    //private ?array $Dieta = null;
+    private ?VegetarianoVeganoSeleccion $dieta = null;
 
-    /**
-     * @var Collection<int, ProductoComida>
-     */
-    #[ORM\OneToMany(targetEntity: ProductoComida::class, mappedBy: 'Comida', cascade: ['persist'])]
-    private Collection $productoComidas;
+    #[ORM\ManyToMany(targetEntity: Producto::class, mappedBy: 'comidas')]
+    private Collection $productos;
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private array $opciones = [];
 
     public function __construct()
     {
-        //$this->Producto = new ArrayCollection();
-        $this->productoComidas = new ArrayCollection();
+        $this->productos = new ArrayCollection();
+        $this->opciones = array_merge(
+            OpcionesQuitar::todas(),// funciones de cada enum
+            OpcionesAnadir::todas(),
+            PuntoCoccion::todas()
+        );
     }
+
 
     public function getId(): ?int
     {
@@ -65,141 +67,112 @@ class Comida
 
     public function getNombre(): ?string
     {
-        return $this->Nombre;
+        return $this->nombre;
     }
 
-    public function setNombre(?string $Nombre): static
+    public function setNombre(?string $nombre): static
     {
-        $this->Nombre = $Nombre;
-
+        $this->nombre = $nombre;
         return $this;
     }
 
     public function getPrecio(): ?float
     {
-        return $this->Precio;
+        return $this->precio;
     }
 
-    public function setPrecio(?float $Precio): static
+    public function setPrecio(?float $precio): static
     {
-        $this->Precio = $Precio;
-
+        $this->precio = $precio;
         return $this;
     }
 
     public function getDescripcion(): ?string
     {
-        return $this->Descripcion;
+        return $this->descripcion;
     }
 
-    public function setDescripcion(?string $Descripcion): static
+    public function setDescripcion(?string $descripcion): static
     {
-        $this->Descripcion = $Descripcion;
-
+        $this->descripcion = $descripcion;
         return $this;
     }
 
-    public function getIngredientes(): ?string
+    public function getReceta(): ?string
     {
-        return $this->Ingredientes;
+        return $this->receta;
     }
 
-    public function setIngredientes(?string $Ingredientes): static
+    public function setReceta(?string $receta): static
     {
-        $this->Ingredientes = $Ingredientes;
-
+        $this->receta = $receta;
         return $this;
     }
 
-    public function getCategoria(): ?CategoriaComida
+    public function getCategoria(): array
     {
-        return $this->Categoria;
+        return $this->categoria;
     }
 
-    public function setCategoria(?CategoriaComida $Categoria): static
+    public function setCategoria(array $categorias): self
     {
-        $this->Categoria = $Categoria;
-
+        $this->categoria = $categorias;
         return $this;
     }
 
     public function getStock(): ?int
     {
-        return $this->Stock;
+        return $this->stock;
     }
 
-    public function setStock(?int $Stock): static
+    public function setStock(?int $stock): static
     {
-        $this->Stock = $Stock;
-
+        $this->stock = $stock;
         return $this;
     }
 
-    /**
-     * @return Collection<int, Producto>
-     */
-    // public function getProducto(): Collection
-    // {
-    //     return $this->Producto;
-    // }
-
-    // public function addProducto(Producto $producto): static
-    // {
-    //     if (!$this->Producto->contains($producto)) {
-    //         $this->Producto->add($producto);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeProducto(Producto $producto): static
-    // {
-    //     $this->Producto->removeElement($producto);
-
-    //     return $this;
-    // }
-
-    /**
-     * @return VegetarianoVeganoSeleccion[]|null
-     */
     public function getDieta(): ?VegetarianoVeganoSeleccion
     {
-        return $this->Dieta;
+        return $this->dieta;
     }
 
-    public function setDieta(VegetarianoVeganoSeleccion $Dieta): static
+    public function setDieta(?VegetarianoVeganoSeleccion $dieta): static
     {
-        $this->Dieta = $Dieta;
-
+        $this->dieta = $dieta;
         return $this;
     }
 
-    /**
-     * @return Collection<int, ProductoComida>
-     */
-    public function getProductoComidas(): Collection
+    // Relación con Producto (bidireccional)
+    public function getProductos(): Collection
     {
-        return $this->productoComidas;
+        return $this->productos;
     }
 
-    public function addProductoComida(ProductoComida $productoComida): static
+    public function addProducto(Producto $producto): static
     {
-        if (!$this->productoComidas->contains($productoComida)) {
-            $this->productoComidas->add($productoComida);
-            $productoComida->setComida($this);
+        if (!$this->productos->contains($producto)) {
+            $this->productos->add($producto);
+            $producto->addComida($this);
         }
-
         return $this;
     }
 
-    public function removeProductoComida(ProductoComida $productoComida): static
+    public function removeProducto(Producto $producto): static
     {
-        if ($this->productoComidas->removeElement($productoComida)) {
-            // set the owning side to null (unless already changed)
-            if ($productoComida->getComida() === $this) {
-                $productoComida->setComida(null);
-            }
+        if ($this->productos->removeElement($producto)) {
+            $producto->removeComida($this);
         }
+        return $this;
+    }
+
+    public function getOpciones(): ?array
+    {
+        return $this->opciones ?? [];
+    }
+
+    public function setOpciones(?array $opciones): self
+    {
+        $this->opciones = $opciones;
         return $this;
     }
 }

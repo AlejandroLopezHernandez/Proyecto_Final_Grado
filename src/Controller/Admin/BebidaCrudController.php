@@ -2,14 +2,14 @@
 
 namespace App\Controller\Admin;
 
-use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use App\Entity\Bebida;
 use App\Enum\FormatoBebida;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 
 class BebidaCrudController extends AbstractCrudController
 {
@@ -17,7 +17,6 @@ class BebidaCrudController extends AbstractCrudController
     {
         return Bebida::class;
     }
-
 
     public function configureFields(string $pageName): iterable
     {
@@ -28,15 +27,15 @@ class BebidaCrudController extends AbstractCrudController
             NumberField::new('precio'),
             NumberField::new('stock'),
             ChoiceField::new('formato')
-                ->setChoices([
-                    'Pinta' => FormatoBebida::Pinta,
-                    'MediaPinta' => FormatoBebida::MediaPinta,
-                    'Canya' => FormatoBebida::Canya,
-                    'Copa' => FormatoBebida::Copa,
-                    'CafeLeche' => FormatoBebida::CafeLeche,
-                    'CafeExpresso' => FormatoBebida::CafeExpresso
-                ])
-                ->renderAsNativeWidget()
+                ->setChoices(FormatoBebida::eleccionParaCrud()) // ¡Nuevo método!
+                ->renderAsNativeWidget(),
+            AssociationField::new('proveedores')
+                ->setLabel('Proveedores')                
+                ->setFormTypeOption('by_reference', false)
+                ->formatValue(function ($value, $entity) {
+                    return implode(', ', $entity->getProveedores()->map(fn($p) => $p->getNombre())->toArray());
+                })
+                ->setFormTypeOption('choice_label', 'nombre')
         ];
     }
 }

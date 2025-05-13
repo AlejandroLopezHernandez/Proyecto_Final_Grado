@@ -18,50 +18,41 @@ class Producto
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Nombre = null;
+    private ?string $nombre = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $Coste = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $Stock = null;
+    private ?float $coste = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Descripcion = null;
+    private ?string $medida = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $stock = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $descripcion = null;
 
     #[ORM\Column(type: 'string', nullable: true, enumType: CategoriaProducto::class)]
-    private ?CategoriaProducto $Categoria = null;
+    private ?CategoriaProducto $categoria = null;
 
-    // /**
-    //  * @var Collection<int, Comida>
-    //  */
-    // #[ORM\ManyToMany(targetEntity: Comida::class, mappedBy: 'Producto')]
-    // private Collection $comidas;
-    /**
-     * @var Collection<int, Proveedor>
-     */
     #[ORM\ManyToMany(targetEntity: Proveedor::class, inversedBy: 'productos')]
-    private Collection $Proveedor;
+    private Collection $proveedores;
 
-    #[ORM\OneToOne(mappedBy: 'producto', targetEntity: Bebida::class, cascade: ['persist', 'remove'])]
-    private ?Bebida $Bebida = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Medida = null;
-
-    /**
-     * @var Collection<int, ProductoComida>
-     */
-    #[ORM\OneToMany(targetEntity: ProductoComida::class, mappedBy: 'Producto')]
-    private Collection $productoComidas;
+    #[ORM\ManyToMany(targetEntity: Comida::class, inversedBy: 'productos')]
+    private Collection $comidas;
 
     public function __construct()
-    {
-        //$this->comidas = new ArrayCollection();
-        $this->Proveedor = new ArrayCollection();
-        $this->productoComidas = new ArrayCollection();
+    {        
+        $this->proveedores = new ArrayCollection();
+        $this->comidas = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->nombre ?? '';
+    }
+
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -69,172 +60,110 @@ class Producto
 
     public function getNombre(): ?string
     {
-        return $this->Nombre;
+        return $this->nombre;
     }
 
-    public function setNombre(?string $Nombre): static
+    public function setNombre(?string $nombre): static
     {
-        $this->Nombre = $Nombre;
-
+        $this->nombre = $nombre;
         return $this;
     }
 
     public function getCoste(): ?float
     {
-        return $this->Coste;
+        return $this->coste;
     }
 
-    public function setCoste(?float $Coste): static
+    public function setCoste(?float $coste): static
     {
-        $this->Coste = $Coste;
-
-        return $this;
-    }
-
-    public function getStock(): ?int
-    {
-        return $this->Stock;
-    }
-
-    public function setStock(?int $Stock): static
-    {
-        $this->Stock = $Stock;
-
-        return $this;
-    }
-
-    public function getDescripcion(): ?string
-    {
-        return $this->Descripcion;
-    }
-
-    public function setDescripcion(?string $Descripcion): static
-    {
-        $this->Descripcion = $Descripcion;
-
-        return $this;
-    }
-
-    public function getCategoria(): ?CategoriaProducto
-    {
-        return $this->Categoria;
-    }
-
-    public function setCategoria(?CategoriaProducto $Categoria): static
-    {
-        $this->Categoria = $Categoria;
-
-        return $this;
-    }
-
-    // /**
-    //  * @return Collection<int, Comida>
-    //  */
-    // public function getComidas(): Collection
-    // {
-    //     return $this->comidas;
-    // }
-
-    // public function addComida(Comida $comida): static
-    // {
-    //     if (!$this->comidas->contains($comida)) {
-    //         $this->comidas->add($comida);
-    //         $comida->addProducto($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeComida(Comida $comida): static
-    // {
-    //     if ($this->comidas->removeElement($comida)) {
-    //         $comida->removeProducto($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    /**
-     * @return Collection<int, Proveedor>
-     */
-    public function getProveedor(): Collection
-    {
-        return $this->Proveedor;
-    }
-
-    public function addProveedor(Proveedor $proveedor): static
-    {
-        if (!$this->Proveedor->contains($proveedor)) {
-            $this->Proveedor->add($proveedor);
-        }
-
-        return $this;
-    }
-
-    public function removeProveedor(Proveedor $proveedor): static
-    {
-        $this->Proveedor->removeElement($proveedor);
-
-        return $this;
-    }
-
-    public function getBebida(): ?Bebida
-    {
-        return $this->Bebida;
-    }
-
-    public function setBebida(?Bebida $bebida): self
-    {
-        $this->Bebida = $bebida;
-        if ($bebida !== null && $bebida->getProducto() !== $this) {
-            $bebida->setProducto($this);
-        }
+        $this->coste = $coste;
         return $this;
     }
 
     public function getMedida(): ?string
     {
-        return $this->Medida;
+        return $this->medida;
     }
 
-    public function setMedida(?string $Medida): static
+    public function setMedida(?string $medida): static
     {
-        $this->Medida = $Medida;
-
+        $this->medida = $medida;
         return $this;
     }
 
-    /**
-     * @return Collection<int, ProductoComida>
-     */
-    public function getProductoComidas(): Collection
+    public function getStock(): ?int
     {
-        return $this->productoComidas;
+        return $this->stock;
     }
 
-    public function addProductoComida(ProductoComida $productoComida): static
+    public function setStock(?int $stock): static
     {
-        if (!$this->productoComidas->contains($productoComida)) {
-            $this->productoComidas->add($productoComida);
-            $productoComida->setProducto($this);
+        $this->stock = $stock;
+        return $this;
+    }
+
+    public function getDescripcion(): ?string
+    {
+        return $this->descripcion;
+    }
+
+    public function setDescripcion(?string $descripcion): static
+    {
+        $this->descripcion = $descripcion;
+        return $this;
+    }
+
+    public function getCategoria(): ?CategoriaProducto
+    {
+        return $this->categoria;
+    }
+
+    public function setCategoria(?CategoriaProducto $categoria): static
+    {
+        $this->categoria = $categoria;
+        return $this;
+    }
+
+    // Relación con Proveedores
+    public function getProveedores(): Collection
+    {
+        return $this->proveedores;
+    }
+
+    public function addProveedor(Proveedor $proveedor): static
+    {
+        if (!$this->proveedores->contains($proveedor)) {
+            $this->proveedores->add($proveedor);
         }
-
         return $this;
     }
 
-    public function removeProductoComida(ProductoComida $productoComida): static
+    public function removeProveedor(Proveedor $proveedor): static
     {
-        if ($this->productoComidas->removeElement($productoComida)) {
-            // set the owning side to null (unless already changed)
-            if ($productoComida->getProducto() === $this) {
-                $productoComida->setProducto(null);
-            }
+        $this->proveedores->removeElement($proveedor);
+        return $this;
+    }
+
+    // Relación con Comidas (bidireccional)
+    public function getComidas(): Collection
+    {
+        return $this->comidas;
+    }
+
+    public function addComida(Comida $comida): static
+    {
+        if (!$this->comidas->contains($comida)) {
+            $this->comidas->add($comida);
+            $comida->addProducto($this);
         }
-
         return $this;
     }
-    public function __tostring(): string
+
+    public function removeComida(Comida $comida): static
     {
-        return $this->getNombre();
+        if ($this->comidas->removeElement($comida)) {
+            $comida->removeProducto($this);
+        }
+        return $this;
     }
 }

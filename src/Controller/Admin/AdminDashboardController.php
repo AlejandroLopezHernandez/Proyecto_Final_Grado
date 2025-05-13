@@ -22,7 +22,7 @@ class AdminDashboardController extends AbstractDashboardController
 {
     public function index(): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        // $this->denyAccessUnlessGranted('ROLE_ADMIN');
         //return parent::index();
 
         // Option 1. You can make your dashboard redirect to some common page of your backend

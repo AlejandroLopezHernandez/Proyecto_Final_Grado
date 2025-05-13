@@ -2,18 +2,21 @@
 
 namespace App\Controller\Admin;
 
-use App\Controller\ProductoComidaController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use App\Entity\Comida;
 use App\Enum\CategoriaComida;
 use App\Enum\VegetarianoVeganoSeleccion;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use App\Enum\OpcionesQuitar;
+use App\Enum\OpcionesAnadir;
+use App\Enum\PuntoCoccion;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+
 
 class ComidaCrudController extends AbstractCrudController
 {
@@ -28,28 +31,41 @@ class ComidaCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('nombre'),
-            TextField::new('descripcion'),
-            TextField::new('ingredientes'),
-            ChoiceField::new('dieta')
-                ->setChoices([
-                    'Vegetariana' => VegetarianoVeganoSeleccion::Vegetariano,
-                    'Vegana' => VegetarianoVeganoSeleccion::Vegano,
-                ])
-                ->renderAsNativeWidget(),
-            NumberField::new('stock'),
+            
+            AssociationField::new('productos')
+                ->setLabel('Productos utilizados')
+                ->setFormTypeOption('by_reference', false)
+                ->autocomplete()
+                ->setCrudController(ProductoCrudController::class),
+
             ChoiceField::new('categoria')
-                ->setChoices([
-                    'Aperitivos' => CategoriaComida::Aperitivos,
-                    'Hamburguesas' => CategoriaComida::Hamburguesas,
-                    'Pizzas' => CategoriaComida::Pizzas,
-                    'Sandwiches' => CategoriaComida::Sandwiches,
-                    'Postres' => CategoriaComida::Postres,
-                ])
+                ->setLabel('Categorías')
+                ->setChoices(CategoriaComida::eleccionMultipleParaCrud())
+                ->renderAsNativeWidget(false)
+                ->allowMultipleChoices()
+                ->setRequired(false),
+
+            ChoiceField::new('dieta')
+                ->setLabel('Tipo de dieta')
+                ->setChoices(VegetarianoVeganoSeleccion::eleccionParaCrud())
                 ->renderAsNativeWidget(),
-            CollectionField::new('productoComidas', 'productos')
-                ->useEntryCrudForm(ProductoComidaCrudController::class)
-                ->setFormTypeOptions(['by_reference' => false])
-                ->setRequired(false)
+
+            // Configuración de opciones
+            ChoiceField::new('opciones')
+                ->setLabel('Opciones disponibles')
+                ->allowMultipleChoices()
+                ->setChoices(array_merge(
+                    OpcionesQuitar::todas(),
+                    OpcionesAnadir::todas(),
+                    PuntoCoccion::todas()
+                )),
+
+            NumberField::new('stock'),
+            NumberField::new('precio'),
+            TextareaField::new('descripcion'),
+            TextareaField::new('receta')
+                ->setLabel('Receta completa')
+                ->setNumOfRows(10)
         ];
     }
 }

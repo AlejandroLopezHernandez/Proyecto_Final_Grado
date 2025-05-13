@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorías de Comida{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/comidaCardCategoria.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h1>Categorías de Comida</h1>
+    <div class="card-categorias">
+        {% for categoria in categorias %}
+            <button class="categoria-btn" data-categoria="{{ categoria.name }}">
+                {{ categoria.value }}
+            </button>
+        {% endfor %}
+    </div>
+{% endblock %}

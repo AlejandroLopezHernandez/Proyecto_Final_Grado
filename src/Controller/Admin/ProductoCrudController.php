@@ -2,14 +2,13 @@
 
 namespace App\Controller\Admin;
 
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use App\Entity\Producto;
 use App\Enum\CategoriaProducto;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class ProductoCrudController extends AbstractCrudController
@@ -29,13 +28,23 @@ class ProductoCrudController extends AbstractCrudController
             NumberField::new('stock'),
             TextField::new('medida'),
             TextField::new('descripcion'),
-            ChoiceField::new('categoria')
-                ->setChoices([
-                    'Comida' => CategoriaProducto::Comida,
-                    'Bebida' => CategoriaProducto::Bebida,
-                    'Otros' => CategoriaProducto::Otros,
-                ])
-                ->renderAsNativeWidget()
+            ChoiceField::new('Categoria')
+                ->setChoices(CategoriaProducto::eleccionParaCrud())
+                ->renderAsNativeWidget(),
+            AssociationField::new('proveedores') //  Debe coincidir con la propiedad de la entidad
+                ->setLabel('Proveedores')
+                ->setFormTypeOption('by_reference', false)
+                ->formatValue(function ($value, $entity) {
+                    return implode(', ', $entity->getProveedores()->map(fn($p) => $p->getNombre())->toArray());
+                })
+                ->setFormTypeOption('choice_label', 'nombre'),
+            AssociationField::new('comidas')
+                ->setLabel('Comidas que lo usan')
+                ->onlyOnIndex() // Solo visible en el listado y no en el formulario de crear
+                ->formatValue(function ($value, $entity) {
+                    return implode(', ', $entity->getComidas()->map(fn($c) => $c->getNombre())->toArray());
+                })
+                ->setFormTypeOption('choice_label', 'nombre')
         ];
     }
 }

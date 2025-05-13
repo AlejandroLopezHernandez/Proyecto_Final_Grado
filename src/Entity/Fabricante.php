@@ -16,16 +16,16 @@ class Fabricante
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Nombre = null;
+    private ?string $nombre = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Pais = null;
+    private ?string $pais = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Descripcion = null;
+    private ?string $descripcion = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Imagen = null;
+    private ?string $imagen = null;
 
     /**
      * @var Collection<int, Bebida>
@@ -45,48 +45,48 @@ class Fabricante
 
     public function getNombre(): ?string
     {
-        return $this->Nombre;
+        return $this->nombre;
     }
 
     public function setNombre(?string $Nombre): static
     {
-        $this->Nombre = $Nombre;
+        $this->nombre = $Nombre;
 
         return $this;
     }
 
     public function getPais(): ?string
     {
-        return $this->Pais;
+        return $this->pais;
     }
 
     public function setPais(?string $Pais): static
     {
-        $this->Pais = $Pais;
+        $this->pais = $Pais;
 
         return $this;
     }
 
     public function getDescripcion(): ?string
     {
-        return $this->Descripcion;
+        return $this->descripcion;
     }
 
     public function setDescripcion(?string $Descripcion): static
     {
-        $this->Descripcion = $Descripcion;
+        $this->descripcion = $Descripcion;
 
         return $this;
     }
 
     public function getImagen(): ?string
     {
-        return $this->Imagen;
+        return $this->imagen;
     }
 
     public function setImagen(?string $Imagen): static
     {
-        $this->Imagen = $Imagen;
+        $this->imagen = $Imagen;
 
         return $this;
     }

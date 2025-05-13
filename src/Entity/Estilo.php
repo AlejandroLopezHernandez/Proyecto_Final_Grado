@@ -18,16 +18,16 @@ class Estilo
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Nombre = null;
+    private ?string $nombre = null;
 
     #[ORM\Column(type: 'string', nullable: true, enumType: TipoBebida::class)]
-    private ?TipoBebida $TipoBebida = null;
+    private ?TipoBebida $tipoBebida = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Descripcion = null;
+    private ?string $descripcion = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Maridaje = null;
+    private ?string $maridaje = null;
 
     /**
      * @var Collection<int, Bebida>
@@ -47,48 +47,48 @@ class Estilo
 
     public function getNombre(): ?string
     {
-        return $this->Nombre;
+        return $this->nombre;
     }
 
     public function setNombre(string $Nombre): static
     {
-        $this->Nombre = $Nombre;
+        $this->nombre = $Nombre;
 
         return $this;
     }
 
     public function getTipoBebida(): ?TipoBebida
     {
-        return $this->TipoBebida;
+        return $this->tipoBebida;
     }
 
     public function setTipoBebida(?TipoBebida $TipoBebida): static
     {
-        $this->TipoBebida = $TipoBebida;
+        $this->tipoBebida = $TipoBebida;
 
         return $this;
     }
 
     public function getDescripcion(): ?string
     {
-        return $this->Descripcion;
+        return $this->descripcion;
     }
 
     public function setDescripcion(?string $Descripcion): static
     {
-        $this->Descripcion = $Descripcion;
+        $this->descripcion = $Descripcion;
 
         return $this;
     }
 
     public function getMaridaje(): ?string
     {
-        return $this->Maridaje;
+        return $this->maridaje;
     }
 
     public function setMaridaje(?string $Maridaje): static
     {
-        $this->Maridaje = $Maridaje;
+        $this->maridaje = $Maridaje;
 
         return $this;
     }
