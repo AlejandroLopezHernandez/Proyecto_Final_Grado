@@ -1,0 +1,22 @@
+#barraSuperior{
+background-color:#3e5c76;
+}
+#barraLateral{
+background-color: #aab9cf;
+}
+#fondo{
+background-color: #f5f7fa;
+}
+.botonNuevaOrden{
+background-color: #4ea8de;
+}
+.botonOrdenCreada{
+background-color: #3cb371;
+}
+.botonOrdenPendiente{
+background-color: #c94c4c;
+}
+.texto{
+color: #333333;
+}
+
