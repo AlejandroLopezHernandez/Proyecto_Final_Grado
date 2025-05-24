@@ -1,0 +1,67 @@
+body{
+    background-color: rgb(82, 184, 195);
+}
+h1{
+    text-align: center;
+    margin: 20px 0 10px 0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+#formularioInterno{
+     background-color: rgb(207, 233, 169);
+}
+/* Estilos para los inputs - gris claro */
+.form-control {
+    background-color: #eae5e5; /* Gris claro */
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    padding: 8px 12px;
+}
+
+/* Efecto al enfocar un input */
+.form-control:focus {
+    background-color: #d1cece;
+    box-shadow: 0 0 0 0.2rem rgba(130, 224, 170, 0.25);
+    border-color: #82e0aa;
+}
+#botonReservar{
+    background-color: rgb(154, 227, 125);
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size:16px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid black;
+}
+#googleReservas {
+    background-color: rgb(207, 233, 169) !important; 
+}
+#botonReservar {
+    background-color: rgb(154, 227, 125);
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid black;
+    transition: all 0.3s ease;
+}
+
+#botonReservar:hover {
+    background-color: #a3e08d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para las tarjetas y secciones */
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
