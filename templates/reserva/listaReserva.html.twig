@@ -33,7 +33,6 @@
                             <th>Email</th>
                             <th>Hora</th>
                             <th>Comensales</th>
-                            <th>Mesa</th>
                             <th>Estado</th>
                             <th>Información adicional</th>
                         </tr>
@@ -45,13 +44,6 @@
                             <td>{{ reserva.emailCliente }}</td>
                             <td>{{ reserva.fechaHoraReserva ? reserva.fechaHoraReserva|date('d/m/Y H:i') : 'No especificada' }}</td>
                             <td>{{ reserva.numeroComensales }}</td>
-                            <td>
-                                {% if reserva.numeroMesa %}
-                                    Mesa #{{ reserva.numeroMesa }}
-                                {% else %}
-                                    Sin asignar
-                                {% endif %}
-                            </td>
                             <td>
                                 {% if reserva.estado %}
                                     <span class="badge {{ reserva.estado.badgeClass }}">

@@ -9,6 +9,7 @@ use App\Entity\Estilo;
 use App\Entity\Fabricante;
 use App\Entity\Producto;
 use App\Entity\Proveedor;
+use App\Entity\Reserva;
 use App\Entity\Usuario;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -69,5 +70,6 @@ class AdminDashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Fabricantes', 'fas fa-list', Fabricante::class);
         yield MenuItem::linkToCrud('Estilos', 'fas fa-list', Estilo::class);
         yield MenuItem::linkToCrud('Proveedores', 'fas fa-list', Proveedor::class);
+        yield MenuItem::linkToCrud('Reservas', 'fas fa-list', Reserva::class);
     }
 }
