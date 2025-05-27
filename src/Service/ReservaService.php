@@ -21,7 +21,7 @@ class ReservaService
         $exito = $this->simularAPIGoogleReservas($reserva);
 
         if ($exito) {
-            $reserva->setEstado(EstadoReserva::Confirmado);
+            $reserva->setEstado(EstadoReserva::Pendiente);
             $this->entityManager->persist($reserva);
             $this->entityManager->flush();
             return true;

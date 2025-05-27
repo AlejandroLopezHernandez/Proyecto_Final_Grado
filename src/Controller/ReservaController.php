@@ -38,7 +38,7 @@ class ReservaController extends AbstractController
             $exito = $reservaService->crearReserva($reserva);
 
             if ($exito) {
-                $this->addFlash('success', '¡Reserva confirmada con éxito! Google Reservas ha asignado la mesa #' . $reserva->getNumeroMesa());
+                $this->addFlash('success', '¡Reserva demandada con éxito!Espere mail de confirmación');
                 return $this->redirectToRoute('app_reservas');
             } else {
                 $this->addFlash('error', 'No hay disponibilidad para esa fecha y hora según Google Reservas.');
