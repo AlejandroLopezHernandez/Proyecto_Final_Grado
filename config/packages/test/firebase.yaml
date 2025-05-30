@@ -1,0 +1,5 @@
+parameters:
+    firebase_project_id: 'ClickComanda'
+    firebase_auth_emulator: 'http://localhost:9099'
+    firebase_firestore_emulator: 'http://localhost:8080'
+    firebase_storage_emulator: 'http://localhost:9199'
