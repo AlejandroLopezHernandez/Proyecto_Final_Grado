@@ -15,6 +15,7 @@ final class BebidaController extends AbstractController
             'controller_name' => 'BebidaController',
         ]);
     }
+<<<<<<< HEAD
 
       // Para mostrar todas las categorias existentes con o sin platos registrados
       #[Route('/comida/categorias', name: 'app_comida_categorias')]
@@ -26,4 +27,6 @@ final class BebidaController extends AbstractController
               'categorias' => $categorias
           ]);
       }
+=======
+>>>>>>> fba8cd241d1716d1fd48513c3b0e994ce67f045f
 }

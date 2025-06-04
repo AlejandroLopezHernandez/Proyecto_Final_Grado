@@ -4,6 +4,7 @@ namespace App\Enum;
 
 enum FormatoBebida: string
 {
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     case Pinta = 'pinta';
     case MediaPinta = 'media pinta';
@@ -11,11 +12,16 @@ enum FormatoBebida: string
     case CafeLeche = 'café con leche';
     case CafeExpresso = 'café expresso';
 =======
+=======
+>>>>>>> fba8cd241d1716d1fd48513c3b0e994ce67f045f
     // Cervezas
     case MEDIA_PINTA = 'media_pinta';  // 25cl
     case PINTA = 'pinta';              // 50cl
     case TERCIO = 'tercio';            // 33cl
+<<<<<<< HEAD
     case LATA_330 = 'lata_330';         // 33cl
+=======
+>>>>>>> fba8cd241d1716d1fd48513c3b0e994ce67f045f
     case BOTELLA_500 = 'botella_500'; // 50cl
     case LATA = 'lata';                // 44cl
     case BOTELLA_750= 'botella_750'; // 75cl 
@@ -44,7 +50,10 @@ enum FormatoBebida: string
             self::MEDIA_PINTA => 'Media Pinta (25cl)',
             self::PINTA => 'Pinta (50cl)',
             self::TERCIO => 'Tercio (33cl)',
+<<<<<<< HEAD
             self::LATA_330 => 'Lata (33cl)',
+=======
+>>>>>>> fba8cd241d1716d1fd48513c3b0e994ce67f045f
             self::BOTELLA_500 => 'Botella Cerveza (50cl)',
             self::LATA => 'Lata (44cl)',
             self::BOTELLA_750 => 'Botella 75cl (Cerveza)',
@@ -68,5 +77,8 @@ enum FormatoBebida: string
             []
         );
     }
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> fba8cd241d1716d1fd48513c3b0e994ce67f045f
 }
