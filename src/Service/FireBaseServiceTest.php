@@ -1,5 +1,7 @@
 <?php
 // tests/Service/FirebaseServiceTest.php
+
+use App\Service\FirebaseService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -10,7 +12,7 @@ class FirebaseServiceTest extends KernelTestCase
     protected function setUp(): void
     {
         self::bootKernel(['environment' => 'test']);
-        $this->firebaseService = self::getContainer()->get(FirebaseService::class);
+        $this->firebaseService = self::getContainer()->get(FireBaseService::class);
     }
 
     public function testCreateDocument(): void

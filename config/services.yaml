@@ -6,6 +6,11 @@
 parameters:
 
 services:
+    App\EventSubscriber\RequestLoggerSubscriber:
+        arguments:
+            $logger: '@monolog.logger.user_actions'
+        tags:
+            - { name: kernel.event_subscriber }
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

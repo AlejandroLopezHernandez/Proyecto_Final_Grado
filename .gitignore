@@ -14,3 +14,15 @@
 /phpunit.xml
 /.phpunit.cache/
 ###< phpunit/phpunit ###
+phpunit.dist.xml
+firestore.rules
+firestore.indexes.json
+firestore-debug.log
+firebase.json
+firebase-debug.log
+.firebaserc
+FireBaseService.php
+FireBaseServiceTest.php
+tests
+test
+.DS_Store
