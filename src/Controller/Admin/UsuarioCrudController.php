@@ -7,10 +7,12 @@ use App\Entity\Usuario;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 
 class UsuarioCrudController extends AbstractCrudController
 {
@@ -26,6 +28,17 @@ class UsuarioCrudController extends AbstractCrudController
     {
         return Usuario::class;
     }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            // Habilitar para todas las páginas (index, detail, edit, etc.)
+            ->add(Crud::PAGE_INDEX, Action::DETAIL) // 👈 Añade el botón de detalle
+            ->add(Crud::PAGE_EDIT, Action::INDEX)   // Opcional: añade botón para volver al listado
+            
+            ;
+    }
+
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         if ($entityInstance instanceof Usuario) {

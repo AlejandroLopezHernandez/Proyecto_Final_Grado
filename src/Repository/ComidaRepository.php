@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Comida;
+use App\Enum\CategoriaComida;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -40,4 +41,33 @@ class ComidaRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+     /**
+     * Devuelve un array con todas las categorías 
+     */
+    public function findCategoriasDisponibles(): array
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('DISTINCT c.Categoria')
+            ->where('c.Categoria IS NOT NULL');
+
+        return array_map(
+            fn($row) => $row['Categoria'],
+            $qb->getQuery()->getArrayResult()
+        );
+    }
+
+    /**
+     * Devuelve todas las comidas que pertenecen a una categoría .
+     */
+    public function findByCategoria(CategoriaComida $categoria): array
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.Categoria = :categoria')
+            ->setParameter('categoria', $categoria)
+            ->orderBy('c.Nombre', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }
+

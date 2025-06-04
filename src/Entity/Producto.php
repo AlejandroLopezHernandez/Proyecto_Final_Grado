@@ -18,18 +18,22 @@ class Producto
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Nombre = null;
+    private ?string $nombre = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $Coste = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $Stock = null;
+    private ?float $coste = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Descripcion = null;
+    private ?string $medida = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $stock = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $descripcion = null;
 
     #[ORM\Column(type: 'string', nullable: true, enumType: CategoriaProducto::class)]
+<<<<<<< Updated upstream
     private ?CategoriaProducto $Categoria = null;
 
     /**
@@ -46,13 +50,33 @@ class Producto
 
     #[ORM\OneToOne(mappedBy: 'producto', targetEntity: Bebida::class, cascade: ['persist', 'remove'])]
     private ?Bebida $Bebida = null;
+=======
+    private ?CategoriaProducto $categoria = null;
+
+    #[ORM\ManyToMany(targetEntity: Proveedor::class, inversedBy: 'productos')]
+    private Collection $proveedores;
+
+    #[ORM\ManyToMany(targetEntity: Comida::class, inversedBy: 'productos')]
+    private Collection $comidas;
+>>>>>>> Stashed changes
 
     public function __construct()
-    {
+    {        
+        $this->proveedores = new ArrayCollection();
         $this->comidas = new ArrayCollection();
-        $this->Proveedor = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+<<<<<<< Updated upstream
+        $this->comidas = new ArrayCollection();
+        $this->Proveedor = new ArrayCollection();
+=======
+        return $this->nombre ?? '';
+>>>>>>> Stashed changes
+    }
+
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -60,64 +84,60 @@ class Producto
 
     public function getNombre(): ?string
     {
-        return $this->Nombre;
+        return $this->nombre;
     }
 
-    public function setNombre(?string $Nombre): static
+    public function setNombre(?string $nombre): static
     {
-        $this->Nombre = $Nombre;
-
+        $this->nombre = $nombre;
         return $this;
     }
 
     public function getCoste(): ?float
     {
-        return $this->Coste;
+        return $this->coste;
     }
 
-    public function setCoste(?float $Coste): static
+    public function setCoste(?float $coste): static
     {
-        $this->Coste = $Coste;
+        $this->coste = $coste;
+        return $this;
+    }
 
+    public function getMedida(): ?string
+    {
+        return $this->medida;
+    }
+
+    public function setMedida(?string $medida): static
+    {
+        $this->medida = $medida;
         return $this;
     }
 
     public function getStock(): ?int
     {
-        return $this->Stock;
+        return $this->stock;
     }
 
-    public function setStock(?int $Stock): static
+    public function setStock(?int $stock): static
     {
-        $this->Stock = $Stock;
-
+        $this->stock = $stock;
         return $this;
     }
 
     public function getDescripcion(): ?string
     {
-        return $this->Descripcion;
+        return $this->descripcion;
     }
 
-    public function setDescripcion(?string $Descripcion): static
+    public function setDescripcion(?string $descripcion): static
     {
-        $this->Descripcion = $Descripcion;
-
+        $this->descripcion = $descripcion;
         return $this;
     }
 
-    public function getCategoria(): ?CategoriaProducto
-    {
-        return $this->Categoria;
-    }
-
-    public function setCategoria(?CategoriaProducto $Categoria): static
-    {
-        $this->Categoria = $Categoria;
-
-        return $this;
-    }
-
+<<<<<<< Updated upstream
     /**
      * @return Collection<int, Comida>
      */
@@ -149,37 +169,63 @@ class Producto
      * @return Collection<int, Proveedor>
      */
     public function getProveedor(): Collection
+=======
+    public function getCategoria(): ?CategoriaProducto
+>>>>>>> Stashed changes
     {
-        return $this->Proveedor;
+        return $this->categoria;
+    }
+
+    public function setCategoria(?CategoriaProducto $categoria): static
+    {
+        $this->categoria = $categoria;
+        return $this;
+    }
+
+    // Relación con Proveedores
+    public function getProveedores(): Collection
+    {
+        return $this->proveedores;
     }
 
     public function addProveedor(Proveedor $proveedor): static
     {
-        if (!$this->Proveedor->contains($proveedor)) {
-            $this->Proveedor->add($proveedor);
+        if (!$this->proveedores->contains($proveedor)) {
+            $this->proveedores->add($proveedor);
         }
-
         return $this;
     }
+<<<<<<< Updated upstream
+}
+=======
 
     public function removeProveedor(Proveedor $proveedor): static
     {
-        $this->Proveedor->removeElement($proveedor);
-
+        $this->proveedores->removeElement($proveedor);
         return $this;
     }
 
-    public function getBebida(): ?Bebida
+    // Relación con Comidas (bidireccional)
+    public function getComidas(): Collection
     {
-        return $this->Bebida;
+        return $this->comidas;
     }
 
-    public function setBebida(?Bebida $bebida): self
+    public function addComida(Comida $comida): static
     {
-        $this->Bebida = $bebida;
-        if ($bebida !== null && $bebida->getProducto() !== $this) {
-            $bebida->setProducto($this);
+        if (!$this->comidas->contains($comida)) {
+            $this->comidas->add($comida);
+            $comida->addProducto($this);
+        }
+        return $this;
+    }
+
+    public function removeComida(Comida $comida): static
+    {
+        if ($this->comidas->removeElement($comida)) {
+            $comida->removeProducto($this);
         }
         return $this;
     }
 }
+>>>>>>> Stashed changes

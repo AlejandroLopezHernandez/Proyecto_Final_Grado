@@ -34,6 +34,12 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+
+    public function __toString(): string
+    {
+        return $this->nombre ?? '';
+    }
+
     public function getId(): ?int
     {
         return $this->id;

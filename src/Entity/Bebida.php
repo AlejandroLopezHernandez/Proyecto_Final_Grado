@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Enum\FormatoBebida;
+use App\Enum\TipoBebida;
 use App\Repository\BebidaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,29 +19,61 @@ class Bebida
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Nombre = null;
+    private ?string $nombre = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $GradoAlcoholico = null;
+    private ?float $gradoAlcoholico = null;
+
+    #[ORM\Column(type: 'string', nullable: true, enumType: TipoBebida::class)]
+    private ?TipoBebida $tipoBebida = null;
 
     #[ORM\Column(type: 'string', nullable: true, enumType: FormatoBebida::class)]
-    private ?FormatoBebida $Formato = null;
+    private ?FormatoBebida $formato = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $Precio = null;
+    private ?float $coste = null;
 
     #[ORM\Column(nullable: true)]
+<<<<<<< Updated upstream
     private ?int $Stock = null;
 
     #[ORM\OneToOne(inversedBy: 'Bebida')]
     #[ORM\JoinColumn(name: 'id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     private ?Producto $producto = null;
+=======
+    private ?float $pvp = null;
+>>>>>>> Stashed changes
+
+    #[ORM\Column(nullable: true)]
+    private ?int $stock = 0;    // si no se rellena habrá 0 stock
+
+    #[ORM\ManyToOne(targetEntity:Estilo::class,inversedBy: 'bebidas')]
+    private ?Estilo $estilo = null;
 
     #[ORM\ManyToOne(inversedBy: 'bebidas')]
-    private ?Estilo $Estilo = null;
+    private ?Fabricante $fabricante = null;
 
-    #[ORM\ManyToOne(inversedBy: 'bebidas')]
-    private ?Fabricante $Fabricante = null;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $descripcion = null;
+
+    /**
+     * @var Collection<int, Proveedor>
+     */
+    #[ORM\ManyToMany(targetEntity: Proveedor::class, inversedBy: 'bebidas')]
+    private Collection $proveedores;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lupulos = null;
+
+    public function __construct()
+    {
+        $this->proveedores = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->nombre ?? '';
+    }
 
     public function getId(): ?int
     {
@@ -47,24 +82,39 @@ class Bebida
 
     public function getNombre(): ?string
     {
-        return $this->Nombre;
+        return $this->nombre;
     }
 
     public function setNombre(?string $Nombre): static
     {
-        $this->Nombre = $Nombre;
+        $this->nombre = $Nombre;
 
         return $this;
     }
 
     public function getGradoAlcoholico(): ?float
     {
-        return $this->GradoAlcoholico;
+        return $this->gradoAlcoholico;
     }
 
     public function setGradoAlcoholico(?float $GradoAlcoholico): static
     {
-        $this->GradoAlcoholico = $GradoAlcoholico;
+        $this->gradoAlcoholico = $GradoAlcoholico;
+
+        return $this;
+    }
+
+    /**
+     * @return TipoBebida[]|null
+     */
+    public function getTipoBebida(): ?TipoBebida
+    {
+        return $this->tipoBebida;
+    }
+
+    public function setTipoBebida(?TipoBebida $TipoBebida): static
+    {
+        $this->tipoBebida = $TipoBebida;
 
         return $this;
     }
@@ -74,73 +124,172 @@ class Bebida
      */
     public function getFormato(): ?FormatoBebida
     {
-        return $this->Formato;
+        return $this->formato;
     }
 
     public function setFormato(?FormatoBebida $Formato): static
     {
-        $this->Formato = $Formato;
+        $this->formato = $Formato;
 
         return $this;
     }
 
-    public function getPrecio(): ?float
+    public function getCoste(): ?float
     {
-        return $this->Precio;
+        return $this->coste;
     }
 
-    public function setPrecio(?float $Precio): static
+    public function setCoste(?float $Coste): static
     {
-        $this->Precio = $Precio;
+        $this->coste = $Coste;
+
+        return $this;
+    }
+
+    public function getPvp(): ?float
+    {
+        return $this->pvp;
+    }
+
+    public function setPvp(?float $Pvp): static
+    {
+        $this->pvp = $Pvp;
 
         return $this;
     }
 
     public function getStock(): ?int
     {
-        return $this->Stock;
+        return $this->stock;
     }
 
     public function setStock(?int $Stock): static
     {
-        $this->Stock = $Stock;
+        $this->stock = $Stock;
+
+        return $this;
+    }    
+    
+    /**
+     * @return Collection<int, Proveedor>
+     */
+    public function getProveedores(): Collection
+    {
+        return $this->proveedores;
+    }
+
+    public function addProveedor(Proveedor $proveedor): static
+    {
+        if (!$this->proveedores->contains($proveedor)) {
+            $this->proveedores->add($proveedor);
+            $proveedor->addBebida($this); // Para que tambien se registre en el proveedor asociado
+        }
 
         return $this;
     }
 
-    public function getProducto(): ?Producto
+    public function removeProveedor(Proveedor $proveedor): static
     {
-        return $this->producto;
-    }
+        if ($this->proveedores->removeElement($proveedor)) {
+            $proveedor->removeBebida($this); // Para que tambien se borre en el proveedor asociado
+        }
 
-    public function setProducto(?Producto $producto): self
-    {
-        $this->producto = $producto;
 
         return $this;
     }
 
-    public function getEstilo(): ?Estilo
-    {
-        return $this->Estilo;
-    }
 
-    public function setEstilo(?Estilo $Estilo): static
-    {
-        $this->Estilo = $Estilo;
-
-        return $this;
-    }
-
+    /**
+     * Mismo tipo de persistencia bidireccional que en Proveedor(sin array)
+     */
     public function getFabricante(): ?Fabricante
     {
-        return $this->Fabricante;
+        return $this->fabricante;
+    }
+    
+    public function setFabricante(?Fabricante $fabricante): static
+    {
+        $this->fabricante = $fabricante;
+    
+    
+        if ($fabricante !== null && !$fabricante->getBebidas()->contains($this)) {
+            $fabricante->addBebida($this);
+        }
+    
+        return $this;
+    }
+    
+    public function removeFabricante(): static
+    {
+        if ($this->fabricante !== null) {
+            $fabricante = $this->fabricante;
+            $this->fabricante = null;
+    
+            if ($fabricante->getBebidas()->contains($this)) {
+                $fabricante->removeBebida($this);
+            }
+        }
+    
+        return $this;
     }
 
-    public function setFabricante(?Fabricante $Fabricante): static
+
+     /**
+     * Mismo tipo de persistencia bidireccional que en Fabricante
+     */
+    public function getEstilo(): ?Estilo
     {
-        $this->Fabricante = $Fabricante;
+        return $this->estilo;
+    }
+    
+    public function setEstilo(?Estilo $estilo): static
+    {
+        $this->estilo = $estilo;
+    
+        
+        if ($estilo !== null && !$estilo->getBebidas()->contains($this)) {
+            $estilo->addBebida($this);
+        }
+    
+        return $this;
+    }
+    
+    public function removeEstilo(): static
+    {
+        if ($this->estilo !== null) {
+            $estilo = $this->estilo;
+            $this->estilo = null;
+    
+            if ($estilo->getBebidas()->contains($this)) {
+                $estilo->removeBebida($this);
+            }
+        }
+    
+        return $this;
+    }
+
+    public function getDescripcion(): ?string
+    {
+        return $this->descripcion;
+    }
+
+    public function setDescripcion(?string $Descripcion): static
+    {
+        $this->descripcion = $Descripcion;
 
         return $this;
     }
+
+    public function getLupulos(): ?string
+    {
+        return $this->lupulos;
+    }
+
+    public function setLupulos(?string $lupulos): static
+    {
+        $this->lupulos = $lupulos;
+
+        return $this;
+    }
+    
 }

@@ -1,0 +1,33 @@
+body {
+    background: rgb(179, 179, 158);
+}
+
+.categoria-btn {
+    font-size: smaller;
+    padding: 1.2rem;
+    background-color: #f0f0f0;
+    border: 2px solid #0e7900;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    height: 100%;
+}
+
+.categoria-btn:hover {
+    background-color: #0e7900;
+    color: white;
+    border: 2px solid #ffffff;
+
+}
+
+.categoria-btn:active {
+    transform: scale(0.98);
+}
+
+/* Custom column for 5 items per row on lg */
+@media (min-width: 992px) {
+    .col-lg-2-4 {
+        flex: 0 0 auto;
+        width: 20%;
+    }
+}

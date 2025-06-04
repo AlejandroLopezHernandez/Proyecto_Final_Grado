@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle {{ tipo|capitalize }}</title>
+    <link rel="stylesheet" href="{{ asset('css/cardDetalle.css') }}">
+    <script defer src="{{ asset('script/cardDetalle.js') }}"></script>
+</head>
+<body>
+    <div class="card-detalle">
+        <button class="cerrar-btn" onclick="window.history.back()">✖</button>
+        <h1>Detalle de {{ tipo|capitalize }}</h1>
+        <ul>
+            {% for campo, valor in entidad|as_array %}
+                <li>
+                    <strong>{{ campo|capitalize }}:</strong>
+                    {% if valor is object and valor.id is defined %}
+                        <a href="/{{ valor|lower_class_name }}/{{ valor.id }}">
+                            {{ valor.toString is defined ? valor.toString : valor.id }}
+                        </a>
+                    {% else %}
+                        {{ valor }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

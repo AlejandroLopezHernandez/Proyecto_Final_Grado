@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Enum\TipoBebida;
+use App\Enum\TipoFermentacion;
 use App\Repository\EstiloRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,26 +18,55 @@ class Estilo
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Nombre = null;
+    private ?string $nombre = null;
 
-    #[ORM\Column(type: 'string', nullable: true, enumType: TipoBebida::class)]
-    private ?TipoBebida $TipoBebida = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Descripcion = null;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $descripcion = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Maridaje = null;
+    private ?string $maridaje = null;
 
     /**
      * @var Collection<int, Bebida>
      */
-    #[ORM\OneToMany(targetEntity: Bebida::class, mappedBy: 'Estilo')]
+    #[ORM\OneToMany(targetEntity: Bebida::class, mappedBy: 'estilo')]
     private Collection $bebidas;
+
+    #[ORM\Column(type: 'string', nullable: true, enumType: TipoFermentacion::class)]
+    private ?TipoFermentacion $fermentacion = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $color = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $sabor = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $aroma = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $carbonatacion = null;
+
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'subestilos')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?self $estiloPadre = null;
+
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'estiloPadre')]
+    #[ORM\JoinColumn(nullable: true)]
+    private Collection $subestilos;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $origen = null;
+
 
     public function __construct()
     {
         $this->bebidas = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->nombre ?? '';
     }
 
     public function getId(): ?int
@@ -47,48 +76,37 @@ class Estilo
 
     public function getNombre(): ?string
     {
-        return $this->Nombre;
+        return $this->nombre;
     }
 
     public function setNombre(string $Nombre): static
     {
-        $this->Nombre = $Nombre;
+        $this->nombre = $Nombre;
 
         return $this;
     }
 
-    public function getTipoBebida(): ?TipoBebida
-    {
-        return $this->TipoBebida;
-    }
-
-    public function setTipoBebida(?TipoBebida $TipoBebida): static
-    {
-        $this->TipoBebida = $TipoBebida;
-
-        return $this;
-    }
 
     public function getDescripcion(): ?string
     {
-        return $this->Descripcion;
+        return $this->descripcion;
     }
 
     public function setDescripcion(?string $Descripcion): static
     {
-        $this->Descripcion = $Descripcion;
+        $this->descripcion = $Descripcion;
 
         return $this;
     }
 
     public function getMaridaje(): ?string
     {
-        return $this->Maridaje;
+        return $this->maridaje;
     }
 
     public function setMaridaje(?string $Maridaje): static
     {
-        $this->Maridaje = $Maridaje;
+        $this->maridaje = $Maridaje;
 
         return $this;
     }
@@ -114,11 +132,118 @@ class Estilo
     public function removeBebida(Bebida $bebida): static
     {
         if ($this->bebidas->removeElement($bebida)) {
-            // set the owning side to null (unless already changed)
+
             if ($bebida->getEstilo() === $this) {
                 $bebida->setEstilo(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFermentacion(): ?TipoFermentacion
+    {
+        return $this->fermentacion;
+    }
+
+    public function setFermentacion(?TipoFermentacion $fermentacion): static
+    {
+        $this->fermentacion = $fermentacion;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): static
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function getSabor(): ?string
+    {
+        return $this->sabor;
+    }
+
+    public function setSabor(?string $sabor): static
+    {
+        $this->sabor = $sabor;
+
+        return $this;
+    }
+
+    public function getAroma(): ?string
+    {
+        return $this->aroma;
+    }
+
+    public function setAroma(?string $aroma): static
+    {
+        $this->aroma = $aroma;
+
+        return $this;
+    }
+
+    public function getCarbonatacion(): ?string
+    {
+        return $this->carbonatacion;
+    }
+
+    public function setCarbonatacion(?string $carbonatacion): static
+    {
+        $this->carbonatacion = $carbonatacion;
+
+        return $this;
+    }
+
+    public function getEstiloPadre(): ?self
+    {
+        return $this->estiloPadre;
+    }
+
+    public function setEstiloPadre(?self $estiloPadre): static
+    {
+        $this->estiloPadre = $estiloPadre;
+        return $this;
+    }
+
+    public function getSubestilos(): Collection
+    {
+        return $this->subestilos;
+    }
+
+    public function addSubestilo(self $subestilo): static
+    {
+        if (!$this->subestilos->contains($subestilo)) {
+            $this->subestilos->add($subestilo);
+            $subestilo->setEstiloPadre($this);
+        }
+        return $this;
+    }
+
+    public function removeSubestilo(self $subestilo): static
+    {
+        if ($this->subestilos->removeElement($subestilo)) {
+            if ($subestilo->getEstiloPadre() === $this) {
+                $subestilo->setEstiloPadre(null);
+            }
+        }
+        return $this;
+    }
+
+    public function getOrigen(): ?string
+    {
+        return $this->origen;
+    }
+
+    public function setOrigen(?string $origen): static
+    {
+        $this->origen = $origen;
 
         return $this;
     }
