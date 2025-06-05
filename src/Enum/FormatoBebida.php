@@ -8,9 +8,10 @@ enum FormatoBebida: string
     case MEDIA_PINTA = 'media_pinta';  // 25cl
     case PINTA = 'pinta';              // 50cl
     case TERCIO = 'tercio';            // 33cl
+    case LATA_330 = 'lata_330';         // 33cl
     case BOTELLA_500 = 'botella_500'; // 50cl
     case LATA = 'lata';                // 44cl
-    case BOTELLA_750= 'botella_750'; // 75cl 
+    case BOTELLA_750 = 'botella_750'; // 75cl 
 
         // Vinos
     case COPA_VINO = 'copa_vino';      // 15cl
@@ -36,6 +37,7 @@ enum FormatoBebida: string
             self::MEDIA_PINTA => 'Media Pinta (25cl)',
             self::PINTA => 'Pinta (50cl)',
             self::TERCIO => 'Tercio (33cl)',
+            self::LATA_330 => 'Lata (33cl)',
             self::BOTELLA_500 => 'Botella Cerveza (50cl)',
             self::LATA => 'Lata (44cl)',
             self::BOTELLA_750 => 'Botella 75cl (Cerveza)',

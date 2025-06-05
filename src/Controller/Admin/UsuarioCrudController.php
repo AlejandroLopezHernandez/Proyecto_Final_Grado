@@ -13,15 +13,24 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Psr\Log\LoggerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
+
 
 class UsuarioCrudController extends AbstractCrudController
 {
     //Método para guardar contraseñas con hash en la base de datos
     private UserPasswordHasherInterface $passwordHasher;
-
-    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    private AdminUrlGenerator $adminUrlGenerator;
+    private $logger;
+    private $security;
+    public function __construct(UserPasswordHasherInterface $passwordHasher, AdminUrlGenerator $adminUrlGenerator, LoggerInterface $logger, Security $security)
     {
         $this->passwordHasher = $passwordHasher;
+        $this->adminUrlGenerator = $adminUrlGenerator;
+        $this->logger = $logger;
+        $this->security = $security;
     }
 
     public static function getEntityFqcn(): string
@@ -35,8 +44,8 @@ class UsuarioCrudController extends AbstractCrudController
             // Habilitar para todas las páginas (index, detail, edit, etc.)
             ->add(Crud::PAGE_INDEX, Action::DETAIL) // 👈 Añade el botón de detalle
             ->add(Crud::PAGE_EDIT, Action::INDEX)   // Opcional: añade botón para volver al listado
-            
-            ;
+
+        ;
     }
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
@@ -48,6 +57,14 @@ class UsuarioCrudController extends AbstractCrudController
         }
 
         parent::persistEntity($entityManager, $entityInstance);
+        $user = $this->security->getUser();
+        $userId = $user ? $user->getUserIdentifier() : 'admin';
+
+        $this->logger->info('Entidad creada', [
+            'entidad' => get_class($entityInstance),
+            'id' => method_exists($entityInstance, 'getId') ? $entityInstance->getId() : null,
+            'usuario' => $userId,
+        ]);
     }
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
@@ -61,6 +78,14 @@ class UsuarioCrudController extends AbstractCrudController
             }
         }
         parent::updateEntity($entityManager, $entityInstance);
+        $user = $this->security->getUser();
+        $userId = $user ? $user->getUserIdentifier() : 'admin';
+
+        $this->logger->info('Entidad actualizada', [
+            'entidad' => get_class($entityInstance),
+            'id' => method_exists($entityInstance, 'getId') ? $entityInstance->getId() : null,
+            'usuario' => $userId,
+        ]);
     }
     public function configureFields(string $pageName): iterable
     {
@@ -79,5 +104,18 @@ class UsuarioCrudController extends AbstractCrudController
                 ->allowMultipleChoices()
                 ->renderExpanded()
         ];
+    }
+    public function deleteEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        parent::deleteEntity($entityManager, $entityInstance);
+
+        $user = $this->security->getUser();
+        $userId = $user ? $user->getUserIdentifier() : 'admin';
+
+        $this->logger->info('Entidad eliminada', [
+            'entidad' => get_class($entityInstance),
+            'id' => method_exists($entityInstance, 'getId') ? $entityInstance->getId() : null,
+            'usuario' => $userId,
+        ]);
     }
 }

@@ -13,14 +13,20 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Psr\Log\LoggerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ProveedorCrudController extends AbstractCrudController
 {
     private AdminUrlGenerator $adminUrlGenerator;
-
-    public function __construct(AdminUrlGenerator $adminUrlGenerator)
+    private $logger;
+    private $security;
+    public function __construct(AdminUrlGenerator $adminUrlGenerator, LoggerInterface $logger, Security $security)
     {
         $this->adminUrlGenerator = $adminUrlGenerator;
+        $this->logger = $logger;
+        $this->security = $security;
     }
 
     public static function getEntityFqcn(): string
@@ -76,5 +82,46 @@ class ProveedorCrudController extends AbstractCrudController
                 })
                 ->renderAsHtml()
         ];
+    }
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        parent::persistEntity($entityManager, $entityInstance);
+
+        $user = $this->security->getUser();
+        $userId = $user ? $user->getUserIdentifier() : 'admin';
+
+        $this->logger->info('Entidad creada', [
+            'entidad' => get_class($entityInstance),
+            'id' => method_exists($entityInstance, 'getId') ? $entityInstance->getId() : null,
+            'usuario' => $userId,
+        ]);
+    }
+
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        parent::updateEntity($entityManager, $entityInstance);
+
+        $user = $this->security->getUser();
+        $userId = $user ? $user->getUserIdentifier() : 'admin';
+
+        $this->logger->info('Entidad actualizada', [
+            'entidad' => get_class($entityInstance),
+            'id' => method_exists($entityInstance, 'getId') ? $entityInstance->getId() : null,
+            'usuario' => $userId,
+        ]);
+    }
+
+    public function deleteEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        parent::deleteEntity($entityManager, $entityInstance);
+
+        $user = $this->security->getUser();
+        $userId = $user ? $user->getUserIdentifier() : 'admin';
+
+        $this->logger->info('Entidad eliminada', [
+            'entidad' => get_class($entityInstance),
+            'id' => method_exists($entityInstance, 'getId') ? $entityInstance->getId() : null,
+            'usuario' => $userId,
+        ]);
     }
 }

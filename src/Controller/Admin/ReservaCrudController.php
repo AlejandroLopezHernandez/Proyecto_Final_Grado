@@ -19,15 +19,24 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class ReservaCrudController extends AbstractCrudController
 {
+    private AdminUrlGenerator $adminUrlGenerator;
+    private $logger;
+    private $security;
     private MailerInterface $mailer;
-    public function __construct(MailerInterface $mailer)
+    public function __construct(MailerInterface $mailer, AdminUrlGenerator $adminUrlGenerator, LoggerInterface $logger, Security $security)
     {
         $this->mailer = $mailer;
+        $this->adminUrlGenerator = $adminUrlGenerator;
+        $this->logger = $logger;
+        $this->security = $security;
     }
     public static function getEntityFqcn(): string
     {
@@ -141,6 +150,7 @@ class ReservaCrudController extends AbstractCrudController
      */
     public function createEntity(string $entityFqcn)
     {
+
         $reserva = new Reserva();
         // Establecer estado por defecto como PENDIENTE
         $reserva->setEstado(EstadoReserva::Pendiente);
@@ -159,6 +169,16 @@ class ReservaCrudController extends AbstractCrudController
         if ($entityInstance instanceof Reserva) {
             $this->enviarEmailConfirmacion($entityInstance);
         }
+        parent::persistEntity($entityManager, $entityInstance);
+
+        $user = $this->security->getUser();
+        $userId = $user ? $user->getUserIdentifier() : 'admin';
+
+        $this->logger->info('Entidad creada', [
+            'entidad' => get_class($entityInstance),
+            'id' => method_exists($entityInstance, 'getId') ? $entityInstance->getId() : null,
+            'usuario' => $userId,
+        ]);
     }
 
     /**
@@ -175,11 +195,20 @@ class ReservaCrudController extends AbstractCrudController
         $estadoAnterior = $reservaAnterior['estado'] ?? null;
         $estadoNuevo = $entityInstance->getEstado();
 
-        parent::updateEntity($entityManager, $entityInstance);
-
         // Solo enviar email si ha cambiado a CONFIRMADO
         if ($estadoAnterior !== EstadoReserva::Confirmado && $estadoNuevo === EstadoReserva::Confirmado) {
             $this->enviarEmailConfirmacionAdmin($entityInstance);
+        }
+        parent::updateEntity($entityManager, $entityInstance);
+
+        if ($estadoNuevo === EstadoReserva::Confirmado) {
+            $usuario = $this->security->getUser();
+            $this->logger->info('Reserva confirmada por el administrador', [
+                'reserva_id' => $entityInstance->getId(),
+                'cliente' => $entityInstance->getNombreCliente(),
+                'fecha' => $entityInstance->getFechaHoraReserva()?->format('Y-m-d H:i'),
+                'confirmada_por' => $usuario ? $usuario->getUserIdentifier() : 'admin',
+            ]);
         }
     }
 
@@ -296,6 +325,20 @@ class ReservaCrudController extends AbstractCrudController
             $reserva->getNumeroMesa() ? '<p><strong>Mesa asignada:</strong> ' . $reserva->getNumeroMesa() . '</p>' : '',
             $reserva->getInfoAdicional() ? '<p><strong>Información adicional:</strong> ' . $reserva->getInfoAdicional() . '</p>' : ''
         );
+    }
+
+    public function deleteEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        parent::deleteEntity($entityManager, $entityInstance);
+
+        $user = $this->security->getUser();
+        $userId = $user ? $user->getUserIdentifier() : 'admin';
+
+        $this->logger->info('Entidad eliminada', [
+            'entidad' => get_class($entityInstance),
+            'id' => method_exists($entityInstance, 'getId') ? $entityInstance->getId() : null,
+            'usuario' => $userId,
+        ]);
     }
 }
     // Opcional: Personalizar acciones

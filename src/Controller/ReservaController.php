@@ -8,6 +8,7 @@ use App\Form\ReservaType;
 use App\Repository\ReservaRepository;
 use App\Service\ReservaService;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,11 +16,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ReservaController extends AbstractController
 {
+    private LoggerInterface $logger;
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
     #[Route('/reservas', name: 'app_reservas')]
     public function index(ReservaRepository $reservaRepository): Response
     {
         $reservas = $reservaRepository->findAll();
-
         return $this->render('reserva/listaReserva.html.twig', [
             'reservas' => $reservas,
         ]);
@@ -36,6 +41,14 @@ class ReservaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $exito = $reservaService->crearReserva($reserva);
+
+            $this->logger->info('Nueva reserva creada', [
+                'nombre' => $reserva->getNombreCliente(),
+                'email' => $reserva->getEmailCliente(),
+                'fecha' => $reserva->getFechaHoraReserva()?->format('Y-m-d H:i'),
+                'mesa' => $reserva->getNumeroMesa(),
+                'ip' => $request->getClientIp(),
+            ]);
 
             if ($exito) {
                 $this->addFlash('success', '¡Reserva demandada con éxito!Espere mail de confirmación');

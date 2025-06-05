@@ -7,6 +7,7 @@ use App\Enum\TipoBebida;
 use App\Entity\Bebida;
 use App\Entity\Fabricante;
 use App\Enum\FormatoBebida;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -18,15 +19,20 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Psr\Log\LoggerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class BebidaCrudController extends AbstractCrudController
 {
-
+    private $logger;
+    private $security;
     private AdminUrlGenerator $adminUrlGenerator;
 
-    public function __construct(AdminUrlGenerator $adminUrlGenerator)
+    public function __construct(AdminUrlGenerator $adminUrlGenerator, LoggerInterface $logger, Security $security)
     {
         $this->adminUrlGenerator = $adminUrlGenerator;
+        $this->logger = $logger;
+        $this->security = $security;
     }
     public static function getEntityFqcn(): string
     {
@@ -39,11 +45,9 @@ class BebidaCrudController extends AbstractCrudController
             // Habilitar para todas las páginas (index, detail, edit, etc.)
             ->add(Crud::PAGE_INDEX, Action::DETAIL) // Añade el botón de detalle
             ->add(Crud::PAGE_EDIT, Action::INDEX)   // Opcional: añade botón para volver al listado
-            
-            ;
+
+        ;
     }
-
-
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -76,7 +80,7 @@ class BebidaCrudController extends AbstractCrudController
             ChoiceField::new('formato')
                 ->setChoices(FormatoBebida::eleccionParaCrud()) // Hecho en el Enum
                 ->renderAsNativeWidget(),
-                AssociationField::new('proveedores')
+            AssociationField::new('proveedores')
                 ->setLabel('Proveedores')
                 ->setFormTypeOption('by_reference', false)
                 ->formatValue(function ($value, $entity) {
@@ -94,5 +98,46 @@ class BebidaCrudController extends AbstractCrudController
                 ->renderAsHtml(),
 
         ];
+    }
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        parent::persistEntity($entityManager, $entityInstance);
+
+        $user = $this->security->getUser();
+        $userId = $user ? $user->getUserIdentifier() : 'admin';
+
+        $this->logger->info('Entidad creada', [
+            'entidad' => get_class($entityInstance),
+            'id' => method_exists($entityInstance, 'getId') ? $entityInstance->getId() : null,
+            'usuario' => $userId,
+        ]);
+    }
+
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        parent::updateEntity($entityManager, $entityInstance);
+
+        $user = $this->security->getUser();
+        $userId = $user ? $user->getUserIdentifier() : 'admin';
+
+        $this->logger->info('Entidad actualizada', [
+            'entidad' => get_class($entityInstance),
+            'id' => method_exists($entityInstance, 'getId') ? $entityInstance->getId() : null,
+            'usuario' => $userId,
+        ]);
+    }
+
+    public function deleteEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        parent::deleteEntity($entityManager, $entityInstance);
+
+        $user = $this->security->getUser();
+        $userId = $user ? $user->getUserIdentifier() : 'admin';
+
+        $this->logger->info('Entidad eliminada', [
+            'entidad' => get_class($entityInstance),
+            'id' => method_exists($entityInstance, 'getId') ? $entityInstance->getId() : null,
+            'usuario' => $userId,
+        ]);
     }
 }
