@@ -44,10 +44,10 @@ class Proveedor
         $this->productos = new ArrayCollection();
         $this->bebidas = new ArrayCollection();
     }
-
+    
     public function __toString(): string
     {
-        return $this->nombre;
+        return $this->nombre ?? '';
     }
 
     public function getId(): ?int

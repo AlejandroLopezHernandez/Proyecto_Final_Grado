@@ -26,7 +26,7 @@ class Comida
     private ?string $nombre = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $precio = null;
+    private ?float $pvp = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $descripcion = null;
@@ -59,6 +59,10 @@ class Comida
         );
     }
 
+    public function __toString(): string
+    {
+        return $this->nombre ?? '';
+    }
 
     public function getId(): ?int
     {
@@ -76,14 +80,14 @@ class Comida
         return $this;
     }
 
-    public function getPrecio(): ?float
+    public function getPvp(): ?float
     {
-        return $this->precio;
+        return $this->pvp;
     }
 
-    public function setPrecio(?float $precio): static
+    public function setPvp(?float $precio): static
     {
-        $this->precio = $precio;
+        $this->pvp = $precio;
         return $this;
     }
 

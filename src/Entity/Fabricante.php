@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Doctrine\DBAL\Types\Types;
 use App\Repository\FabricanteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,7 +21,7 @@ class Fabricante
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $pais = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $descripcion = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -30,12 +30,17 @@ class Fabricante
     /**
      * @var Collection<int, Bebida>
      */
-    #[ORM\OneToMany(targetEntity: Bebida::class, mappedBy: 'Fabricante')]
+    #[ORM\OneToMany(targetEntity: Bebida::class, mappedBy: 'fabricante')]
     private Collection $bebidas;
 
     public function __construct()
     {
         $this->bebidas = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->nombre ?? '';
     }
 
     public function getId(): ?int
@@ -112,7 +117,7 @@ class Fabricante
     public function removeBebida(Bebida $bebida): static
     {
         if ($this->bebidas->removeElement($bebida)) {
-            // set the owning side to null (unless already changed)
+
             if ($bebida->getFabricante() === $this) {
                 $bebida->setFabricante(null);
             }

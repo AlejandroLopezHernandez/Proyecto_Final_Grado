@@ -2,27 +2,21 @@
 
 namespace App\Enum;
 
-enum TipoBebida: string
+enum TipoFermentacion: string
 {
-    case REFRESCOS = 'refrescos';
-    case CERVEZA = 'cerveza';
-    case VINOS = 'vinos';
-    case DESTILADOS = 'destilados';
-    case LICORES = 'licores';
-    case CAFES = 'cafes';
-    case SIN_ALCOHOL = 'sin alcohol';
+    case ALE = 'ale';
+    case LAGER = 'lager';
+    case LAMBIC = 'lambic';
+    case MIXTA = 'mixta';
 
     // Método para mostrar nombres legibles
     public function nombreLegible(): string
     {
         return match ($this) {
-            self::REFRESCOS => 'Refrescos',
-            self::CERVEZA => 'Cerveza',
-            self::VINOS => 'Vinos',
-            self::DESTILADOS => 'Destilados',
-            self::LICORES => 'Licores',
-            self::CAFES => 'Cafés',
-            self::SIN_ALCOHOL => 'Sin Alcohol',
+            self::ALE => 'Fermentación Alta (Ale)',
+            self::LAGER => 'Fermentación Baja (Lager)',
+            self::LAMBIC => 'Fermentación Espontánea (Lambic)',
+            self::MIXTA => 'Fermentación Mixta',
         };
     }
 

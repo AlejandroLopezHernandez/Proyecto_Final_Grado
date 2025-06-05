@@ -15,4 +15,15 @@ final class BebidaController extends AbstractController
             'controller_name' => 'BebidaController',
         ]);
     }
+
+      // Para mostrar todas las categorias existentes con o sin platos registrados
+      #[Route('/comida/categorias', name: 'app_comida_categorias')]
+      public function categorias(): Response
+      {
+          $categorias = CategoriaBebidas::cases();
+  
+          return $this->render('comida/cardTodasCategorias.html.twig', [
+              'categorias' => $categorias
+          ]);
+      }
 }
