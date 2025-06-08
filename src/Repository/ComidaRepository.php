@@ -16,58 +16,82 @@ class ComidaRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Comida::class);
     }
-
-    //    /**
-    //     * @return Comida[] Returns an array of Comida objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Comida
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
-
-     /**
-     * Devuelve un array con todas las categorías 
-     */
-    public function findCategoriasDisponibles(): array
+    public function comidasXtipo(): array
     {
-        $qb = $this->createQueryBuilder('c')
-            ->select('DISTINCT c.Categoria')
-            ->where('c.Categoria IS NOT NULL');
+        $comidas = $this->findAll(); // recuperamos todas las comidas
+        $conteoCategorias = [];
 
-        return array_map(
-            fn($row) => $row['Categoria'],
-            $qb->getQuery()->getArrayResult()
-        );
+        foreach ($comidas as $comida) {
+            $categorias = $comida->getCategoria(); // debe devolver array (campo tipo JSON)
+
+            if (!is_array($categorias)) {
+                continue;
+            }
+
+            foreach ($categorias as $categoria) {
+                if (!isset($conteoCategorias[$categoria])) {
+                    $conteoCategorias[$categoria] = 0;
+                }
+                $conteoCategorias[$categoria]++;
+            }
+        }
+
+        // Ordenamos de mayor a menor
+        arsort($conteoCategorias);
+
+        // Convertimos en array listo para el JSON
+        $resultado = [];
+        foreach ($conteoCategorias as $categoria => $numero_comidas) {
+            $resultado[] = [
+                'categoria' => $categoria,
+                'numero_comidas' => $numero_comidas
+            ];
+        }
+        return $resultado;
     }
 
-    /**
-     * Devuelve todas las comidas que pertenecen a una categoría .
-     */
-    public function findByCategoria(CategoriaComida $categoria): array
+    public function ComidasXprecio(): array
     {
-        return $this->createQueryBuilder('c')
-            ->where('c.Categoria = :categoria')
-            ->setParameter('categoria', $categoria)
-            ->orderBy('c.Nombre', 'ASC')
+        $result = $this->createQueryBuilder('c')
+            ->select([
+                "CASE 
+                WHEN c.pvp < 10 THEN 'Menos de 10€'
+                WHEN c.pvp >= 10 AND c.pvp <= 15 THEN '10€ - 15€'
+                WHEN c.pvp > 15 THEN 'Más de 15€'
+                ELSE 'Sin precio'
+            END AS rango_precio",
+                'COUNT(c.id) AS cantidad_comidas'
+            ])
+            ->groupBy('rango_precio')
+            ->orderBy(
+                '
+            CASE 
+                WHEN rango_precio = \'Menos de 10€\' THEN 1
+                WHEN rango_precio = \'10€ - 15€\' THEN 2
+                WHEN rango_precio = \'Más de 15€\' THEN 3
+                ELSE 4
+            END'
+            )
             ->getQuery()
             ->getResult();
+
+        // Añadir los nombres concatenados manualmente
+        foreach ($result as &$item) {
+            $comidas = $this->createQueryBuilder('c')
+                ->select('c.nombre')
+                ->where("CASE 
+                WHEN c.pvp < 10 THEN 'Menos de 10€'
+                WHEN c.pvp >= 10 AND c.pvp <= 15 THEN '10€ - 15€'
+                WHEN c.pvp > 15 THEN 'Más de 15€'
+                ELSE 'Sin precio'
+            END = :rango")
+                ->setParameter('rango', $item['rango_precio'])
+                ->getQuery()
+                ->getScalarResult();
+
+            $item['comidas_en_rango'] = implode(', ', array_column($comidas, 'nombre'));
+        }
+
+        return $result;
     }
 }
-

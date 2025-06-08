@@ -22,7 +22,10 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface
         $roles = $token->getRoleNames();
 
         if (in_array('ROLE_ADMIN', $roles)) {
-            return new RedirectResponse($this->router->generate('admin_home'));
+            return new RedirectResponse($this->router->generate('dashboardAdmin'));
+        }
+        if (in_array('ROLE_MANAGER', $roles)) {
+            return new RedirectResponse($this->router->generate('DashboardManager'));
         }
 
         return new RedirectResponse($this->router->generate('main_home'));

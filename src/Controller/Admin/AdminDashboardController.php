@@ -18,7 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-#[AdminDashboard(routePath: '/admin', routeName: 'admin_home')]
+#[AdminDashboard(routePath: '/admin', routeName: 'dashboardAdmin')]
 class AdminDashboardController extends AbstractDashboardController
 {
     public function index(): Response

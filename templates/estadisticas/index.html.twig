@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard de manager{% endblock %}
+
+{% block body %}
+<style>
+canvas{
+    max-height:500px;
+}
+#cuadroTiposComidas{
+    height:900px !important;
+}
+.container {
+    display: grid;
+    gap: 20px; /* Espaciado entre gráficos */
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Ajusta el tamaño de las columnas */
+    padding: 20px;
+}
+
+.chart-container {
+    display: flex;
+    flex-direction: column; /* Asegura que el título esté arriba y el gráfico abajo */
+    align-items: center; /* Centra el contenido horizontalmente */
+    justify-content: flex-start; /* Asegura que el título quede arriba */
+    position: relative;
+    width: 100%; /* Se ajusta al tamaño definido por la cuadrícula */
+    height: 450px; /* Altura suficiente para incluir el título y el gráfico */
+    background: #f9f9f9; /* Fondo opcional para diferenciar los gráficos */
+    border: 1px solid #ccc; /* Bordes opcionales */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 10px;
+    text-align: center; /* Centra el texto del título */
+}
+.chart-container h2 {
+    margin-bottom: 10px; /* Espaciado entre el título y el gráfico */
+}
+
+.chart-container.pie-chart canvas {
+    aspect-ratio: 1; /* Mantén una proporción perfecta de 1:1 */
+    max-width: 300px; /* Ajusta el tamaño máximo del gráfico */
+    max-height: 300px; /* Ajusta el tamaño máximo del gráfico */
+}
+</style>
+    <h2>Dashboard de manager</h2>
+    <class="container">
+
+<div class="chart-container">
+    <canvas id="cervezasXestilo"></canvas>
+</div><br><br>
+<div class="chart-container">
+    <canvas id="bebidasAlcoholicas"></canvas>
+</div>
+<div class="chart-container">
+    <canvas id="cuadroTiposComidas"></canvas>
+</div>
+<div class="chart-container">
+    <canvas id="cuadroComidasPrecio"></canvas>
+</div>
+<div class="chart-container">
+    <canvas id="cuadroBebidasPrecio"></canvas>
+</div>
+<div class="chart-container">
+    <canvas id="cuadroProveedoresProducto"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ asset('./js/managerEstadisticas.js')}}"></script>
+{% endblock %}
