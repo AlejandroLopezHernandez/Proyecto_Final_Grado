@@ -189,13 +189,9 @@ class ReservaCrudController extends AbstractCrudController
         if (!$entityInstance instanceof Reserva) {
             return;
         }
-
-        // Obtener el estado anterior
         $reservaAnterior = $entityManager->getUnitOfWork()->getOriginalEntityData($entityInstance);
         $estadoAnterior = $reservaAnterior['estado'] ?? null;
         $estadoNuevo = $entityInstance->getEstado();
-
-        // Solo enviar email si ha cambiado a CONFIRMADO
         if ($estadoAnterior !== EstadoReserva::Confirmado && $estadoNuevo === EstadoReserva::Confirmado) {
             $this->enviarEmailConfirmacionAdmin($entityInstance);
         }
@@ -226,15 +222,14 @@ class ReservaCrudController extends AbstractCrudController
             $mailer = $this->mailer;
 
             $email = (new Email())
-                ->from('alejal07@ucm.es') // Cambia por tu email
+                ->from('alejal07@ucm.es')
                 ->to($reserva->getEmailCliente())
                 ->subject('Reserva recibida - Pendiente de confirmación')
                 ->html($this->generarHtmlEmailPendiente($reserva));
 
             $mailer->send($email);
         } catch (\Exception $e) {
-            // Log del error pero no interrumpir el proceso
-            // $this->logger->error('Error enviando email: ' . $e->getMessage());
+            $this->logger->error('Error enviando email: ' . $e->getMessage());
         }
     }
 
@@ -302,7 +297,7 @@ class ReservaCrudController extends AbstractCrudController
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
                 <h2 style="color: #28a745;">¡Tu reserva ha sido confirmada!</h2>
                 <p>Hola <strong>%s</strong>,</p>
-                <p>Nos complace confirmar tu reserva en nuestro restaurante.</p>
+                <p>Nos complace confirmar tu reserva en el restaurante El Cañaveral</p>
                 
                 <div style="background-color: #d4edda; padding: 15px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #28a745;">
                     <h3 style="margin-top: 0; color: #155724;">Detalles confirmados:</h3>
@@ -313,8 +308,8 @@ class ReservaCrudController extends AbstractCrudController
                 </div>
                 
                 <p>Te esperamos en la fecha y hora indicada.</p>
-                <p><strong>Dirección:</strong> [Tu dirección aquí]</p>
-                <p><strong>Teléfono:</strong> [Tu teléfono aquí]</p>
+                <p><strong>Dirección:</strong> Avenida de la ONU número 81, Móstoles</p>
+                <p><strong>Teléfono:</strong> 642524636</p>
                 
                 <p>¡Nos vemos pronto!</p>
             </div>

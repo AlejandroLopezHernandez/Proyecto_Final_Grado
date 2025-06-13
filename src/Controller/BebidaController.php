@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Enum\TipoBebida;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -16,14 +17,14 @@ final class BebidaController extends AbstractController
         ]);
     }
 
-      // Para mostrar todas las categorias existentes con o sin platos registrados
-      #[Route('/comida/categorias', name: 'app_comida_categorias')]
-      public function categorias(): Response
-      {
-          $categorias = CategoriaBebidas::cases();
-  
-          return $this->render('comida/cardTodasCategorias.html.twig', [
-              'categorias' => $categorias
-          ]);
-      }
+    // Para mostrar todas las categorias existentes con o sin platos registrados
+    #[Route('/comida/categorias', name: 'app_comida_categorias')]
+    public function categorias(): Response
+    {
+        $categorias = TipoBebida::cases();
+
+        return $this->render('comida/cardTodasCategorias.html.twig', [
+            'categorias' => $categorias
+        ]);
+    }
 }

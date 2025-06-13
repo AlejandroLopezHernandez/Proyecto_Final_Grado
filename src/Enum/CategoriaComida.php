@@ -13,7 +13,6 @@ enum CategoriaComida: string
     case VEGETARIANO = 'vegetariano';
     case VEGANO = 'vegano';
     case POSTRES = 'postres';
-    case OTROS = 'otros';
 
     // Método para mostrar nombres legibles
     public function nombresCategorias(): string
@@ -27,8 +26,7 @@ enum CategoriaComida: string
             self::ENTRE_PANES => 'Entre Panes',
             self::VEGETARIANO => 'Vegetariano',
             self::VEGANO => 'Vegano',
-            self::POSTRES => 'Postres',
-            self::OTROS => 'Otros'
+            self::POSTRES => 'Postres'
         };
     }
 

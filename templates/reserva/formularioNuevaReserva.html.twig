@@ -10,14 +10,6 @@
     <div class="container">
         <h1>Nueva Reserva con Google Reservas</h1>
         
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="alert alert-{{ label }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
-        
         <div class="card" id="formularioInterno">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">Datos de la Reserva</h5>
@@ -41,7 +33,7 @@
                         <div class="google-reservation-box p-3 mb-4 border rounded bg-light" id="googleReservas">
                             <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google" height="30">
                             <span class="ms-2">Reservas</span>
-                            <p class="small text-muted mt-2">Al hacer clic en "Reservar ahora", tu solicitud será procesada a través del sistema de Google Reservas (simulado)</p>
+                            <p class="small text-muted mt-2">Al hacer clic en "Reservar ahora", tu solicitud será procesada a través del sistema de Google Reservas </p>
                         </div>
                         <button type="submit" class="btn btn-success btn-lg" id="botonReservar">
                             <i class="fas fa-calendar-check"></i> Reservar ahora
@@ -52,4 +44,34 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const formulario = document.querySelector("form");
+    const botonReservar = document.querySelector("#botonReservar");
+
+    botonReservar.addEventListener("click", function (e) {
+        const camposObligatorios = formulario.querySelectorAll("input[required], textarea[required], select[required]");
+        let todoValido = true;
+
+        camposObligatorios.forEach(function (campo) {
+            if (!campo.value.trim()) {
+                campo.classList.add("is-invalid");
+                todoValido = false;
+            } else {
+                campo.classList.remove("is-invalid");
+            }
+        });
+
+        if (!todoValido) {
+            e.preventDefault(); // 🚫 Evita el envío
+            alert("Por favor, rellena todos los campos obligatorios.");
+        }
+    if(todoValido){
+            alert("Reserva demandada con éxito. Espere email de confirmación");
+            }
+    });
+    });
+</script>
 {% endblock %}

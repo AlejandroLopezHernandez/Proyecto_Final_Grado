@@ -30,7 +30,7 @@ class RequestLoggerSubscriber implements EventSubscriberInterface
     public function onKernelController(ControllerEvent $event)
     {
         $request = $event->getRequest();
-        $route = $request->attributes->get('_route');   // nombre de la ruta
+        $route = $request->attributes->get('_route');
         $user = $this->security->getUser();
 
         $userId = $user ? $user->getUserIdentifier() : 'anonimo';

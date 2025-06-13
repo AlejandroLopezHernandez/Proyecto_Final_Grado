@@ -1,1323 +1,1450 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <title>Restaurante El Cañaveral</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/cartaStyle.css" />
-  </head>
-  <body>
+    <link rel="stylesheet" href="css/cartaStyle.css">
+    <style>
+        h1{
+        text-align:center;
+        }
+        .estilo-section {
+            margin-bottom: 2rem;
+            border-left: 4px solid #f39c12;
+            padding-left: 1rem;
+        }
+        .estilo-title {
+            color: #f39c12;
+            font-size: 1.3em;
+            margin-bottom: 0.5rem;
+            
+        }
+        .estilo-descripcion {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-size: 1.0em;
+        }
+        .estilo-caracteristicas {
+            font-size: 1.0em;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        .cerveza-card {
+            border-left: 2px solid #f39c12;
+        }
+        .indice-container {
+            background-color: #f3e6b7;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .indice-title {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.2em;
+        }
+        .indice-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            color: #273746;
+        }
+        .indice-list li {
+            margin: 0;
+            color: #273746;
+        }
+        .indice-list a {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #f1c40f
+            color: #273746;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+        .indice-list a:hover {
+            background-color: #f1c40f;
+            color: #212529;
+        }
+        .section-title{
+        text-align:center;
+        }
+        .descripcion{
+        font-size: 1.0em;
+        }
+    </style>
+</head>
+<body>
     <div class="menu-container">
-      <div class="header">
-        <div class="fecha">08/06/2025</div>
-        <h1>Restaurante El Cañaveral</h1>
-        <p>Carta de Comidas y Bebidas</p>
-        <div class="d-flex justify-content-end">
-            <a href="/reservas/nueva" id="boton-reserva" class="btn btn-success">Reservar mesa</a>
+        <div class="header">
+            <h1>Restaurante El Cañaveral</h1>
         </div>
-      </div>
-      <div class="menu-content">
-        <div class="section">
-          <h2 class="section-title">Comida</h2>
-          <div class="category-section">
-            <h3 class="category-title">🥟 ENTRANTES</h3>
-            <div class="items-grid">
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Huevos Rotos Con Jamón Ibérico</h3>
-                  <span class="item-price">12.50 €</span>
-                </div>
-                <p class="item-description">
-                  Un plato tradicional con huevos fritos sobre una base de
-                  patatas doradas, acompañado de jamón ibérico crujiente.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Croquetas De Jamón Ibérico</h3>
-                  <span class="item-price">12.00 €</span>
-                </div>
-                <p class="item-description">
-                  Bocaditos cremosos con un interior suave y lleno de sabor,
-                  donde el jamón ibérico se funde con una bechamel sedosa.
-                  Rebozadas en pan crujiente y fritas hasta conseguir una
-                  textura dorada y perfecta. 8 unidades por racion.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Pan Tumaca</h3>
-                  <span class="item-price">4.50 €</span>
-                </div>
-                <p class="item-description">
-                  Rebanadas de pan crujiente bañadas en tomate natural maduro,
-                  aceite de oliva virgen extra y ajo fresco. Una explosión de
-                  frescura y tradición que te transportará directamente a la
-                  esencia mediterránea
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Pan Tumaca Con Jamon</h3>
-                  <span class="item-price">7.00 €</span>
-                </div>
-                <p class="item-description">
-                  Rebanadas de pan crujiente bañadas en tomate natural maduro,
-                  aceite de oliva virgen extra, ajo fresco y nuestro
-                  expectacular jamon ibérico. Una explosión de frescura y
-                  tradición que te transportará directamente a la esencia
-                  mediterránea
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Patatas Bravas Con Alioli</h3>
-                  <span class="item-price">8.50 €</span>
-                </div>
-                <p class="item-description">
-                  Crujientes patatas doradas, bañadas en una salsa brava con el
-                  equilibrio perfecto entre picante y sabor ahumado. Acompañadas
-                  de un cremoso alioli casero que potencia cada bocado. Un
-                  clásico que nunca falla.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Revuelto De Bacalao Y Guindilla</h3>
-                  <span class="item-price">13.00 €</span>
-                </div>
-                <p class="item-description">
-                  Suave bacalao desmigado, salteado con cebolla y guindilla para
-                  un toque picante, todo envuelto en huevos cremosos. Una
-                  combinación de sabores intensos y textura melosa que hará que
-                  quieras repetir.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Tartar De Salmon Y Aguacate</h3>
-                  <span class="item-price">14.00 €</span>
-                </div>
-                <p class="item-description">
-                  Cubos de salmón fresco mezclados con aguacate cremoso y
-                  aderezados con zumo de limón y aceite de oliva. Un plato
-                  refrescante con una textura suave y un sabor sofisticado.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="category-section">
-            <h3 class="category-title">🥦 VEGETARIANO</h3>
-            <div class="items-grid">
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Pan Tumaca</h3>
-                  <span class="item-price">4.50 €</span>
-                </div>
-                <p class="item-description">
-                  Rebanadas de pan crujiente bañadas en tomate natural maduro,
-                  aceite de oliva virgen extra y ajo fresco. Una explosión de
-                  frescura y tradición que te transportará directamente a la
-                  esencia mediterránea
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Tosta De Queso De Cabra Y Miel</h3>
-                  <span class="item-price">8.00 €</span>
-                </div>
-                <p class="item-description">
-                  Una combinación sublime de pan crujiente, cremoso queso de
-                  cabra y el dulzor dorado de la miel, enriquecido con el toque
-                  crujiente de las nueces. Puro equilibrio de sabores y
-                  texturas.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Ensalada Caprese</h3>
-                  <span class="item-price">10.00 €</span>
-                </div>
-                <p class="item-description">
-                  La combinación perfecta de tomate maduro, mozzarella fresca y
-                  albahaca aromática, acompañada de un aderezo de aceite de
-                  oliva virgen extra y vinagre balsámico. Un clásico italiano
-                  que nunca falla.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Ensalada De Quinoa Y Aguacate</h3>
-                  <span class="item-price">9.50 €</span>
-                </div>
-                <p class="item-description">
-                  Una mezcla fresca y nutritiva de quinoa esponjosa, aguacate
-                  cremoso y tomate cherry dulce, con un toque de limón y aceite
-                  de oliva para un final vibrante y refrescante.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Hamburguesa Vegana</h3>
-                  <span class="item-price">10.00 €</span>
-                </div>
-                <p class="item-description">
-                  Una opción deliciosa con hamburguesa vegetal, pan integral,
-                  aguacate cremoso y rúcula fresca. Acompañada de cebolla y
-                  mahonesa vegana para una textura suave y un sabor increíble.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Tosta De Comate Cherry Y Mozzarella</h3>
-                  <span class="item-price">8.00 €</span>
-                </div>
-                <p class="item-description">
-                  Pan crujiente con tomate cherry asado y mozzarella fundida,
-                  acompañado de albahaca fresca y un toque de vinagre balsámico.
-                  Una combinación refrescante y llena de matices mediterráneos.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Ensalada De Quinoa Y Frutos Rojos</h3>
-                  <span class="item-price">11.00 €</span>
-                </div>
-                <p class="item-description">
-                  Una ensalada fresca y colorida con quinoa esponjosa, frutos
-                  rojos y rúcula, aderezada con miel y vinagre balsámico para un
-                  toque dulce y sofisticado.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Arroz Con Verduras Y Nueces</h3>
-                  <span class="item-price">14.00 €</span>
-                </div>
-                <p class="item-description">
-                  Un arroz basmati suelto y aromático, salteado con rúcula
-                  fresca y tomate cherry, acompañado de frutos secos y aderezado
-                  con aceite de oliva y un toque de limón. Un plato ligero y
-                  lleno de matices.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="category-section">
-            <h3 class="category-title">🌱 VEGANO</h3>
-            <div class="items-grid">
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Pan Tumaca</h3>
-                  <span class="item-price">4.50 €</span>
-                </div>
-                <p class="item-description">
-                  Rebanadas de pan crujiente bañadas en tomate natural maduro,
-                  aceite de oliva virgen extra y ajo fresco. Una explosión de
-                  frescura y tradición que te transportará directamente a la
-                  esencia mediterránea
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Ensalada De Quinoa Y Aguacate</h3>
-                  <span class="item-price">9.50 €</span>
-                </div>
-                <p class="item-description">
-                  Una mezcla fresca y nutritiva de quinoa esponjosa, aguacate
-                  cremoso y tomate cherry dulce, con un toque de limón y aceite
-                  de oliva para un final vibrante y refrescante.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Hamburguesa Vegana</h3>
-                  <span class="item-price">10.00 €</span>
-                </div>
-                <p class="item-description">
-                  Una opción deliciosa con hamburguesa vegetal, pan integral,
-                  aguacate cremoso y rúcula fresca. Acompañada de cebolla y
-                  mahonesa vegana para una textura suave y un sabor increíble.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Ensalada De Quinoa Y Frutos Rojos</h3>
-                  <span class="item-price">11.00 €</span>
-                </div>
-                <p class="item-description">
-                  Una ensalada fresca y colorida con quinoa esponjosa, frutos
-                  rojos y rúcula, aderezada con miel y vinagre balsámico para un
-                  toque dulce y sofisticado.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Arroz Con Verduras Y Nueces</h3>
-                  <span class="item-price">14.00 €</span>
-                </div>
-                <p class="item-description">
-                  Un arroz basmati suelto y aromático, salteado con rúcula
-                  fresca y tomate cherry, acompañado de frutos secos y aderezado
-                  con aceite de oliva y un toque de limón. Un plato ligero y
-                  lleno de matices.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="category-section">
-            <h3 class="category-title">🍔 ENTRE PANES</h3>
-            <div class="items-grid">
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Pan Tumaca</h3>
-                  <span class="item-price">4.50 €</span>
-                </div>
-                <p class="item-description">
-                  Rebanadas de pan crujiente bañadas en tomate natural maduro,
-                  aceite de oliva virgen extra y ajo fresco. Una explosión de
-                  frescura y tradición que te transportará directamente a la
-                  esencia mediterránea
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Pan Tumaca Con Jamon</h3>
-                  <span class="item-price">7.00 €</span>
-                </div>
-                <p class="item-description">
-                  Rebanadas de pan crujiente bañadas en tomate natural maduro,
-                  aceite de oliva virgen extra, ajo fresco y nuestro
-                  expectacular jamon ibérico. Una explosión de frescura y
-                  tradición que te transportará directamente a la esencia
-                  mediterránea
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Tosta De Queso De Cabra Y Miel</h3>
-                  <span class="item-price">8.00 €</span>
-                </div>
-                <p class="item-description">
-                  Una combinación sublime de pan crujiente, cremoso queso de
-                  cabra y el dulzor dorado de la miel, enriquecido con el toque
-                  crujiente de las nueces. Puro equilibrio de sabores y
-                  texturas.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Tosta De Salmón Y Aguacate</h3>
-                  <span class="item-price">9.00 €</span>
-                </div>
-                <p class="item-description">
-                  La cremosidad del aguacate se une a la suavidad del salmón
-                  ahumado sobre una base de pan crujiente. Una tosta elegante
-                  con un toque de limón que realza cada bocado.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Hamburguesa Vacuno Ahumada</h3>
-                  <span class="item-price">12.00 €</span>
-                </div>
-                <p class="item-description">
-                  Un sabor inconfundible con 200gr de carne de vacuno jugosa,
-                  acompañada de lechuga fresca, tomate natural, queso cheddar
-                  fundido y cebolla crujiente. Todo dentro de un pan de
-                  hamburguesa tostado, con una deliciosa salsa ahumada que
-                  realza los sabores.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Hamburguesa BBQ</h3>
-                  <span class="item-price">14.00 €</span>
-                </div>
-                <p class="item-description">
-                  Una explosión de sabor con carne de vacuno a la parrilla,
-                  cubierta con bacon crujiente, queso cheddar y cebolla
-                  caramelizada. Todo bañado en una irresistible salsa barbacoa
-                  para un toque ahumado y dulce.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Hamburguesa Vegana</h3>
-                  <span class="item-price">10.00 €</span>
-                </div>
-                <p class="item-description">
-                  Una opción deliciosa con hamburguesa vegetal, pan integral,
-                  aguacate cremoso y rúcula fresca. Acompañada de cebolla y
-                  mahonesa vegana para una textura suave y un sabor increíble.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Tosta De Comate Cherry Y Mozzarella</h3>
-                  <span class="item-price">8.00 €</span>
-                </div>
-                <p class="item-description">
-                  Pan crujiente con tomate cherry asado y mozzarella fundida,
-                  acompañado de albahaca fresca y un toque de vinagre balsámico.
-                  Una combinación refrescante y llena de matices mediterráneos.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="category-section">
-            <h3 class="category-title">🐟 MAR</h3>
-            <div class="items-grid">
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Revuelto De Bacalao Y Guindilla</h3>
-                  <span class="item-price">13.00 €</span>
-                </div>
-                <p class="item-description">
-                  Suave bacalao desmigado, salteado con cebolla y guindilla para
-                  un toque picante, todo envuelto en huevos cremosos. Una
-                  combinación de sabores intensos y textura melosa que hará que
-                  quieras repetir.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Tosta De Salmón Y Aguacate</h3>
-                  <span class="item-price">9.00 €</span>
-                </div>
-                <p class="item-description">
-                  La cremosidad del aguacate se une a la suavidad del salmón
-                  ahumado sobre una base de pan crujiente. Una tosta elegante
-                  con un toque de limón que realza cada bocado.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Bacalao Al Pil-Pil</h3>
-                  <span class="item-price">16.00 €</span>
-                </div>
-                <p class="item-description">
-                  Bacalao confitado en aceite de oliva con ajo y guindilla,
-                  creando una emulsión cremosa y llena de sabor. Un plato
-                  clásico con una textura sedosa y un toque de intensidad en
-                  cada bocado.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Merluza A La Gallega</h3>
-                  <span class="item-price">16.00 €</span>
-                </div>
-                <p class="item-description">
-                  Merluza fresca cocinada con patatas tiernas y pimentón
-                  ahumado, todo bañado en un aceite de oliva virgen extra para
-                  potenciar los sabores. Un plato tradicional con una textura
-                  suave y un toque de intensidad gallega.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Salmón Con Citricos</h3>
-                  <span class="item-price">15.00 €</span>
-                </div>
-                <p class="item-description">
-                  Salmón fresco cocinado a la plancha, con un ligero toque de
-                  limón y pimienta para realzar su sabor natural. Acompañado de
-                  una guarnición fresca que equilibra cada bocado.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Arroz Meloso Con Bacalao</h3>
-                  <span class="item-price">18.00 €</span>
-                </div>
-                <p class="item-description">
-                  Un arroz cremoso cocinado con un caldo potente de buey,
-                  acompañado de bacalao fresco y un toque de pimentón ahumado.
-                  Una receta llena de matices que te transporta al mejor sabor
-                  del mar.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Tartar De Salmon Y Aguacate</h3>
-                  <span class="item-price">14.00 €</span>
-                </div>
-                <p class="item-description">
-                  Cubos de salmón fresco mezclados con aguacate cremoso y
-                  aderezados con zumo de limón y aceite de oliva. Un plato
-                  refrescante con una textura suave y un sabor sofisticado.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="category-section">
-            <h3 class="category-title">🥩 CARNES</h3>
-            <div class="items-grid">
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Solomillo Al Whiskey</h3>
-                  <span class="item-price">19.00 €</span>
-                </div>
-                <p class="item-description">
-                  Un solomillo de ternera jugoso, cocinado con una salsa de
-                  whiskey que aporta profundidad y un toque especiado.
-                  Acompañado de cebolla caramelizada y una reducción de caldo de
-                  buey, creando una armonía perfecta de sabores intensos.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Entrecot A La Brasa</h3>
-                  <span class="item-price">17.00 €</span>
-                </div>
-                <p class="item-description">
-                  Un entrecot de ternera con un marmoleado perfecto, asado a la
-                  brasa para realzar su sabor y jugosidad. Acompañado de una
-                  pincelada de aceite de oliva y una mezcla de sal en escamas y
-                  pimienta para potenciar cada bocado.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Lomo Alto</h3>
-                  <span class="item-price">19.00 €</span>
-                </div>
-                <p class="item-description">
-                  Un corte premium de lomo alto de ternera, cocinado a la
-                  parrilla con una costra dorada y un interior tierno. Servido
-                  con un toque de aceite de oliva y un acompañamiento de
-                  guarnición opcional.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Milanesa De Pollo con Ensalada</h3>
-                  <span class="item-price">13.00 €</span>
-                </div>
-                <p class="item-description">
-                  Crujiente pechuga de pollo empanada, dorada a la perfección,
-                  servida sobre una base de lechuga fresca y tomate cherry. Todo
-                  acompañado con un toque de vinagre balsámico para realzar los
-                  sabores. Un plato equilibrado y delicioso.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="category-section">
-            <h3 class="category-title">🍝 ARROCES PASTAS</h3>
-            <div class="items-grid">
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Arroz Meloso Con Bacalao</h3>
-                  <span class="item-price">18.00 €</span>
-                </div>
-                <p class="item-description">
-                  Un arroz cremoso cocinado con un caldo potente de buey,
-                  acompañado de bacalao fresco y un toque de pimentón ahumado.
-                  Una receta llena de matices que te transporta al mejor sabor
-                  del mar.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Tagliatelle Al Pesto Con Bacon</h3>
-                  <span class="item-price">12.00 €</span>
-                </div>
-                <p class="item-description">
-                  Delicados tagliatelle de pasta fresca bañados en una salsa de
-                  pesto aromática, con crujientes trozos de bacon dorado y un
-                  toque de queso parmesano rallado. Una explosión de sabor en
-                  cada bocado.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Macarrones a la BBQ Con Cheddar</h3>
-                  <span class="item-price">13.00 €</span>
-                </div>
-                <p class="item-description">
-                  Macarrones bañados en una salsa barbacoa ahumada, mezclados
-                  con queso cheddar fundido para una textura cremosa y un toque
-                  irresistible. Cada bocado es una explosión de sabor.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Arroz Con Pollo Al Curry</h3>
-                  <span class="item-price">15.00 €</span>
-                </div>
-                <p class="item-description">
-                  Granos sueltos de arroz basmati con pechuga de pollo tierna,
-                  envueltos en una cremosa salsa de curry y leche de coco. Un
-                  plato con matices exóticos y un aroma seductor.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">
-                    Espaguetis Con Parmesano Y Tomate Natural
-                  </h3>
-                  <span class="item-price">11.00 €</span>
-                </div>
-                <p class="item-description">
-                  Espaguetis al dente bañados en una salsa de tomate natural con
-                  un toque de ajo y aceite de oliva. Coronados con virutas de
-                  queso parmesano que realzan cada bocado con su sabor intenso.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Arroz Con Verduras Y Nueces</h3>
-                  <span class="item-price">14.00 €</span>
-                </div>
-                <p class="item-description">
-                  Un arroz basmati suelto y aromático, salteado con rúcula
-                  fresca y tomate cherry, acompañado de frutos secos y aderezado
-                  con aceite de oliva y un toque de limón. Un plato ligero y
-                  lleno de matices.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="category-section">
-            <h3 class="category-title">🍰 POSTRES</h3>
-            <div class="items-grid">
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Tiramisu</h3>
-                  <span class="item-price">6.00 €</span>
-                </div>
-                <p class="item-description">
-                  Un postre italiano con capas de bizcochos de soletilla
-                  empapados en café y una crema sedosa de mascarpone, coronado
-                  con una lluvia de cacao puro que potencia su sabor
-                  inconfundible.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Cheesecake De Frutos Rojos</h3>
-                  <span class="item-price">6.00 €</span>
-                </div>
-                <p class="item-description">
-                  Una tarta cremosa con base crujiente de galletas, un relleno
-                  suave de queso crema y un toque de frutos rojos que aportan
-                  frescura y un contraste irresistible.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Coulant De Chocolate</h3>
-                  <span class="item-price">5.00 €</span>
-                </div>
-                <p class="item-description">
-                  Un bizcocho esponjoso de chocolate negro con un interior
-                  fundente que se derrite en cada cucharada. La combinación
-                  perfecta entre crujiente por fuera y cremoso por dentro.
-                </p>
-              </div>
-            </div>
-          </div>
+        <div class="menu-content">
+            
+        <div class="indice-container">
+            <h3 class="indice-title">Índice</h3>
+            <ul class="indice-list">
+        
+                <li><a href="#entrantes">🥟 Entrantes</a></li>
+            
+                <li><a href="#vegetariano">🥦 Vegetariano</a></li>
+            
+                <li><a href="#vegano">🌱 Vegano</a></li>
+            
+                <li><a href="#entre_panes">🍔 Entre Panes</a></li>
+            
+                <li><a href="#mar">🐟 Mar</a></li>
+            
+                <li><a href="#carnes">🥩 Carnes</a></li>
+            
+                <li><a href="#arroces_pastas">🍝 Arroces y Pasta</a></li>
+            
+                <li><a href="#postres">🍰 Postres</a></li>
+            
+                <li><a href="#cervezas">🍺 Cervezas</a></li>
+            
+                <li><a href="#refrescos">🧃 Refrescos</a></li>
+            
+                <li><a href="#vinos">🍷 Vinos</a></li>
+            
+                <li><a href="#cafes">☕ Cafés</a></li>
+            
+                <li><a href="#destilados">🍸 Destilados</a></li>
+            
+            </ul>
         </div>
-        <div class="section">
-          <h2 class="section-title">Bebidas</h2>
-          <div class="category-section">
-            <h3 class="category-title">🍺 CERVEZA</h3>
-            <div class="items-grid">
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">O'Hara's Irish Red Ale</h3>
-                  <span class="item-price">4.30 €</span>
+        
+            <div class="section">
+                <h2 class="section-title">Comida</h2>
+                
+                <div class='category-section' id='entrantes'>
+                    <h3 class='category-title'>🥟 ENTRANTES</h3>
+                    <div class='items-grid'>
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Huevos Rotos Con Jamón Ibérico</h3>
+                    <span class='item-price'>12.50 €</span>
                 </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 27</em
-                  ><br />O'Hara's Irish Red Ale destaca dentro del estilo Red
-                  Ale, con un cuerpo maltoso impresionante que recuerda a un
-                  Bock, pero con un carácter únicamente irlandés. Su perfil
-                  suave y equilibrado combina tonos de caramelo con un amargor
-                  bien ajustado, ofreciendo una complejidad superior a muchas
-                  cervezas comerciales del mismo estilo.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Punk IPA</h3>
-                  <span class="item-price">3.80 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 12</em
-                  ><br />Este clásico ligero y dorado se ha transformado con
-                  lúpulos del nuevo mundo para crear una explosión de sabor.
-                  Explosiones de caramelo y fruta tropical con un toque de
-                  pomelo, piña y lichi, preceden a un final amargo y penetrante.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Imparable</h3>
-                  <span class="item-price">4.00 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 31</em
-                  ><br />Imparable es mucho más que una IPA, es ya un clásico
-                  moderno que desde su creación, se ha convertido en un
-                  referente para los hop lovers. Su equilibrio perfecto entre
-                  amargor y aroma, con notas cítricas, tropicales y resinosas,
-                  la convierten en una cerveza única e inolvidable.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Soup</h3>
-                  <span class="item-price">6.00 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 32</em
-                  ><br />una cerveza afrutada, tropical, turbia y espesa
-                  elaborada con lúpulos citra y mosaic, esta IPA tiene 6% de
-                  graduación alcohólica New England IPA
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">TDH Citra Lupomax DIPA</h3>
-                  <span class="item-price">7.50 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 33</em
-                  ><br />Colaboración con Alpha Delta Beer, cremosa y jugosa con
-                  maltas de cebada, trigo y avena en su base, lupulada con
-                  lúpulo Citra Lupomax. El triple dry hopping realza aún más las
-                  notas características de Citra.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">TDH Mosaic x Vic Secret IPA</h3>
-                  <span class="item-price">6.80 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 32</em
-                  ><br />Colaboracion con ReBrew. New England IPA con lúpulos
-                  Mosaic y Vic Secret, que esconde un mundo fresco de piña,
-                  frutos del bosque y maracuyá. La New England IPA enfatiza el
-                  aroma y el sabor del lúpulo y minimiza el amargor. Se basa en
-                  técnicas de lúpulo tardío y/o en frío para ofrecer una
-                  experiencia de aroma y sabor afrutado tropical explosivamente
-                  jugoso.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Wigman</h3>
-                  <span class="item-price">3.90 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 34</em
-                  ><br />Una IPA de sesión inconformista, esta cerveza ofrece un
-                  suave maridaje de suaves frutas tropicales, notas de pino y un
-                  intenso aroma cítrico. Refrescante, infinitamente bebible y
-                  con una graduación alcohólica constante del 4,3%, querrás
-                  tener a Wingman a tu lado toda la noche. ¡Prepara el control!
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Eternal Haze DDH DIPA</h3>
-                  <span class="item-price">6.50 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 33</em
-                  ><br />Refrescante y llena de sabor de principio a fin. El
-                  lúpulo es evidente, con excelentes sabores a cáscara de
-                  pomelo, y este amargor combina a la perfección con los sabores
-                  más jugosos y suaves a frutas tropicales del lúpulo Mosaic.
-                  Sin embargo, el fuerte golpe de alcohol te mantiene a raya,
-                  impidiendo que la bebas de golpe.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Targa</h3>
-                  <span class="item-price">6.20 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 32</em
-                  ><br />Fermentada con levadura Verdant. Una IPA de corte
-                  moderno muy afrutada y muy fresca.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Eternal Session IPA</h3>
-                  <span class="item-price">3.60 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 34</em
-                  ><br />Una Session IPA fresca y equilibrada con un perfil
-                  lupulado vibrante y un amargor suave.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Keep Calm</h3>
-                  <span class="item-price">5.80 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 35</em
-                  ><br />Colaboracion con los zaragozanos Cierzo. Tanquilízate,
-                  mantén la calma. Attik y Cierzo están aquí para calmar tus
-                  nervios y equilibrar tu mente. Descorcha esta cerveza y déjate
-                  embriagar por el aroma herbal y resinoso de los terpenos CBD,
-                  potenciado por el uso de las variedades de lúpulo Strata,
-                  Cascade y Columbus.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Neon Zebra</h3>
-                  <span class="item-price">7.40 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 33</em
-                  ><br />¿Listo para lucir tus rayas? ¡Neon Zebra desatará un
-                  resplandor vibrante de lúpulo en tu paladar! Esta Doble IPA
-                  super pálida y contundente , elaborada con lúpulos
-                  neozelandeses Nelson Sauvin y Nectaron, libera aromas de
-                  frutos rojos , uva blanca y melón cantalupo maduro . Estos
-                  aromas son el resultado de sus componentes tiolizados, que se
-                  liberan durante la fermentación y potencian los compuestos
-                  aromáticos frutales presentes de forma natural en la cerveza.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Coastal Eddie</h3>
-                  <span class="item-price">7.00 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 36</em
-                  ><br />Coastal Eddie es un torbellino de sensaciones donde el
-                  choque de las maltas tostadas y los aromas lúpulados resinosos
-                  y cítricos mantienen un delicioso equilibrio de fuerzas para
-                  una sensación en boca redonda que recuerda al toffee y un
-                  final amargo propio de las IPAs americanas.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Gorilla</h3>
-                  <span class="item-price">7.00 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 36</em
-                  ><br />IPA negra lupulada con una combinación intensamente
-                  cítrica y tropical de Riwaka y NZ Cascade, luego infusionada
-                  con pimienta. Y no cualquier tipo de cepa, sino una rara y
-                  única variedad de Gorilla del Congo, caracterizada por un
-                  intenso aroma cítrico y una delicada nota de humo, sin ser
-                  excesivamente picante. Aquellos a quienes les gusten las
-                  lambics pueden asociar este pimiento con Zwanze 2022 de
-                  Cantillon en Bruselas.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Gelato Blueberry</h3>
-                  <span class="item-price">7.20 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 15</em
-                  ><br />En la nueva versión de Gelato recurrimos a una de las
-                  frutas que mejor funciona en la cerveza, los arándanos, y la
-                  complementamos con malvaviscos. Tiene una consistencia
-                  agradablemente espesa, es intenso, dulce y ácido al mismo
-                  tiempo.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Peacharine</h3>
-                  <span class="item-price">6.80 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 32</em
-                  ><br />Jugosa New England IPA lupulada con una nueva variedad
-                  experimental de Nueva Zelanda. Peacharine se caracteriza por
-                  intensas notas de melocotones y nectarinas además de
-                  distintivas notas cítricas, con lima y delicadas notas
-                  florales de fondo.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Gold Fronts</h3>
-                  <span class="item-price">6.20 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 32</em
-                  ><br />Elaborada con una base de maltas pils , copos y malta
-                  de avena, además de trigo crudo, presenta un aspecto pálido y
-                  deliciosamente turbio . Su generoso dry-hop de Krush, Ella,
-                  Simcoe y El Dorado Lupomax despliega una compleja sinfonía
-                  aromática : fruta de hueso madura que te envuelve, un pomelo
-                  vivaz que despierta tus sentidos, dulces notas de caramelo de
-                  fruta que incitan a salivar y ese inconfundible toque "dank"
-                  que te invita a la reflexión. Una armonía perfecta para que
-                  cada sorbo sea un disfrute sin saturación. BLING, BLING! ¡Y
-                  vaya si brilla!
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Utopia</h3>
-                  <span class="item-price">5.80 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 15</em
-                  ><br />Cerveza de estilo Sour Ale, ácida y frutal. Se elabora
-                  con fruta de la pasión, flor de hibisco y un dry-hopping de
-                  lúpulo Mosaic para potenciar sus aromas. Tiene un cuerpo de un
-                  color rojo intenso, cierta turbidez, y una corona de espuma
-                  perecedera con un toque rosado aportado por la flor de
-                  hibisco. Su aroma es frutal con tonos al fondo de malta,
-                  frutos rojos predominan. En boca es ligera de textura, ácida y
-                  afrutada, un fondo con detalles dulces.ibitas
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Pain Killer</h3>
-                  <span class="item-price">9.00 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 38</em
-                  ><br />Una ráfaga de frutas como la naranja y el mango, con un
-                  cuerpo alto y pleno que te envuelve. Esta Triple IPA es pura
-                  intensidad que anestesia suavemente. Sorbo a sorbo te atrapa,
-                  hasta hacer que te rindas al placer sin resistencia.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Groggy</h3>
-                  <span class="item-price">7.00 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 33</em
-                  ><br />Sumérgete en esta delciosa y cautivadora Doble IPA
-                  elaborada con las variedades de lúpulos Mosaic, Mosaic Cryo,
-                  Citra & Motueka: Cerveza aromáticamente compleja y vibrante,
-                  con una mezcla de notas cítricas, tropicales, de frutas de
-                  hueso y herbales que se combinan para crear una experiencia
-                  sensorial interesante y emocionante.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Heineken</h3>
-                  <span class="item-price">4.00 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 2</em
-                  ><br />Una Pilsner clásica con un equilibrio perfecto entre
-                  malta y lúpulo, ofreciendo un sabor refrescante y un final
-                  limpio.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Sapporo</h3>
-                  <span class="item-price">4.00 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 2</em
-                  ><br />Una Pilsner japonesa con un cuerpo ligero y un perfil
-                  seco y refrescante, ideal para acompañar comidas.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Mahou 5 estrellas</h3>
-                  <span class="item-price">3.60 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 1</em
-                  ><br />Una Lager española con un sabor equilibrado, notas de
-                  cereal y un amargor suave.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Paulaner Munchner Hell</h3>
-                  <span class="item-price">5.00 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 4</em
-                  ><br />Una Helles bávara con un sabor maltoso suave y un
-                  amargor ligero, perfecta para disfrutar en cualquier ocasión.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Guinness</h3>
-                  <span class="item-price">6.00 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 14</em
-                  ><br />Una Stout irlandesa con un cuerpo cremoso, notas de
-                  café y chocolate, y un final seco.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Guinness</h3>
-                  <span class="item-price">4.00 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 14</em
-                  ><br />Una Stout irlandesa con un cuerpo cremoso, notas de
-                  café y chocolate, y un final seco.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Carlow Brewing OHaras Irish Stout</h3>
-                  <span class="item-price">5.20 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 14</em
-                  ><br />Una Stout tradicional con un perfil tostado intenso,
-                  notas de café y un amargor equilibrado.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Delirium Tremens</h3>
-                  <span class="item-price">5.50 €</span>
-                </div>
-                <p class="item-description">
-                  <em style="font-size: 0.85em; color: #666">Estilo: 21</em
-                  ><br />Delirium Tremens es una Belgian Pale Ale de triple
-                  fermentación con un color dorado pálido y una espuma blanca y
-                  estable. Su sabor es especiado con toques frutales, ofreciendo
-                  una sensación cálida en boca y un final seco y amargo.
-                </p>
-              </div>
+                <div class='descripcion'>Un plato tradicional con huevos fritos sobre una base de patatas doradas, acompañado de jamón ibérico crujiente.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
             </div>
-          </div>
-          <div class="category-section">
-            <h3 class="category-title">🧃 REFRESCOS</h3>
-            <div class="items-grid">
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Coca Cola Zero</h3>
-                  <span class="item-price">2.85 €</span>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Croquetas De Jamón Ibérico</h3>
+                    <span class='item-price'>12.00 €</span>
                 </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Coca Cola</h3>
-                  <span class="item-price">2.85 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Fanta Naranja</h3>
-                  <span class="item-price">2.85 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Fanta Limón</h3>
-                  <span class="item-price">2.85 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Sprite</h3>
-                  <span class="item-price">2.85 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Schweppes</h3>
-                  <span class="item-price">2.85 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Aquarius Limón</h3>
-                  <span class="item-price">2.90 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Aquarius Naranja</h3>
-                  <span class="item-price">2.90 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Nestea</h3>
-                  <span class="item-price">2.90 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Zumo Naranja</h3>
-                  <span class="item-price">2.40 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Zumo Pina</h3>
-                  <span class="item-price">2.40 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
+                <div class='descripcion'>Bocaditos cremosos con un interior suave y lleno de sabor, donde el jamón ibérico se funde con una bechamel sedosa. Rebozadas en pan crujiente y fritas hasta conseguir una textura dorada y perfecta. 8 unidades por racion.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
             </div>
-          </div>
-          <div class="category-section">
-            <h3 class="category-title">🍷 VINOS</h3>
-            <div class="items-grid">
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Cepa 21</h3>
-                  <span class="item-price">3.50 €</span>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Pan Tumaca</h3>
+                    <span class='item-price'>4.50 €</span>
                 </div>
-                <p class="item-description">
-                  Cepa 21 es un vino 100% Tempranillo con una crianza de 12
-                  meses en barrica de roble francés. Destaca por su equilibrio
-                  entre fruta madura y notas especiadas, con un final elegante y
-                  persistente.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Siglo Saco</h3>
-                  <span class="item-price">21.00 €</span>
-                </div>
-                <p class="item-description">
-                  Siglo Saco es un Rioja clásico con una crianza de 12 meses en
-                  barrica de roble. Su perfil combina frutos rojos maduros con
-                  notas de vainilla y especias, ofreciendo un final sedoso y
-                  equilibrado.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Matsu El Recio</h3>
-                  <span class="item-price">26.00 €</span>
-                </div>
-                <p class="item-description">
-                  El Recio es un vino de Toro con una crianza de 14 meses en
-                  barrica de roble francés. Su perfil es potente y estructurado,
-                  con notas de cacao, vainilla y fruta negra madura.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Javier Sanz Verdejo</h3>
-                  <span class="item-price">3.00 €</span>
-                </div>
-                <p class="item-description">
-                  Un Verdejo 100% procedente de viñedos viejos, con una crianza
-                  sobre lías que aporta complejidad y textura. Fresco, afrutado
-                  y mineral, ideal para mariscos y pescados.
-                </p>
-              </div>
+                <div class='descripcion'>Rebanadas de pan crujiente bañadas en tomate natural maduro, aceite de oliva virgen extra y ajo fresco. Una explosión de frescura y tradición que te transportará directamente a la esencia mediterránea</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
             </div>
-          </div>
-          <div class="category-section">
-            <h3 class="category-title">☕ CAFES</h3>
-            <div class="items-grid">
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Cafe Con Leche</h3>
-                  <span class="item-price">1.80 €</span>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Pan Tumaca Con Jamon</h3>
+                    <span class='item-price'>7.00 €</span>
                 </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Cafe Con Leche Descafeinado</h3>
-                  <span class="item-price">1.80 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Cafe Con Leche Vaso</h3>
-                  <span class="item-price">1.80 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Cafe Con Leche Descafeinado Vaso</h3>
-                  <span class="item-price">1.80 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Cafe Cortado</h3>
-                  <span class="item-price">1.60 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Cafe Cortado Descafeinado</h3>
-                  <span class="item-price">1.60 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Cafe Solo</h3>
-                  <span class="item-price">1.50 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Cafe Solo</h3>
-                  <span class="item-price">1.50 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Cafe Irlandes</h3>
-                  <span class="item-price">4.00 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Cafe Vienes</h3>
-                  <span class="item-price">3.00 €</span>
-                </div>
-                <p class="item-description">None</p>
-              </div>
+                <div class='descripcion'>Rebanadas de pan crujiente bañadas en tomate natural maduro, aceite de oliva virgen extra, ajo fresco y nuestro expectacular jamon ibérico. Una explosión de frescura y tradición que te transportará directamente a la esencia mediterránea</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
             </div>
-          </div>
-          <div class="category-section">
-            <h3 class="category-title">🥃 WHISKEY</h3>
-            <div class="items-grid">
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Jameson</h3>
-                  <span class="item-price">7.50 €</span>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Patatas Bravas Con Alioli</h3>
+                    <span class='item-price'>8.50 €</span>
                 </div>
-                <p class="item-description">
-                  Un whiskey irlandés triple destilado con un perfil suave y
-                  equilibrado, con notas de vainilla, miel y madera tostada.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Glenfiddich 12 Years Old</h3>
-                  <span class="item-price">12.00 €</span>
-                </div>
-                <p class="item-description">
-                  Un whisky escocés single malt envejecido 12 años en barricas
-                  de roble, con notas de pera, miel y especias.
-                </p>
-              </div>
+                <div class='descripcion'>Crujientes patatas doradas, bañadas en una salsa brava con el equilibrio perfecto entre picante y sabor ahumado. Acompañadas de un cremoso alioli casero que potencia cada bocado. Un clásico que nunca falla.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
             </div>
-          </div>
-          <div class="category-section">
-            <h3 class="category-title">🍹 RON</h3>
-            <div class="items-grid">
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Havana Club Añejo 7 Años</h3>
-                  <span class="item-price">7.00 €</span>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Revuelto De Bacalao Y Guindilla</h3>
+                    <span class='item-price'>13.00 €</span>
                 </div>
-                <p class="item-description">
-                  Un ron cubano envejecido durante 7 años en barricas de roble,
-                  con un perfil complejo de vainilla, cacao y tabaco.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Barcelo</h3>
-                  <span class="item-price">7.00 €</span>
-                </div>
-                <p class="item-description">
-                  Un ron dominicano premium con un envejecimiento prolongado,
-                  ofreciendo notas de caramelo, frutos secos y madera tostada.
-                </p>
-              </div>
+                <div class='descripcion'>Suave bacalao desmigado, salteado con cebolla y guindilla para un toque picante, todo envuelto en huevos cremosos. Una combinación de sabores intensos y textura melosa que hará que quieras repetir.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
             </div>
-          </div>
-          <div class="category-section">
-            <h3 class="category-title">🍶 VODKA</h3>
-            <div class="items-grid">
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Absolut</h3>
-                  <span class="item-price">6.50 €</span>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Tartar De Salmon Y Aguacate</h3>
+                    <span class='item-price'>14.00 €</span>
                 </div>
-                <p class="item-description">
-                  Un vodka sueco destilado a partir de trigo de invierno, con un
-                  perfil puro y suave, ideal para cócteles.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Belvedere</h3>
-                  <span class="item-price">10.00 €</span>
-                </div>
-                <p class="item-description">
-                  Un vodka polaco premium elaborado con centeno, con un sabor
-                  limpio y un toque ligeramente dulce.
-                </p>
-              </div>
+                <div class='descripcion'>Cubos de salmón fresco mezclados con aguacate cremoso y aderezados con zumo de limón y aceite de oliva. Un plato refrescante con una textura suave y un sabor sofisticado.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
             </div>
-          </div>
-          <div class="category-section">
-            <h3 class="category-title">🍸 GINEBRA</h3>
-            <div class="items-grid">
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Tanqueray London Dry Gin</h3>
-                  <span class="item-price">7.00 €</span>
-                </div>
-                <p class="item-description">
-                  Una ginebra clásica con un perfil seco y especiado, con notas
-                  de enebro, cítricos y hierbas aromáticas.
-                </p>
-              </div>
-              <div class="item-card">
-                <div class="item-header">
-                  <h3 class="item-name">Bombay Sapphire</h3>
-                  <span class="item-price">8.00 €</span>
-                </div>
-                <p class="item-description">
-                  Una ginebra premium con una infusión de 10 botánicos,
-                  ofreciendo un equilibrio entre notas cítricas y florales.
-                </p>
-              </div>
             </div>
-          </div>
+                </div>
+                
+                <div class='category-section' id='vegetariano'>
+                    <h3 class='category-title'>🥦 VEGETARIANO</h3>
+                    <div class='items-grid'>
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Pan Tumaca</h3>
+                    <span class='item-price'>4.50 €</span>
+                </div>
+                <div class='descripcion'>Rebanadas de pan crujiente bañadas en tomate natural maduro, aceite de oliva virgen extra y ajo fresco. Una explosión de frescura y tradición que te transportará directamente a la esencia mediterránea</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Tosta De Queso De Cabra Y Miel</h3>
+                    <span class='item-price'>8.00 €</span>
+                </div>
+                <div class='descripcion'>Una combinación sublime de pan crujiente, cremoso queso de cabra y el dulzor dorado de la miel, enriquecido con el toque crujiente de las nueces. Puro equilibrio de sabores y texturas.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Ensalada Caprese</h3>
+                    <span class='item-price'>10.00 €</span>
+                </div>
+                <div class='descripcion'>La combinación perfecta de tomate maduro, mozzarella fresca y albahaca aromática, acompañada de un aderezo de aceite de oliva virgen extra y vinagre balsámico. Un clásico italiano que nunca falla.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Ensalada De Quinoa Y Aguacate</h3>
+                    <span class='item-price'>9.50 €</span>
+                </div>
+                <div class='descripcion'>Una mezcla fresca y nutritiva de quinoa esponjosa, aguacate cremoso y tomate cherry dulce, con un toque de limón y aceite de oliva para un final vibrante y refrescante.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Hamburguesa Vegana</h3>
+                    <span class='item-price'>10.00 €</span>
+                </div>
+                <div class='descripcion'>Una opción deliciosa con hamburguesa vegetal, pan integral, aguacate cremoso y rúcula fresca. Acompañada de cebolla y mahonesa vegana para una textura suave y un sabor increíble.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Tosta De Comate Cherry Y Mozzarella</h3>
+                    <span class='item-price'>8.00 €</span>
+                </div>
+                <div class='descripcion'>Pan crujiente con tomate cherry asado y mozzarella fundida, acompañado de albahaca fresca y un toque de vinagre balsámico. Una combinación refrescante y llena de matices mediterráneos.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Ensalada De Quinoa Y Frutos Rojos</h3>
+                    <span class='item-price'>11.00 €</span>
+                </div>
+                <div class='descripcion'>Una ensalada fresca y colorida con quinoa esponjosa, frutos rojos y rúcula, aderezada con miel y vinagre balsámico para un toque dulce y sofisticado.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Arroz Con Verduras Y Nueces</h3>
+                    <span class='item-price'>14.00 €</span>
+                </div>
+                <div class='descripcion'>Un arroz basmati suelto y aromático, salteado con rúcula fresca y tomate cherry, acompañado de frutos secos y aderezado con aceite de oliva y un toque de limón. Un plato ligero y lleno de matices.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            </div>
+                </div>
+                
+                <div class='category-section' id='vegano'>
+                    <h3 class='category-title'>🌱 VEGANO</h3>
+                    <div class='items-grid'>
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Pan Tumaca</h3>
+                    <span class='item-price'>4.50 €</span>
+                </div>
+                <div class='descripcion'>Rebanadas de pan crujiente bañadas en tomate natural maduro, aceite de oliva virgen extra y ajo fresco. Una explosión de frescura y tradición que te transportará directamente a la esencia mediterránea</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Ensalada De Quinoa Y Aguacate</h3>
+                    <span class='item-price'>9.50 €</span>
+                </div>
+                <div class='descripcion'>Una mezcla fresca y nutritiva de quinoa esponjosa, aguacate cremoso y tomate cherry dulce, con un toque de limón y aceite de oliva para un final vibrante y refrescante.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Hamburguesa Vegana</h3>
+                    <span class='item-price'>10.00 €</span>
+                </div>
+                <div class='descripcion'>Una opción deliciosa con hamburguesa vegetal, pan integral, aguacate cremoso y rúcula fresca. Acompañada de cebolla y mahonesa vegana para una textura suave y un sabor increíble.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Ensalada De Quinoa Y Frutos Rojos</h3>
+                    <span class='item-price'>11.00 €</span>
+                </div>
+                <div class='descripcion'>Una ensalada fresca y colorida con quinoa esponjosa, frutos rojos y rúcula, aderezada con miel y vinagre balsámico para un toque dulce y sofisticado.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Arroz Con Verduras Y Nueces</h3>
+                    <span class='item-price'>14.00 €</span>
+                </div>
+                <div class='descripcion'>Un arroz basmati suelto y aromático, salteado con rúcula fresca y tomate cherry, acompañado de frutos secos y aderezado con aceite de oliva y un toque de limón. Un plato ligero y lleno de matices.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            </div>
+                </div>
+                
+                <div class='category-section' id='entre_panes'>
+                    <h3 class='category-title'>🍔 ENTRE PANES</h3>
+                    <div class='items-grid'>
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Pan Tumaca</h3>
+                    <span class='item-price'>4.50 €</span>
+                </div>
+                <div class='descripcion'>Rebanadas de pan crujiente bañadas en tomate natural maduro, aceite de oliva virgen extra y ajo fresco. Una explosión de frescura y tradición que te transportará directamente a la esencia mediterránea</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Pan Tumaca Con Jamon</h3>
+                    <span class='item-price'>7.00 €</span>
+                </div>
+                <div class='descripcion'>Rebanadas de pan crujiente bañadas en tomate natural maduro, aceite de oliva virgen extra, ajo fresco y nuestro expectacular jamon ibérico. Una explosión de frescura y tradición que te transportará directamente a la esencia mediterránea</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Tosta De Queso De Cabra Y Miel</h3>
+                    <span class='item-price'>8.00 €</span>
+                </div>
+                <div class='descripcion'>Una combinación sublime de pan crujiente, cremoso queso de cabra y el dulzor dorado de la miel, enriquecido con el toque crujiente de las nueces. Puro equilibrio de sabores y texturas.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Tosta De Salmón Y Aguacate</h3>
+                    <span class='item-price'>9.00 €</span>
+                </div>
+                <div class='descripcion'>La cremosidad del aguacate se une a la suavidad del salmón ahumado sobre una base de pan crujiente. Una tosta elegante con un toque de limón que realza cada bocado.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Hamburguesa Vacuno Ahumada</h3>
+                    <span class='item-price'>12.00 €</span>
+                </div>
+                <div class='descripcion'>Un sabor inconfundible con 200gr de carne de vacuno jugosa, acompañada de lechuga fresca, tomate natural, queso cheddar fundido y cebolla crujiente. Todo dentro de un pan de hamburguesa tostado, con una deliciosa salsa ahumada que realza los sabores.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Hamburguesa BBQ</h3>
+                    <span class='item-price'>14.00 €</span>
+                </div>
+                <div class='descripcion'>Una explosión de sabor con carne de vacuno a la parrilla, cubierta con bacon crujiente, queso cheddar y cebolla caramelizada. Todo bañado en una irresistible salsa barbacoa para un toque ahumado y dulce.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Hamburguesa Vegana</h3>
+                    <span class='item-price'>10.00 €</span>
+                </div>
+                <div class='descripcion'>Una opción deliciosa con hamburguesa vegetal, pan integral, aguacate cremoso y rúcula fresca. Acompañada de cebolla y mahonesa vegana para una textura suave y un sabor increíble.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Tosta De Comate Cherry Y Mozzarella</h3>
+                    <span class='item-price'>8.00 €</span>
+                </div>
+                <div class='descripcion'>Pan crujiente con tomate cherry asado y mozzarella fundida, acompañado de albahaca fresca y un toque de vinagre balsámico. Una combinación refrescante y llena de matices mediterráneos.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            </div>
+                </div>
+                
+                <div class='category-section' id='mar'>
+                    <h3 class='category-title'>🐟 MAR</h3>
+                    <div class='items-grid'>
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Revuelto De Bacalao Y Guindilla</h3>
+                    <span class='item-price'>13.00 €</span>
+                </div>
+                <div class='descripcion'>Suave bacalao desmigado, salteado con cebolla y guindilla para un toque picante, todo envuelto en huevos cremosos. Una combinación de sabores intensos y textura melosa que hará que quieras repetir.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Tosta De Salmón Y Aguacate</h3>
+                    <span class='item-price'>9.00 €</span>
+                </div>
+                <div class='descripcion'>La cremosidad del aguacate se une a la suavidad del salmón ahumado sobre una base de pan crujiente. Una tosta elegante con un toque de limón que realza cada bocado.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Bacalao Al Pil-Pil</h3>
+                    <span class='item-price'>16.00 €</span>
+                </div>
+                <div class='descripcion'>Bacalao confitado en aceite de oliva con ajo y guindilla, creando una emulsión cremosa y llena de sabor. Un plato clásico con una textura sedosa y un toque de intensidad en cada bocado.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Merluza A La Gallega</h3>
+                    <span class='item-price'>16.00 €</span>
+                </div>
+                <div class='descripcion'>Merluza fresca cocinada con patatas tiernas y pimentón ahumado, todo bañado en un aceite de oliva virgen extra para potenciar los sabores. Un plato tradicional con una textura suave y un toque de intensidad gallega.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Salmón Con Citricos</h3>
+                    <span class='item-price'>15.00 €</span>
+                </div>
+                <div class='descripcion'>Salmón fresco cocinado a la plancha, con un ligero toque de limón y pimienta para realzar su sabor natural. Acompañado de una guarnición fresca que equilibra cada bocado.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Arroz Meloso Con Bacalao</h3>
+                    <span class='item-price'>18.00 €</span>
+                </div>
+                <div class='descripcion'>Un arroz cremoso cocinado con un caldo potente de buey, acompañado de bacalao fresco y un toque de pimentón ahumado. Una receta llena de matices que te transporta al mejor sabor del mar.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Tartar De Salmon Y Aguacate</h3>
+                    <span class='item-price'>14.00 €</span>
+                </div>
+                <div class='descripcion'>Cubos de salmón fresco mezclados con aguacate cremoso y aderezados con zumo de limón y aceite de oliva. Un plato refrescante con una textura suave y un sabor sofisticado.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            </div>
+                </div>
+                
+                <div class='category-section' id='carnes'>
+                    <h3 class='category-title'>🥩 CARNES</h3>
+                    <div class='items-grid'>
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Solomillo Al Whiskey</h3>
+                    <span class='item-price'>19.00 €</span>
+                </div>
+                <div class='descripcion'>Un solomillo de ternera jugoso, cocinado con una salsa de whiskey que aporta profundidad y un toque especiado. Acompañado de cebolla caramelizada y una reducción de caldo de buey, creando una armonía perfecta de sabores intensos.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Entrecot A La Brasa</h3>
+                    <span class='item-price'>17.00 €</span>
+                </div>
+                <div class='descripcion'>Un entrecot de ternera con un marmoleado perfecto, asado a la brasa para realzar su sabor y jugosidad. Acompañado de una pincelada de aceite de oliva y una mezcla de sal en escamas y pimienta para potenciar cada bocado.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Lomo Alto</h3>
+                    <span class='item-price'>19.00 €</span>
+                </div>
+                <div class='descripcion'>Un corte premium de lomo alto de ternera, cocinado a la parrilla con una costra dorada y un interior tierno. Servido con un toque de aceite de oliva y un acompañamiento de guarnición opcional.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Milanesa De Pollo con Ensalada</h3>
+                    <span class='item-price'>13.00 €</span>
+                </div>
+                <div class='descripcion'>Crujiente pechuga de pollo empanada, dorada a la perfección, servida sobre una base de lechuga fresca y tomate cherry. Todo acompañado con un toque de vinagre balsámico para realzar los sabores. Un plato equilibrado y delicioso.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            </div>
+                </div>
+                
+                <div class='category-section' id='arroces_pastas'>
+                    <h3 class='category-title'>🍝 ARROCES Y PASTA</h3>
+                    <div class='items-grid'>
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Arroz Meloso Con Bacalao</h3>
+                    <span class='item-price'>18.00 €</span>
+                </div>
+                <div class='descripcion'>Un arroz cremoso cocinado con un caldo potente de buey, acompañado de bacalao fresco y un toque de pimentón ahumado. Una receta llena de matices que te transporta al mejor sabor del mar.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Tagliatelle Al Pesto Con Bacon</h3>
+                    <span class='item-price'>12.00 €</span>
+                </div>
+                <div class='descripcion'>Delicados tagliatelle de pasta fresca bañados en una salsa de pesto aromática, con crujientes trozos de bacon dorado y un toque de queso parmesano rallado. Una explosión de sabor en cada bocado.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Macarrones a la BBQ Con Cheddar</h3>
+                    <span class='item-price'>13.00 €</span>
+                </div>
+                <div class='descripcion'>Macarrones bañados en una salsa barbacoa ahumada, mezclados con queso cheddar fundido para una textura cremosa y un toque irresistible. Cada bocado es una explosión de sabor.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Arroz Con Pollo Al Curry</h3>
+                    <span class='item-price'>15.00 €</span>
+                </div>
+                <div class='descripcion'>Granos sueltos de arroz basmati con pechuga de pollo tierna, envueltos en una cremosa salsa de curry y leche de coco. Un plato con matices exóticos y un aroma seductor.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Espaguetis Con Parmesano Y Tomate Natural</h3>
+                    <span class='item-price'>11.00 €</span>
+                </div>
+                <div class='descripcion'>Espaguetis al dente bañados en una salsa de tomate natural con un toque de ajo y aceite de oliva. Coronados con virutas de queso parmesano que realzan cada bocado con su sabor intenso.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Arroz Con Verduras Y Nueces</h3>
+                    <span class='item-price'>14.00 €</span>
+                </div>
+                <div class='descripcion'>Un arroz basmati suelto y aromático, salteado con rúcula fresca y tomate cherry, acompañado de frutos secos y aderezado con aceite de oliva y un toque de limón. Un plato ligero y lleno de matices.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            </div>
+                </div>
+                
+                <div class='category-section' id='postres'>
+                    <h3 class='category-title'>🍰 POSTRES</h3>
+                    <div class='items-grid'>
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Tiramisu</h3>
+                    <span class='item-price'>6.00 €</span>
+                </div>
+                <div class='descripcion'>Un postre italiano con capas de bizcochos de soletilla empapados en café y una crema sedosa de mascarpone, coronado con una lluvia de cacao puro que potencia su sabor inconfundible.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Cheesecake De Frutos Rojos</h3>
+                    <span class='item-price'>6.00 €</span>
+                </div>
+                <div class='descripcion'>Una tarta cremosa con base crujiente de galletas, un relleno suave de queso crema y un toque de frutos rojos que aportan frescura y un contraste irresistible.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Coulant De Chocolate</h3>
+                    <span class='item-price'>5.00 €</span>
+                </div>
+                <div class='descripcion'>Un bizcocho esponjoso de chocolate negro con un interior fundente que se derrite en cada cucharada. La combinación perfecta entre crujiente por fuera y cremoso por dentro.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            </div>
+                </div>
+                
+            </div>
+            <div class="section">
+                <h2 class="section-title">Bebidas</h2>
+                
+            <div class='category-section' id='cervezas'>
+                <h3 class='category-title'>🍺 CERVEZAS</h3>
+                
+            <div class='estilo-section'>
+                <h4 class='estilo-title'>American Ipa</h4>
+                <div class='estilo-descripcion'>La American IPA es una evolución de la IPA inglesa, con un perfil más lupulado y aromático gracias al uso de lúpulos americanos. Se caracteriza por su frescura y su equilibrio entre amargor y notas frutales.</div>
+                <div class='estilo-caracteristicas'>Color: Dorado claro a ámbar | Sabor: Amargor pronunciado con notas cítricas y resinosas | Aroma: Lúpulo fresco con matices tropicales y florales | Origen: Estados Unidos</div>
+            
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Imparable</h3>
+                        <span class='item-price'>4.00 €</span>
+                    </div>
+                    <div class='item-description'><strong>6.8% vol.</strong><br>Formato: lata_330<br>Lúpulos: Citra, Mosaic, Simcoe<br>Imparable es mucho más que una IPA, es ya un clásico moderno que desde su creación, se ha convertido en un referente para los hop lovers.
+Su equilibrio perfecto entre amargor y aroma, con notas cítricas, tropicales y resinosas, la convierten en una cerveza única e inolvidable.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                </div>
+            <div class='estilo-section'>
+                <h4 class='estilo-title'>Belgian Pale Ale</h4>
+                <div class='estilo-descripcion'>La Belgian Pale Ale tiene un perfil más especiado y afrutado debido a las levaduras belgas.</div>
+                <div class='estilo-caracteristicas'>Color: Ámbar claro | Sabor: Maltoso con notas especiadas y afrutadas | Aroma: Levadura belga con toques de miel y frutas | Origen: Belgica</div>
+            
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Delirium Tremens</h3>
+                        <span class='item-price'>5.50 €</span>
+                    </div>
+                    <div class='item-description'><strong>8.5% vol.</strong><br>Formato: tercio<br>Lúpulos: Styrian Golding y Saaz<br>Delirium Tremens es una Belgian Pale Ale de triple fermentación con un color dorado pálido y una espuma blanca y estable. Su sabor es especiado con toques frutales, ofreciendo una sensación cálida en boca y un final seco y amargo.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                </div>
+            <div class='estilo-section'>
+                <h4 class='estilo-title'>Black IPA</h4>
+                <div class='estilo-descripcion'>La Black IPA combina el perfil lupulado de una IPA con las maltas oscuras de una Porter, creando una cerveza con notas tostadas y un amargor potente.</div>
+                <div class='estilo-caracteristicas'>Color: Marrón oscuro a negro | Sabor: Amargor pronunciado con notas tostadas y resinosas | Aroma: Lúpulo intenso con matices de café y chocolate | Origen: Estados Unidos</div>
+            
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Coastal Eddie</h3>
+                        <span class='item-price'>7.00 €</span>
+                    </div>
+                    <div class='item-description'><strong>7.8% vol.</strong><br>Formato: lata<br>Lúpulos: Citra, Simcoe, Chinook<br>Coastal Eddie es un torbellino de sensaciones donde el choque de las maltas tostadas y los aromas lúpulados resinosos y cítricos mantienen un delicioso equilibrio de fuerzas para una sensación en boca redonda que recuerda al toffee y un final amargo propio de las IPAs americanas.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Gorilla</h3>
+                        <span class='item-price'>7.00 €</span>
+                    </div>
+                    <div class='item-description'><strong>7.2% vol.</strong><br>Formato: lata<br>Lúpulos: Riwaka, NZ Cascade<br>IPA negra lupulada con una combinación intensamente cítrica y tropical de Riwaka y NZ Cascade, luego infusionada con pimienta. Y no cualquier tipo de cepa, sino una rara y única variedad de Gorilla del Congo, caracterizada por un intenso aroma cítrico y una delicada nota de humo, sin ser excesivamente picante. Aquellos a quienes les gusten las lambics pueden asociar este pimiento con Zwanze 2022 de Cantillon en Bruselas.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                </div>
+            <div class='estilo-section'>
+                <h4 class='estilo-title'>Doble NEIPA</h4>
+                
+                <div class='estilo-caracteristicas'>Origen: Internacional</div>
+            
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Eternal Haze DDH DIPA</h3>
+                        <span class='item-price'>6.50 €</span>
+                    </div>
+                    <div class='item-description'><strong>8.0% vol.</strong><br>Formato: lata<br>Lúpulos: Mosaic, Citra, Centennial<br>Refrescante y llena de sabor de principio a fin. El lúpulo es evidente, con excelentes sabores a cáscara de pomelo, y este amargor combina a la perfección con los sabores más jugosos y suaves a frutas tropicales del lúpulo Mosaic. Sin embargo, el fuerte golpe de alcohol te mantiene a raya, impidiendo que la bebas de golpe.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Groggy</h3>
+                        <span class='item-price'>7.00 €</span>
+                    </div>
+                    <div class='item-description'><strong>8.0% vol.</strong><br>Formato: lata<br>Lúpulos: Mosaic, Mosaic Cryo, Citra, Motueka<br>Sumérgete en esta delciosa y cautivadora Doble IPA elaborada con las variedades de lúpulos Mosaic, Mosaic Cryo, Citra & Motueka: Cerveza aromáticamente compleja y vibrante, con una mezcla de notas cítricas, tropicales, de frutas de hueso y herbales que se combinan para crear una experiencia sensorial interesante y emocionante.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Neon Zebra</h3>
+                        <span class='item-price'>7.40 €</span>
+                    </div>
+                    <div class='item-description'><strong>8.0% vol.</strong><br>Formato: lata<br>Lúpulos: Nelson Sauvin, Nectaron<br>¿Listo para lucir tus rayas? ¡Neon Zebra desatará un resplandor vibrante de lúpulo en tu paladar! Esta Doble IPA super pálida y contundente , elaborada con lúpulos neozelandeses  Nelson Sauvin y Nectaron, libera aromas de frutos rojos , uva blanca  y melón cantalupo maduro . Estos aromas son el resultado de sus componentes tiolizados, que se liberan durante la fermentación y potencian los compuestos aromáticos frutales presentes de forma natural  en la cerveza.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>TDH Citra Lupomax DIPA</h3>
+                        <span class='item-price'>7.50 €</span>
+                    </div>
+                    <div class='item-description'><strong>8.5% vol.</strong><br>Formato: lata<br>Lúpulos: Citra, Lupomax<br>Colaboración con Alpha Delta Beer, cremosa y jugosa con maltas de cebada, trigo y avena en su base, lupulada con lúpulo Citra Lupomax. El  triple dry hopping realza aún más las notas características de Citra.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                </div>
+            <div class='estilo-section'>
+                <h4 class='estilo-title'>Helles</h4>
+                <div class='estilo-descripcion'>Originaria de Múnich, Alemania, es una Lager dorada pálida con un perfil maltoso y un amargor ligero. Su aroma recuerda al pan y los cereales, y su carbonatación es media-alta</div>
+                <div class='estilo-caracteristicas'>Color: Dorodo palido | Sabor: Suave y maltoso, con un amargor ligero | Aroma: Notas de pan y cereal | Origen: Alemania / Munich</div>
+            
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Paulaner Munchner Hell</h3>
+                        <span class='item-price'>5.00 €</span>
+                    </div>
+                    <div class='item-description'><strong>4.9% vol.</strong><br>Formato: botella_500<br>Lúpulos: Hallertauer<br>Una Helles bávara con un sabor maltoso suave y un amargor ligero, perfecta para disfrutar en cualquier ocasión.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                </div>
+            <div class='estilo-section'>
+                <h4 class='estilo-title'>Indian Pale Ale</h4>
+                <div class='estilo-descripcion'>La IPA nació en Inglaterra en el siglo XVIII, cuando se aumentó la cantidad de lúpulo para conservar la cerveza en los largos viajes hacia la India. Hoy en día, es uno de los estilos más populares, con múltiples variantes que destacan por su intensidad y complejidad aromática.</div>
+                <div class='estilo-caracteristicas'>Color: Dorado a ámbar | Sabor: Amargor pronunciado con notas cítricas y resinosas | Aroma: Intenso a lúpulo, con toques tropicales y florales | Origen: Inglaterra</div>
+            
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Punk IPA</h3>
+                        <span class='item-price'>3.80 €</span>
+                    </div>
+                    <div class='item-description'><strong>5.4% vol.</strong><br>Formato: tercio<br>Lúpulos: Simcoe, Ahtanum, Chinook, Citra, Mosaic, Centennial<br>Este clásico ligero y dorado se ha transformado con lúpulos del nuevo mundo para crear una explosión de sabor. Explosiones de caramelo y fruta tropical con un toque de pomelo, piña y lichi, preceden a un final amargo y penetrante.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                </div>
+            <div class='estilo-section'>
+                <h4 class='estilo-title'>Lager</h4>
+                <div class='estilo-descripcion'>La cerveza Lager es uno de los estilos más populares en el mundo, caracterizada por su fermentación a baja temperatura y su sabor limpio y refrescante. Su proceso de elaboración permite que las levaduras produzcan menos ésteres y compuestos afrutados, lo que resulta en una cerveza más equilibrada y fácil de beber.
+
+Existen múltiples subestilos dentro de la familia Lager, desde las ligeras Pilsner, hasta las más robustas Bock y Dunkel. Su versatilidad la hace ideal para acompañar una gran variedad de comidas.</div>
+                <div class='estilo-caracteristicas'>Color: Desde dorado palido hasta ambar oscuro. | Sabor: Suave, limpio y refrescante, con notas maltosas y un amargor ligero. | Aroma: Ligero aroma a lupulo, con notas florales y cereal. | Origen: Alemania / Baviera</div>
+            
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Mahou 5 estrellas</h3>
+                        <span class='item-price'>3.60 €</span>
+                    </div>
+                    <div class='item-description'><strong>5.5% vol.</strong><br>Formato: tercio<br>Lúpulos: Saaz<br>Una Lager española con un sabor equilibrado, notas de cereal y un amargor suave.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                </div>
+            <div class='estilo-section'>
+                <h4 class='estilo-title'>New England IPA</h4>
+                <div class='estilo-descripcion'>La NEIPA se caracteriza por su turbidez y su textura sedosa, con un perfil de lúpulo más afrutado y menos amargo que otras IPAs. Es una de las variantes más populares en la actualidad.</div>
+                <div class='estilo-caracteristicas'>Color: Dorado turbio | Sabor: Suave y afrutado, con un amargor moderado | Aroma: Explosión de lúpulo con notas tropicales y cítricas | Origen: Estados Unidos</div>
+            
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Gold Fronts</h3>
+                        <span class='item-price'>6.20 €</span>
+                    </div>
+                    <div class='item-description'><strong>6.5% vol.</strong><br>Formato: lata<br>Lúpulos: Krush, Ella, Simcoe, El Dorado Lupomax<br>Elaborada con una base de maltas pils , copos y malta de avena, además de trigo crudo, presenta un aspecto pálido y deliciosamente turbio . Su generoso dry-hop de Krush, Ella, Simcoe y El Dorado Lupomax despliega una compleja sinfonía aromática : fruta de hueso madura  que te envuelve, un pomelo vivaz  que despierta tus sentidos, dulces notas de caramelo de fruta  que incitan a salivar y ese inconfundible toque "dank"  que te invita a la reflexión. Una armonía perfecta  para que cada sorbo sea un disfrute sin saturación. BLING, BLING! ¡Y vaya si brilla!</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Peacharine</h3>
+                        <span class='item-price'>6.80 €</span>
+                    </div>
+                    <div class='item-description'><strong>6.4% vol.</strong><br>Formato: lata<br>Lúpulos: Peacharine<br>Jugosa New England IPA lupulada con una nueva variedad experimental de Nueva Zelanda. Peacharine se caracteriza por intensas notas de melocotones y nectarinas además de distintivas notas cítricas, con lima y delicadas notas florales de fondo.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Soup</h3>
+                        <span class='item-price'>6.00 €</span>
+                    </div>
+                    <div class='item-description'><strong>6.0% vol.</strong><br>Formato: lata<br>Lúpulos: Citra, Mosaic<br>una cerveza  afrutada, tropical, turbia y espesa elaborada con lúpulos citra y mosaic, esta IPA tiene 6% de graduación alcohólica New England IPA</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Targa</h3>
+                        <span class='item-price'>6.20 €</span>
+                    </div>
+                    <div class='item-description'><strong>6.2% vol.</strong><br>Formato: lata<br>Lúpulos: Idaho7, Citra y Cascade<br>Fermentada con levadura Verdant. Una IPA de corte moderno muy afrutada y muy fresca.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>TDH Mosaic x Vic Secret IPA</h3>
+                        <span class='item-price'>6.80 €</span>
+                    </div>
+                    <div class='item-description'><strong>6.5% vol.</strong><br>Formato: lata<br>Lúpulos: Mosaic, Vic Secret<br>Colaboracion con ReBrew. New England IPA con lúpulos Mosaic y Vic Secret, que esconde un mundo fresco de piña, frutos del bosque y maracuyá. La New England IPA enfatiza el aroma y el sabor del lúpulo y minimiza el amargor. Se basa en técnicas de lúpulo tardío y/o en frío para ofrecer una experiencia de aroma y sabor afrutado tropical explosivamente jugoso.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                </div>
+            <div class='estilo-section'>
+                <h4 class='estilo-title'>Pilsner</h4>
+                <div class='estilo-descripcion'>Originaria de Pilsen, República Checa, en 1842, esta cerveza se caracteriza por su color dorado claro y su sabor equilibrado entre malta y lúpulo. Es refrescante, con un amargor pronunciado debido al lúpulo Saaz, y tiene una espuma blanca duradera</div>
+                <div class='estilo-caracteristicas'>Color: Dorado claro | Sabor: Refrescante, con un amargor pronunciado debido al lúpulo Saaz. | Aroma: Floral y especiado | Origen: República Checa</div>
+            
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Heineken</h3>
+                        <span class='item-price'>4.00 €</span>
+                    </div>
+                    <div class='item-description'><strong>5.0% vol.</strong><br>Formato: tercio<br>Lúpulos: Saaz<br>Una Pilsner clásica con un equilibrio perfecto entre malta y lúpulo, ofreciendo un sabor refrescante y un final limpio.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Sapporo</h3>
+                        <span class='item-price'>4.00 €</span>
+                    </div>
+                    <div class='item-description'><strong>5.0% vol.</strong><br>Formato: tercio<br>Lúpulos: Sorachi Ace<br>Una Pilsner japonesa con un cuerpo ligero y un perfil seco y refrescante, ideal para acompañar comidas.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                </div>
+            <div class='estilo-section'>
+                <h4 class='estilo-title'>Red Ale</h4>
+                <div class='estilo-descripcion'>La Red Ale es una cerveza de fermentación alta con un color rojizo característico, resultado del uso de maltas tostadas especiales. Su perfil es equilibrado entre dulzor y amargor, con notas de caramelo y frutos secos. En algunos casos, puede tener un toque lupulado más pronunciado, especialmente en versiones americanas.</div>
+                <div class='estilo-caracteristicas'>Color: Rojo cobrizo a rojo oscuro | Sabor: Dulce y maltoso, con notas de caramelo y un amargor suave | Aroma: Tostado con toques de frutos secos y bizcocho | Origen: Irlanda</div>
+            
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>O'Hara's Irish Red Ale</h3>
+                        <span class='item-price'>4.30 €</span>
+                    </div>
+                    <div class='item-description'><strong>4.3% vol.</strong><br>Formato: botella_500<br>Lúpulos: Mt. Hood<br>O'Hara's Irish Red Ale destaca dentro del estilo Red Ale, con un cuerpo maltoso impresionante que recuerda a un Bock, pero con un carácter únicamente irlandés. Su perfil suave y equilibrado combina tonos de caramelo con un amargor bien ajustado, ofreciendo una complejidad superior a muchas cervezas comerciales del mismo estilo.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                </div>
+            <div class='estilo-section'>
+                <h4 class='estilo-title'>Session IPA</h4>
+                <div class='estilo-descripcion'>La Session IPA es una versión más ligera de la IPA tradicional, diseñada para ser fácil de beber sin perder el carácter lupulado. Su menor contenido alcohólico permite disfrutarla en sesiones prolongadas sin afectar la resistencia del bebedor.</div>
+                <div class='estilo-caracteristicas'>Color: Dorado claro | Sabor: Ligero y refrescante, con un amargor moderado | Aroma: Lúpulo fresco con notas cítricas y frutales | Origen: Estados Unidos</div>
+            
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Eternal Session IPA</h3>
+                        <span class='item-price'>3.60 €</span>
+                    </div>
+                    <div class='item-description'><strong>4.1% vol.</strong><br>Formato: lata_330<br>Lúpulos: Mosaic, Simcoe<br>Una Session IPA fresca y equilibrada con un perfil lupulado vibrante y un amargor suave.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Wigman</h3>
+                        <span class='item-price'>3.90 €</span>
+                    </div>
+                    <div class='item-description'><strong>4.3% vol.</strong><br>Formato: lata_330<br>Lúpulos: Ahtanum,Chinook,Citra,HBC 692,Mosaic,Simcoe<br>Una IPA de sesión inconformista, esta cerveza ofrece un suave maridaje de suaves frutas tropicales, notas de pino y un intenso aroma cítrico. Refrescante, infinitamente bebible y con una graduación alcohólica constante del 4,3%, querrás tener a Wingman a tu lado toda la noche. ¡Prepara el control!</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                </div>
+            <div class='estilo-section'>
+                <h4 class='estilo-title'>Sour Ale</h4>
+                <div class='estilo-descripcion'>Las Sour Ales son cervezas ácidas que se fermentan con bacterias y levaduras salvajes. Son refrescantes y complejas, con un perfil afrutado y un toque vinagre. Son muy populares en Bélgica y Alemania, con estilos como Berliner Weisse y Lambic.</div>
+                <div class='estilo-caracteristicas'>Color: Amarillo pálido a rojizo | Sabor: Ácido y afrutado, con notas de frutas y madera | Aroma: Afrutado con toques de fermentación salvaje | Origen: Bélgica y Alemania</div>
+            
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Gelato Blueberry</h3>
+                        <span class='item-price'>7.20 €</span>
+                    </div>
+                    <div class='item-description'><strong>5.5% vol.</strong><br>Formato: lata<br>En la nueva versión de Gelato recurrimos a una de las frutas que mejor funciona en la cerveza, los arándanos, y la complementamos con malvaviscos. Tiene una consistencia agradablemente espesa, es intenso, dulce y ácido al mismo tiempo.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Utopia</h3>
+                        <span class='item-price'>5.80 €</span>
+                    </div>
+                    <div class='item-description'><strong>4.5% vol.</strong><br>Formato: lata<br>Cerveza de estilo Sour Ale, ácida y frutal. Se elabora con fruta de la pasión, flor de hibisco y un dry-hopping de lúpulo Mosaic para potenciar sus aromas. Tiene un cuerpo de un color rojo intenso, cierta turbidez, y una corona de espuma perecedera con un toque rosado aportado por la flor de hibisco. Su aroma es frutal con tonos al fondo de malta, frutos rojos predominan. En boca es ligera de textura, ácida y afrutada, un fondo con detalles dulces.ibitas</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                </div>
+            <div class='estilo-section'>
+                <h4 class='estilo-title'>Stout</h4>
+                <div class='estilo-descripcion'>La Stout es una cerveza oscura con un fuerte carácter tostado. Su origen se encuentra en Irlanda, donde se popularizó con marcas como Guinness. Existen múltiples variantes, desde las más secas hasta las más dulces y cremosas.</div>
+                <div class='estilo-caracteristicas'>Color: Negro profundo | Sabor: Tostado con notas de café y chocolate | Aroma: Maltoso con toques de cacao y frutos secos | Origen: Irlanda</div>
+            
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Carlow Brewing OHaras Irish Stout</h3>
+                        <span class='item-price'>5.20 €</span>
+                    </div>
+                    <div class='item-description'><strong>4.3% vol.</strong><br>Formato: tercio<br>Lúpulos: Fuggle<br>Una Stout tradicional con un perfil tostado intenso, notas de café y un amargor equilibrado.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Guinness</h3>
+                        <span class='item-price'>6.00 €</span>
+                    </div>
+                    <div class='item-description'><strong>4.2% vol.</strong><br>Formato: pinta<br>Lúpulos: Fuggle, Goldings<br>Una Stout irlandesa con un cuerpo cremoso, notas de café y chocolate, y un final seco.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Guinness</h3>
+                        <span class='item-price'>4.00 €</span>
+                    </div>
+                    <div class='item-description'><strong>4.2% vol.</strong><br>Formato: media_pinta<br>Lúpulos: Fuggle, Goldings<br>Una Stout irlandesa con un cuerpo cremoso, notas de café y chocolate, y un final seco.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                </div>
+            <div class='estilo-section'>
+                <h4 class='estilo-title'>Triple NEIPA</h4>
+                <div class='estilo-descripcion'>La Triple NEIPA es una versión extrema de la New England IPA, con una mayor carga de lúpulo y un cuerpo más robusto. Su textura sedosa y su turbidez característica provienen del uso de avena y trigo, mientras que el triple dry hopping potencia los aromas sin aumentar el amargor.</div>
+                <div class='estilo-caracteristicas'>Color: Dorado turbio | Sabor: Intenso y afrutado, con un amargor moderado | Aroma: Explosión de lúpulo con notas tropicales y cítricas | Origen: Estados Unidos</div>
+            
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Pain Killer</h3>
+                        <span class='item-price'>9.00 €</span>
+                    </div>
+                    <div class='item-description'><strong>10.0% vol.</strong><br>Formato: lata<br>Lúpulos: Citra, Citra Cryo, Nelson Sauvin<br>Una ráfaga de frutas como la naranja y el mango, con un cuerpo alto y pleno que te envuelve. Esta Triple IPA es pura intensidad que anestesia suavemente. Sorbo a sorbo te atrapa, hasta hacer que te rindas al placer sin resistencia.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                </div>
+            <div class='estilo-section'>
+                <h4 class='estilo-title'>West Cost</h4>
+                <div class='estilo-descripcion'>La West Coast IPA es una IPA clásica de la costa oeste de EE.UU., caracterizada por su alto amargor y su perfil lupulado agresivo con notas resinosas y cítricas.</div>
+                <div class='estilo-caracteristicas'>Color: Dorado intenso | Sabor: Amargor pronunciado con notas resinosas y cítricas | Aroma: Lúpulo intenso con matices de pino y frutas tropicales | Origen: Estados Unidos</div>
+            
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>Keep Calm</h3>
+                        <span class='item-price'>5.80 €</span>
+                    </div>
+                    <div class='item-description'><strong>6.0% vol.</strong><br>Formato: lata<br>Lúpulos: Strata, Cascade, Columbus<br>Colaboracion con los zaragozanos Cierzo. Tanquilízate, mantén la calma. Attik y Cierzo están aquí para calmar tus nervios y equilibrar tu mente. Descorcha esta cerveza y déjate embriagar por el aroma herbal y resinoso de los terpenos CBD, potenciado por el uso de las variedades de lúpulo Strata, Cascade y Columbus.</div>
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                </div>
+            </div>
+            
+                
+                <div class='category-section' id='refrescos'>
+                    <h3 class='category-title'>🧃 REFRESCOS</h3>
+                    <div class='items-grid'>
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Coca Cola Zero</h3>
+                    <span class='item-price'>2.85 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Coca Cola</h3>
+                    <span class='item-price'>2.85 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Fanta Naranja</h3>
+                    <span class='item-price'>2.85 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Fanta Limón</h3>
+                    <span class='item-price'>2.85 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Sprite</h3>
+                    <span class='item-price'>2.85 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Schweppes</h3>
+                    <span class='item-price'>2.85 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Aquarius Limón</h3>
+                    <span class='item-price'>2.90 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Aquarius Naranja</h3>
+                    <span class='item-price'>2.90 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Nestea</h3>
+                    <span class='item-price'>2.90 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Zumo Naranja</h3>
+                    <span class='item-price'>2.40 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Zumo Pina</h3>
+                    <span class='item-price'>2.40 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            </div>
+                </div>
+                
+                <div class='category-section' id='vinos'>
+                    <h3 class='category-title'>🍷 VINOS</h3>
+                    <div class='items-grid'>
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Cepa 21</h3>
+                    <span class='item-price'>3.50 €</span>
+                </div>
+                <div class='descripcion'>Cepa 21 es un vino 100% Tempranillo con una crianza de 12 meses en barrica de roble francés. Destaca por su equilibrio entre fruta madura y notas especiadas, con un final elegante y persistente.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Siglo Saco</h3>
+                    <span class='item-price'>21.00 €</span>
+                </div>
+                <div class='descripcion'>Siglo Saco es un Rioja clásico con una crianza de 12 meses en barrica de roble. Su perfil combina frutos rojos maduros con notas de vainilla y especias, ofreciendo un final sedoso y equilibrado.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Matsu El Recio</h3>
+                    <span class='item-price'>26.00 €</span>
+                </div>
+                <div class='descripcion'>El Recio es un vino de Toro con una crianza de 14 meses en barrica de roble francés. Su perfil es potente y estructurado, con notas de cacao, vainilla y fruta negra madura.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Javier Sanz Verdejo</h3>
+                    <span class='item-price'>3.00 €</span>
+                </div>
+                <div class='descripcion'>Un Verdejo 100% procedente de viñedos viejos, con una crianza sobre lías que aporta complejidad y textura. Fresco, afrutado y mineral, ideal para mariscos y pescados.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            </div>
+                </div>
+                
+                <div class='category-section' id='cafes'>
+                    <h3 class='category-title'>☕ CAFÉS</h3>
+                    <div class='items-grid'>
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Cafe Con Leche</h3>
+                    <span class='item-price'>1.80 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Cafe Con Leche Descafeinado</h3>
+                    <span class='item-price'>1.80 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Cafe Con Leche Vaso</h3>
+                    <span class='item-price'>1.80 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Cafe Con Leche Descafeinado Vaso</h3>
+                    <span class='item-price'>1.80 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Cafe Cortado</h3>
+                    <span class='item-price'>1.60 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Cafe Cortado Descafeinado</h3>
+                    <span class='item-price'>1.60 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Cafe Solo</h3>
+                    <span class='item-price'>1.50 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Cafe Solo</h3>
+                    <span class='item-price'>1.50 €</span>
+                </div>
+                
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Cafe Irlandes</h3>
+                    <span class='item-price'>4.00 €</span>
+                </div>
+                <div class='descripcion'>Café con una cucharadita de azúcar, un poco de crema de leche y con un chorrito de whisky irlandés.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Cafe Vienes</h3>
+                    <span class='item-price'>3.00 €</span>
+                </div>
+                <div class='descripcion'>Café y nata montanda, espolvoreado con cacao o canela</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            </div>
+                </div>
+                
+                <div class='category-section' id='destilados'>
+                    <h3 class='category-title'>🍸 DESTILADOS</h3>
+                    <div class='items-grid'>
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Havana Club Añejo 7 Años</h3>
+                    <span class='item-price'>7.00 €</span>
+                </div>
+                <div class='descripcion'>Un ron cubano envejecido durante 7 años en barricas de roble, con un perfil complejo de vainilla, cacao y tabaco.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Barcelo</h3>
+                    <span class='item-price'>7.00 €</span>
+                </div>
+                <div class='descripcion'>Un ron dominicano premium con un envejecimiento prolongado, ofreciendo notas de caramelo, frutos secos y madera tostada.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Absolut</h3>
+                    <span class='item-price'>6.50 €</span>
+                </div>
+                <div class='descripcion'>Un vodka sueco destilado a partir de trigo de invierno, con un perfil puro y suave, ideal para cócteles.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Belvedere</h3>
+                    <span class='item-price'>10.00 €</span>
+                </div>
+                <div class='descripcion'>Un vodka polaco premium elaborado con centeno, con un sabor limpio y un toque ligeramente dulce.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Tanqueray London Dry Gin</h3>
+                    <span class='item-price'>7.00 €</span>
+                </div>
+                <div class='descripcion'>Una ginebra clásica con un perfil seco y especiado, con notas de enebro, cítricos y hierbas aromáticas.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Bombay Sapphire</h3>
+                    <span class='item-price'>8.00 €</span>
+                </div>
+                <div class='descripcion'>Una ginebra premium con una infusión de 10 botánicos, ofreciendo un equilibrio entre notas cítricas y florales.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Jameson</h3>
+                    <span class='item-price'>7.50 €</span>
+                </div>
+                <div class='descripcion'>Un whiskey irlandés triple destilado con un perfil suave y equilibrado, con notas de vainilla, miel y madera tostada.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>Glenfiddich 12 Years Old</h3>
+                    <span class='item-price'>12.00 €</span>
+                </div>
+                <div class='descripcion'>Un whisky escocés single malt envejecido 12 años en barricas de roble, con notas de pera, miel y especias.</div>
+                
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            </div>
+                </div>
+                
+            </div>
         </div>
-      </div>
-      <div class="footer">Gracias por su visita</div>
+        <div class="footer">Gracias por su visita</div>
     </div>
-  </body>
+    <script src="js/scriptCarta.js"></script>
+</body>
 </html>

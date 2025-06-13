@@ -1,5 +1,7 @@
 import json
 from datetime import datetime
+from jinja2 import Template
+from collections import defaultdict
 
 class CartaRenderer:
     ICONOS = {
@@ -7,7 +9,7 @@ class CartaRenderer:
         "entre_panes": "🍔", "mar": "🐟", "carnes": "🥩",
         "arroces_pastas": "🍝", "postres": "🍰",
         "cerveza": "🍺", "vinos": "🍷", "refrescos": "🧃",
-        "cafes": "☕", "whiskey": "🥃", "ron": "🍹", "vodka": "🍶", "ginebra": "🍸"
+"cafes": "☕", "destilados": "🍸"
     }
 
     def __init__(self, conexion):
@@ -22,19 +24,6 @@ class CartaRenderer:
         columns = [col[0] for col in self.cursor.description]
         rows = self.cursor.fetchall()
         comidas = [dict(zip(columns, row)) for row in rows]
-        
-        # DEBUG: Mostrar estructura de datos
-        print("=== DEBUG COMIDAS ===")
-        print(f"Columnas disponibles: {columns}")
-        print(f"Total comidas: {len(comidas)}")
-        if comidas:
-            print("Primeras 3 comidas:")
-            for i, c in enumerate(comidas[:3]):
-                print(f"  {i+1}. Nombre: {c.get('nombre')}")
-                print(f"     Categoría: {c.get('categoria')} (tipo: {type(c.get('categoria'))})")
-                print(f"     Descripción: {c.get('descripcion', '')[:50]}...")
-                print()
-        
         return comidas
 
     def obtener_bebidas(self):
@@ -42,209 +31,343 @@ class CartaRenderer:
         columns = [col[0] for col in self.cursor.description]
         rows = self.cursor.fetchall()
         bebidas = [dict(zip(columns, row)) for row in rows]
-        
-        # DEBUG: Mostrar estructura de datos
-        print("=== DEBUG BEBIDAS ===")
-        print(f"Columnas disponibles: {columns}")
-        print(f"Total bebidas: {len(bebidas)}")
-        if bebidas:
-            print("Primeras 5 bebidas:")
-            for i, b in enumerate(bebidas[:5]):
-                print(f"  {i+1}. Nombre: {b.get('nombre')}")
-                print(f"     Tipo: {b.get('tipo_bebida')}")
-                print(f"     Descripción: {b.get('descripcion', '')[:50]}...")
-                print()
-        
         return bebidas
+
+    def obtener_estilos(self):
+        self.cursor.execute('SELECT * FROM estilo')
+        columns = [col[0] for col in self.cursor.description]
+        rows = self.cursor.fetchall()
+        estilos = [dict(zip(columns, row)) for row in rows]
+        return estilos
+
+    def obtener_cervezas_por_estilo(self):
+        query = """
+        SELECT 
+            b.id, b.nombre, b.grado_alcoholico, b.formato, b.pvp, 
+            b.descripcion, b.lupulos, b.estilo_id,
+            e.nombre as estilo_nombre, e.descripcion as estilo_descripcion,
+            e.color, e.sabor, e.aroma, e.origen
+        FROM bebida b
+        LEFT JOIN estilo e ON b.estilo_id = e.id
+        WHERE b.tipo_bebida = 'cerveza'
+        ORDER BY e.nombre, b.nombre
+        """
+        
+        self.cursor.execute(query)
+        columns = [col[0] for col in self.cursor.description]
+        rows = self.cursor.fetchall()
+        cervezas = [dict(zip(columns, row)) for row in rows]
+        
+        cervezas_por_estilo = {}
+        cervezas_sin_estilo = []
+        
+        for cerveza in cervezas:
+            estilo_id = cerveza.get('estilo_id')
+            estilo_nombre = cerveza.get('estilo_nombre')
+            
+            if estilo_id and estilo_nombre:
+                if estilo_nombre not in cervezas_por_estilo:
+                    cervezas_por_estilo[estilo_nombre] = {
+                        'estilo_info': {
+                            'id': estilo_id,
+                            'nombre': estilo_nombre,
+                            'descripcion': cerveza.get('estilo_descripcion'),
+                            'color': cerveza.get('color'),
+                            'sabor': cerveza.get('sabor'),
+                            'aroma': cerveza.get('aroma'),
+                            'origen': cerveza.get('origen')
+                        },
+                        'cervezas': []
+                    }
+                cervezas_por_estilo[estilo_nombre]['cervezas'].append(cerveza)
+            else:
+                cervezas_sin_estilo.append(cerveza)
+        
+        return cervezas_por_estilo, cervezas_sin_estilo
 
     def formatear_precio(self, pvp):
         return f"{pvp:.2f} €" if pvp else "-"
 
     def clasificar_destilado(self, bebida):
-        """Clasifica un destilado según su descripción"""
         descripcion = (bebida.get("descripcion") or "").lower()
         nombre = (bebida.get("nombre") or "").lower()
-        
-        # Buscar palabras clave tanto en nombre como en descripción
         texto_completo = f"{nombre} {descripcion}"
         
-        print(f"    Clasificando: {nombre[:30]} | Texto: {texto_completo[:50]}")
-        
         if any(palabra in texto_completo for palabra in ["whiskey", "whisky", "bourbon"]):
-            print(f"      -> WHISKEY")
             return "whiskey"
         elif any(palabra in texto_completo for palabra in ["ron", "rum"]):
-            print(f"      -> RON")
             return "ron"
         elif any(palabra in texto_completo for palabra in ["vodka"]):
-            print(f"      -> VODKA")
             return "vodka"
         elif any(palabra in texto_completo for palabra in ["ginebra", "gin"]):
-            print(f"      -> GINEBRA")
             return "ginebra"
         else:
-            print(f"      -> DESTILADOS (genérico)")
             return "destilados"
+
+    def render_items(self, items):
+        html = ""
+        for item in items:
+            ingredientes = ""
+            if item.get('ingredientes'):
+                ingredientes = f"<div class='ingredientes'><strong>Ingredientes:</strong> {item['ingredientes']}</div>"
+            
+            descripcion = ""
+            if item.get('descripcion') and item['descripcion'].lower() != 'none':
+                descripcion = f"<div class='descripcion'>{item['descripcion']}</div>"
+            
+            html += f"""
+            <div class='item-card'>
+                <div class='item-header'>
+                    <h3 class='item-name'>{item.get('nombre', '')}</h3>
+                    <span class='item-price'>{self.formatear_precio(item.get('pvp'))}</span>
+                </div>
+                {descripcion}
+                {ingredientes}
+                <button class='boton-comanda'>Añadir a la comanda</button>
+                <hr class='item-divider'>
+            </div>
+            """
+        return html
+
+    def render_cervezas_por_estilo(self, cervezas_por_estilo, cervezas_sin_estilo):
+        html = ""
+        
+        for estilo_nombre, data in sorted(cervezas_por_estilo.items()):
+            estilo_info = data['estilo_info']
+            cervezas = data['cervezas']
+            
+            estilo_descripcion = ""
+            if estilo_info.get('descripcion'):
+                estilo_descripcion = f"<div class='estilo-descripcion'>{estilo_info['descripcion']}</div>"
+            
+            caracteristicas = []
+            if estilo_info.get('color'):
+                caracteristicas.append(f"Color: {estilo_info['color']}")
+            if estilo_info.get('sabor'):
+                caracteristicas.append(f"Sabor: {estilo_info['sabor']}")
+            if estilo_info.get('aroma'):
+                caracteristicas.append(f"Aroma: {estilo_info['aroma']}")
+            if estilo_info.get('origen'):
+                caracteristicas.append(f"Origen: {estilo_info['origen']}")
+            
+            caracteristicas_html = ""
+            if caracteristicas:
+                caracteristicas_html = f"<div class='estilo-caracteristicas'>{' | '.join(caracteristicas)}</div>"
+            
+            html += f"""
+            <div class='estilo-section'>
+                <h4 class='estilo-title'>{estilo_nombre}</h4>
+                {estilo_descripcion}
+                {caracteristicas_html}
+            """
+            
+            cervezas_html = ""
+            for cerveza in cervezas:
+                info_cerveza = []
+                if cerveza.get('grado_alcoholico'):
+                    info_cerveza.append(f"<strong>{cerveza['grado_alcoholico']}% vol.</strong>")
+                if cerveza.get('formato'):
+                    info_cerveza.append(f"Formato: {cerveza['formato']}")
+                if cerveza.get('lupulos'):
+                    info_cerveza.append(f"Lúpulos: {cerveza['lupulos']}")
+                
+                descripcion_completa = "<br>".join(info_cerveza)
+                if cerveza.get('descripcion') and cerveza['descripcion'].lower() != 'none':
+                    descripcion_completa += f"<br>{cerveza['descripcion']}"
+                
+                cervezas_html += f"""
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>{cerveza.get('nombre', '')}</h3>
+                        <span class='item-price'>{self.formatear_precio(cerveza.get('pvp'))}</span>
+                    </div>
+                    {f"<div class='item-description'>{descripcion_completa}</div>" if descripcion_completa else ""}
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                """
+            
+            html += cervezas_html + "</div>"
+
+        if cervezas_sin_estilo:
+            html += "<div class='estilo-section'><h4 class='estilo-title'>Otras Cervezas</h4>"
+            
+            for cerveza in cervezas_sin_estilo:
+                info_cerveza = []
+                if cerveza.get('grado_alcoholico'):
+                    info_cerveza.append(f"<strong>{cerveza['grado_alcoholico']}% vol.</strong>")
+                if cerveza.get('formato'):
+                    info_cerveza.append(f"Formato: {cerveza['formato']}")
+                
+                descripcion_completa = "<br>".join(info_cerveza)
+                if cerveza.get('descripcion') and cerveza['descripcion'].lower() != 'none':
+                    descripcion_completa += f"<br>{cerveza['descripcion']}"
+                
+                html += f"""
+                <div class='item-card cerveza-card'>
+                    <div class='item-header'>
+                        <h3 class='item-name'>{cerveza.get('nombre', '')}</h3>
+                        <span class='item-price'>{self.formatear_precio(cerveza.get('pvp'))}</span>
+                    </div>
+                    {f"<div class='item-description'>{descripcion_completa}</div>" if descripcion_completa else ""}
+                    <button class='boton-comanda'>Añadir a la comanda</button>
+                    <hr class='item-divider'>
+                </div>
+                """
+            
+            html += "</div>"
+    
+        return html
 
     def render_carta(self, nombre_restaurante="Restaurante El Cañaveral"):
         if not self.conectar():
             return "<html><body><h1>Error de conexión</h1></body></html>"
 
-        comidas = self.obtener_comidas()
-        bebidas = self.obtener_bebidas()
+        comidas_raw = self.obtener_comidas()
+        bebidas_raw = self.obtener_bebidas()
+        cervezas_por_estilo, cervezas_sin_estilo = self.obtener_cervezas_por_estilo()
 
-        # Inicializar categorías de comida
         categorias_comida = {
             "entrantes": [], "vegetariano": [], "vegano": [], "entre_panes": [],
             "mar": [], "carnes": [], "arroces_pastas": [], "postres": []
         }
 
-        # Procesar comidas con DEBUG mejorado
-        print("\n=== PROCESANDO CATEGORÍAS DE COMIDA ===")
-        for i, c in enumerate(comidas):
-            print(f"Procesando comida {i+1}: {c.get('nombre')}")
+        for c in comidas_raw:
             categoria_raw = c.get("categoria", "")
-            print(f"  Categoría raw: '{categoria_raw}' (tipo: {type(categoria_raw)})")
-            
             cats = []
             
-            # Intentar diferentes formas de parsear la categoría
             if isinstance(categoria_raw, str) and categoria_raw:
-                # Primero intentar JSON
                 try:
                     cats = json.loads(categoria_raw)
-                    print(f"  Parseado como JSON: {cats}")
                 except (json.JSONDecodeError, TypeError):
-                    # Si no es JSON, tratar como string simple
                     cats = [categoria_raw]
-                    print(f"  Tratado como string: {cats}")
             elif isinstance(categoria_raw, list):
                 cats = categoria_raw
-                print(f"  Ya era lista: {cats}")
             
-            # Procesar cada categoría
             for cat in cats:
                 cat_original = str(cat).strip()
                 cat_normalizada = cat_original.lower().replace(" ", "_")
                 
-                print(f"    Procesando categoría: '{cat_original}' -> '{cat_normalizada}'")
-                
-                # Mapeo mejorado para variaciones comunes
                 mapeo_categorias = {
-                    "arroz": "arroces_pastas",
-                    "pasta": "arroces_pastas", 
-                    "arroces": "arroces_pastas",
-                    "pastas": "arroces_pastas",
-                    "arroces_y_pastas": "arroces_pastas",
-                    "arroces_pastas": "arroces_pastas",
-                    "pescado": "mar",
-                    "mariscos": "mar",
-                    "carne": "carnes",
-                    "entrante": "entrantes",
-                    "postre": "postres"
+                    "arroz": "arroces_pastas", "pasta": "arroces_pastas", 
+                    "arroces": "arroces_pastas", "pastas": "arroces_pastas",
+                    "arroces_y_pastas": "arroces_pastas", "arroces_pastas": "arroces_pastas",
+                    "pescado": "mar", "mariscos": "mar",
+                    "carne": "carnes", "entrante": "entrantes", "postre": "postres"
                 }
                 
-                # Usar mapeo si existe, sino usar la categoría normalizada
                 cat_final = mapeo_categorias.get(cat_normalizada, cat_normalizada)
-                print(f"      Categoría final: '{cat_final}'")
                 
-                if cat_final in categorias_comida:
-                    if c not in categorias_comida[cat_final]:
-                        categorias_comida[cat_final].append(c)
-                        print(f"      ✓ Agregado a {cat_final}")
-                    else:
-                        print(f"      - Ya existía en {cat_final}")
-                else:
-                    print(f"      ✗ Categoría '{cat_final}' no reconocida")
+                if cat_final in categorias_comida and c not in categorias_comida[cat_final]:
+                    categorias_comida[cat_final].append(c)
 
-        # Inicializar bebidas por tipo
         bebidas_por_tipo = {
-            "cerveza": [], "refrescos": [], "vinos": [], "cafes": [],
-            "whiskey": [], "ron": [], "vodka": [], "ginebra": [], "destilados": []
+            "refrescos": [], "vinos": [], "cafes": [],
+                "refrescos": [], "vinos": [], "cafes": [], "destilados": []
         }
 
-        # Procesar bebidas con DEBUG
-        print("\n=== PROCESANDO BEBIDAS ===")
-        for i, b in enumerate(bebidas):
-            print(f"Procesando bebida {i+1}: {b.get('nombre')}")
+        for b in bebidas_raw:
             tipo = (b.get("tipo_bebida") or "").strip().lower()
-            print(f"  Tipo: '{tipo}'")
             
+            if tipo == "cerveza":
+                continue
+                
             if tipo == "destilados":
-                print(f"  Es destilado, clasificando...")
                 categoria_destilado = self.clasificar_destilado(b)
-                bebidas_por_tipo[categoria_destilado].append(b)
+                bebidas_por_tipo["destilados"].append(b)
             elif tipo in bebidas_por_tipo:
                 bebidas_por_tipo[tipo].append(b)
-                print(f"  ✓ Agregado a {tipo}")
             else:
-                # Mapeo adicional para nombres de tipos que puedan variar
                 mapeo_tipos = {
-                    "cerveza": "cerveza",
-                    "vino": "vinos", 
-                    "refresco": "refrescos",
-                    "cafe": "cafes",
-                    "café": "cafes",
-                    "gaseosa": "refrescos",
-                    "refresco": "refrescos"
+                    "vino": "vinos", "refresco": "refrescos",
+                    "cafe": "cafes", "café": "cafes", "gaseosa": "refrescos"
                 }
                 tipo_mapeado = mapeo_tipos.get(tipo)
                 if tipo_mapeado and tipo_mapeado in bebidas_por_tipo:
                     bebidas_por_tipo[tipo_mapeado].append(b)
-                    print(f"  ✓ Mapeado y agregado a {tipo_mapeado}")
-                else:
-                    print(f"  ✗ Tipo '{tipo}' no reconocido")
 
-        # Mostrar resumen final
-        print("\n=== RESUMEN FINAL ===")
-        print("COMIDAS:")
-        for cat, items in categorias_comida.items():
-            if items:
-                print(f"  {cat}: {len(items)} items")
-        
-        print("\nBEBIDAS:")
-        for tipo, items in bebidas_por_tipo.items():
-            if items:
-                print(f"  {tipo}: {len(items)} items")
-
-        def render_items(items, subtitulo_func=None):
-            html = ""
-            for item in items:
-                subtitulo = subtitulo_func(item) if subtitulo_func else ""
-                html += f"<div class='item-card'><div class='item-header'>"
-                html += f"<h3 class='item-name'>{item.get('nombre', '')}</h3>"
-                html += f"<span class='item-price'>{self.formatear_precio(item.get('pvp'))}</span></div>"
-                html += f"<p class='item-description'>{subtitulo}{item.get('descripcion','')}</p></div>"
-            return html
-
-        def subtitulo_cerveza(item):
-            estilo = item.get("estilo_id")
-            return f"<em style='font-size: 0.85em; color: #666;'>Estilo: {estilo}</em><br>" if estilo else ""
-
-        # Generar secciones de comida - solo mostrar categorías que tengan items
+        # Generar secciones de contenido
         secciones_comida = ""
         for cat in categorias_comida:
-            if categorias_comida[cat]:  # Solo si tiene elementos
+            if categorias_comida[cat]:
                 icon = self.ICONOS.get(cat, "🍽️")
                 titulo = cat.upper().replace('_', ' ')
-                bloque = render_items(categorias_comida[cat])
-                secciones_comida += f"<div class='category-section'><h3 class='category-title'>{icon} {titulo}</h3><div class='items-grid'>{bloque}</div></div>"
+                if cat == 'arroces_pastas':
+                    titulo = 'ARROCES Y PASTA'
+                bloque = self.render_items(categorias_comida[cat])
+                secciones_comida += f"""
+                <div class='category-section' id='{cat}'>
+                    <h3 class='category-title'>{icon} {titulo}</h3>
+                    <div class='items-grid'>{bloque}</div>
+                </div>
+                """
 
-        # Generar secciones de bebida - solo mostrar tipos que tengan items
-        secciones_bebida = ""
-        orden_bebidas = ["cerveza", "refrescos", "vinos", "cafes", "whiskey", "ron", "vodka", "ginebra", "destilados"]
+        seccion_cervezas = ""
+        if cervezas_por_estilo or cervezas_sin_estilo:
+            cervezas_html = self.render_cervezas_por_estilo(cervezas_por_estilo, cervezas_sin_estilo)
+            seccion_cervezas = f"""
+            <div class='category-section' id='cervezas'>
+                <h3 class='category-title'>🍺 CERVEZAS</h3>
+                {cervezas_html}
+            </div>
+            """
+
+        secciones_otras_bebidas = ""
+        orden_bebidas = ["refrescos", "vinos", "cafes", "destilados"]
         
         for tipo in orden_bebidas:
-            if bebidas_por_tipo[tipo]:  # Solo si tiene elementos
+            if bebidas_por_tipo[tipo]:
                 icon = self.ICONOS.get(tipo, "🥤")
                 titulo = tipo.upper()
-                subt = subtitulo_cerveza if tipo == "cerveza" else None
-                bloque = render_items(bebidas_por_tipo[tipo], subt)
-                secciones_bebida += f"<div class='category-section'><h3 class='category-title'>{icon} {titulo}</h3><div class='items-grid'>{bloque}</div></div>"
+                if tipo == 'cafes':
+                    titulo = 'CAFÉS'
+                bloque = self.render_items(bebidas_por_tipo[tipo])
+                secciones_otras_bebidas += f"""
+                <div class='category-section' id='{tipo}'>
+                    <h3 class='category-title'>{icon} {titulo}</h3>
+                    <div class='items-grid'>{bloque}</div>
+                </div>
+                """
 
-        # Cargar y procesar template
+        # Generar índice interactivo
+        indice_interactivo = """
+        <div class="indice-container">
+            <h3 class="indice-title">Índice</h3>
+            <ul class="indice-list">
+        """
+        
+        # Añadir enlaces para las secciones de comida
+        categorias_mostradas = [cat for cat in categorias_comida if categorias_comida[cat]]
+        for cat in categorias_mostradas:
+            nombre_seccion = cat.replace('_', ' ').title()
+            if cat == 'arroces_pastas':
+                nombre_seccion = 'Arroces y Pasta'
+            indice_interactivo += f"""
+                <li><a href="#{cat}">{self.ICONOS.get(cat, "🍽️")} {nombre_seccion}</a></li>
+            """
+        
+        # Añadir enlace para cervezas si hay
+        if cervezas_por_estilo or cervezas_sin_estilo:
+            indice_interactivo += """
+                <li><a href="#cervezas">🍺 Cervezas</a></li>
+            """
+        
+        # Añadir enlaces para otras bebidas
+        tipos_bebida_mostrados = [tipo for tipo in bebidas_por_tipo if bebidas_por_tipo[tipo]]
+        for tipo in tipos_bebida_mostrados:
+            nombre_seccion = tipo.title()
+            if tipo == 'cafes':
+                nombre_seccion = 'Cafés'
+            indice_interactivo += f"""
+                <li><a href="#{tipo}">{self.ICONOS.get(tipo, "🥤")} {nombre_seccion}</a></li>
+            """
+        
+        indice_interactivo += """
+            </ul>
+        </div>
+        """
+
         try:
-            # Buscar el archivo de template (puede tener nombres diferentes)
             template_files = ["carta_template.html", "template.html", "IndexCarta_template.html"]
             template_content = None
             
@@ -252,48 +375,138 @@ class CartaRenderer:
                 try:
                     with open(template_file, "r", encoding="utf-8") as tpl:
                         template_content = tpl.read()
-                        print(f"✓ Template encontrado: {template_file}")
                         break
                 except FileNotFoundError:
                     continue
             
-            if not template_content:
-                # Si no encuentra template, usar el HTML directo que me proporcionaste
+            if template_content:
+                template_content = template_content.replace(
+                    '<div class="menu-content">',
+                    f'<div class="menu-content">{indice_interactivo}'
+                )
+                
+                template = Template(template_content)
+                context = {
+                    "nombre_restaurante": nombre_restaurante,
+                    "fecha": datetime.now().strftime('%d/%m/%Y'),
+                    "comidas": {k: v for k, v in categorias_comida.items() if v},
+                    "bebidas": {k: v for k, v in bebidas_por_tipo.items() if v},
+                    "secciones_comida": secciones_comida,
+                    "seccion_cervezas": seccion_cervezas,
+                    "secciones_otras_bebidas": secciones_otras_bebidas
+                }
+                html = template.render(context)
+            else:
                 template_content = '''<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>{{ nombre_restaurante }}</title>
     <link rel="stylesheet" href="css/cartaStyle.css">
+    <style>
+        h1{
+        text-align:center;
+        }
+        .estilo-section {
+            margin-bottom: 2rem;
+            border-left: 4px solid #f39c12;
+            padding-left: 1rem;
+        }
+        .estilo-title {
+            color: #f39c12;
+            font-size: 1.3em;
+            margin-bottom: 0.5rem;
+            
+        }
+        .estilo-descripcion {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-size: 1.0em;
+        }
+        .estilo-caracteristicas {
+            font-size: 1.0em;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        .cerveza-card {
+            border-left: 2px solid #f39c12;
+        }
+        .indice-container {
+            background-color: #f3e6b7;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .indice-title {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.2em;
+        }
+        .indice-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            color: #273746;
+        }
+        .indice-list li {
+            margin: 0;
+            color: #273746;
+        }
+        .indice-list a {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #f1c40f
+            color: #273746;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+        .indice-list a:hover {
+            background-color: #f1c40f;
+            color: #212529;
+        }
+        .section-title{
+        text-align:center;
+        }
+        .descripcion{
+        font-size: 1.0em;
+        }
+    </style>
 </head>
 <body>
     <div class="menu-container">
         <div class="header">
-            <div class="fecha">{{ fecha }}</div>
             <h1>{{ nombre_restaurante }}</h1>
-            <p>Carta de Comidas y Bebidas</p>
         </div>
         <div class="menu-content">
+            {indice_interactivo}
             <div class="section">
                 <h2 class="section-title">Comida</h2>
                 {{ secciones_comida }}
             </div>
             <div class="section">
                 <h2 class="section-title">Bebidas</h2>
-                {{ secciones_bebida }}
+                {{ seccion_cervezas }}
+                {{ secciones_otras_bebidas }}
             </div>
         </div>
         <div class="footer">Gracias por su visita</div>
     </div>
 </body>
 </html>'''
-                print("⚠ Usando template HTML incorporado")
-            
-            html = template_content
-            html = html.replace("{{ nombre_restaurante }}", nombre_restaurante)
-            html = html.replace("{{ fecha }}", datetime.now().strftime('%d/%m/%Y'))
-            html = html.replace("{{ secciones_comida }}", secciones_comida)
-            html = html.replace("{{ secciones_bebida }}", secciones_bebida)
+                
+                html = template_content
+                html = html.replace("{{ nombre_restaurante }}", nombre_restaurante)
+                html = html.replace("{{ fecha }}", datetime.now().strftime('%d/%m/%Y'))
+                html = html.replace("{{ secciones_comida }}", secciones_comida)
+                html = html.replace("{{ seccion_cervezas }}", seccion_cervezas)
+                html = html.replace("{{ secciones_otras_bebidas }}", secciones_otras_bebidas)
+                html = html.replace("{indice_interactivo}", indice_interactivo)
                 
         except Exception as e:
             print(f"Error procesando template: {e}")

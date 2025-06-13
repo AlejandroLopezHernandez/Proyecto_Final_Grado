@@ -52,7 +52,7 @@ class ReservaController extends AbstractController
 
             if ($exito) {
                 $this->addFlash('success', '¡Reserva demandada con éxito!Espere mail de confirmación');
-                return $this->redirectToRoute('app_reservas');
+                return $this->redirectToRoute('ver_carta');
             } else {
                 $this->addFlash('error', 'No hay disponibilidad para esa fecha y hora según Google Reservas.');
             }
