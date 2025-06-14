@@ -2,29 +2,69 @@
 
 namespace App\Controller;
 
-use App\Enum\TipoBebida;
+use App\Entity\Bebida;
+use App\Repository\BebidaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 
-final class BebidaController extends AbstractController
+class BebidaController extends AbstractController
 {
-    #[Route('/bebida', name: 'app_bebida')]
-    public function index(): Response
+    #[Route('/bebida', name: 'bebida_panel')]
+    public function index(BebidaRepository $bebidaRepository): Response
     {
-        return $this->render('bebida/index.html.twig', [
-            'controller_name' => 'BebidaController',
+        $categorias = $bebidaRepository->findTiposBebida();
+
+        return $this->render('panel/panelItems.html.twig', [
+            'titulo' => 'Categorías de Bebida',
+            'elementos' => array_map(fn($cat) => ['value' => $cat], $categorias),
+            'tipo' => 'categoria_bebida',
         ]);
     }
 
-    // Para mostrar todas las categorias existentes con o sin platos registrados
-    #[Route('/comida/categorias', name: 'app_comida_categorias')]
-    public function categorias(): Response
+    #[Route('/bebida/tipos', name: 'bebida_tipos')]
+    public function obtenerTipos(BebidaRepository $repo): JsonResponse
     {
-        $categorias = TipoBebida::cases();
+        return $this->json($repo->findTiposBebida());
+    }
 
-        return $this->render('comida/cardTodasCategorias.html.twig', [
-            'categorias' => $categorias
-        ]);
+    #[Route('/bebida/{tipo}/registros', name: 'bebida_por_tipo')]
+    public function bebidasPorTipo(BebidaRepository $repo, string $tipo): JsonResponse
+    {
+        $bebidas = $repo->findBebidasPorTipo($tipo);
+
+        return $this->json(array_map(function ($b) {
+            return [
+                'id' => $b->getId(),
+                'nombre' => $b->getNombre(),
+                'pvp' => $b->getPvp(),
+                'formato' => $b->getFormato(),
+                // lo que necesites mostrar
+            ];
+        }, $bebidas));
+    }
+
+
+    #[Route('/bebida/{tipo}/estilos', name: 'bebida_estilos')]
+    public function estilosPorTipo(BebidaRepository $repo, string $tipo): JsonResponse
+    {
+        $estilos = $repo->findEstilosPorTipo($tipo);
+        return $this->json($estilos);
+    }
+
+    #[Route('/bebida/{tipo}/{estilo}/registros', name: 'bebidas_por_estilo')]
+    public function bebidasPorEstilo(BebidaRepository $repo, string $tipo, string $estilo): JsonResponse
+    {
+        $bebidas = $repo->findBebidasPorEstiloYTipo($tipo, $estilo); // CORRECTO orden
+
+        return $this->json(array_map(function ($b) {
+            return [
+                'id' => $b->getId(),
+                'nombre' => $b->getNombre(),
+                'pvp' => $b->getPvp(),
+                'formato' => $b->getFormato(),
+            ];
+        }, $bebidas));
     }
 }

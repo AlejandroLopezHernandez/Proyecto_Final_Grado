@@ -1,0 +1,12 @@
+<div class="contenedor-botones">
+    {% for elemento in elementos %}
+        <button
+            class="categoria-btn"
+            data-tipo="{{ tipo }}"
+            data-nombre="{{ elemento.value }}"
+            type="button"
+        >
+            {{ elemento.value|upper }}
+        </button>
+    {% endfor %}
+</div>

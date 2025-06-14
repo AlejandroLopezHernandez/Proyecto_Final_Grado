@@ -17,9 +17,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use App\Controller\Admin\BebidaCrudController;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-use Doctrine\ORM\EntityManagerInterface;
+
 
 class EstiloCrudController extends AbstractCrudController
 {
@@ -32,6 +34,7 @@ class EstiloCrudController extends AbstractCrudController
         $this->logger = $logger;
         $this->security = $security;
     }
+
     public static function getEntityFqcn(): string
     {
         return Estilo::class;

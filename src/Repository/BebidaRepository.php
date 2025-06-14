@@ -15,6 +15,53 @@ class BebidaRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Bebida::class);
     }
+    public function findTiposBebida(): array
+    {
+        $tipos = $this->createQueryBuilder('b')
+            ->select('DISTINCT b.tipoBebida')
+            ->getQuery()
+            ->getSingleColumnResult();
+
+        return array_filter($tipos); // elimina nulos
+    }
+
+    public function findBebidasPorTipo(string $tipo): array
+    {
+        return $this->createQueryBuilder('b')
+            ->where('b.tipoBebida = :tipo')
+            ->andWhere('b.tipoBebida NOT IN (:conEstilo)')
+            ->setParameter('tipo', $tipo)
+            ->setParameter('conEstilo', ['cerveza', 'destilados'])
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function findEstilosPorTipo(string $tipo): array
+    {
+        return $this->createQueryBuilder('b')
+            ->select('DISTINCT e.nombre')
+            ->join('b.estilo', 'e')
+            ->where('b.tipoBebida = :tipo')
+            ->setParameter('tipo', $tipo)
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
+
+
+    public function findBebidasPorEstiloYTipo(string $tipo, string $estilo): array
+    {
+        return $this->createQueryBuilder('b')
+            ->addSelect('b') // Asegura que devuelva objetos Bebida
+            ->join('b.estilo', 'e')
+            ->where('b.tipoBebida = :tipo')
+            ->andWhere('e.nombre = :estilo')
+            ->setParameter('tipo', $tipo)
+            ->setParameter('estilo', $estilo)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function cervezasXestilo(): array
     {
         return $this->createQueryBuilder('b')

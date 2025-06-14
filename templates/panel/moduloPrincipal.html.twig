@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TPV Restaurante{% endblock %}
+
+
+{% block body %}
+<div class="layout">
+    <nav class="NavegadorPrincipal">
+        <div>
+    <h1 style="text-align: center;">Terminal De Ventas</h1>
+</div>
+        <button onclick="window.location.href='{{ path('editar_mapa_mesas') }}'">Editar mapa de mesas</button>
+    </nav>
+
+    <div id="contenido-dinamico">        
+            <div class="contenedor-mapa" id="fondoMapa">
+                {# Aquí se cargarán las mesas dinámicamente por JS #}
+            </div>
+
+            <nav class="navegadorLateral">           
+                <button id="btnVerMapaMesas" class="editor-btn">Plano de Mesas</button>
+                <button id="btnGuardarMapa" class="editor-btn">Guardar Mapa</button>
+                <button id="btnGuardarMapa" class="editor-btn">Guardar Mapa</button>
+                <button id="btnGuardarMapa" class="editor-btn">Guardar Mapa</button>                 
+                <button id="btnGuardarMapa" class="editor-btn">Guardar Mapa</button>                 
+            </nav>        
+    </div> 
+</div>    
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/moduloPrincipal.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script defer src="{{ asset('js/moduloPrincipal.js') }}"></script>
+{% endblock %}

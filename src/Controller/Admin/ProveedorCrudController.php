@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Proveedor;
 use App\Controller\Admin\ProductoCrudController;
 use App\Controller\Admin\BebidaCrudController;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -15,7 +16,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-use Doctrine\ORM\EntityManagerInterface;
 
 class ProveedorCrudController extends AbstractCrudController
 {

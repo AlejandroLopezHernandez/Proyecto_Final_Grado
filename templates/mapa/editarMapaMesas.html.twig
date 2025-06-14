@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Mapa de Mesas{% endblock %}
+
+{% block body %}
+<div class="editor-layout">
+    <!-- Barra superior -->
+    <div class="barra-superior">
+        <h1>Editar Mapa de Mesas</h1>
+    </div>
+
+    <div class="contenido-editor">
+        <!-- Área del mapa -->
+        <div id="fondoMapa" class="contenedor-mapa">
+            {# aquí se colocan las mesas por JS #}
+        </div>
+        <!-- Barra lateral derecha -->
+        <div class="barra-lateral">
+            <button id="btnNuevaMesa" class="editor-btn">Nueva Mesa</button>
+            <button id="btnGuardarMapa" class="editor-btn">Guardar Mapa</button>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/editorMapaMesas.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/mapaMesas.css') }}">
+{% endblock %}

@@ -9,6 +9,7 @@ use App\Enum\VegetarianoVeganoSeleccion;
 use App\Enum\OpcionesQuitar;
 use App\Enum\OpcionesAnadir;
 use App\Enum\PuntoCoccion;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -22,7 +23,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-use Doctrine\ORM\EntityManagerInterface;
+
 
 class ComidaCrudController extends AbstractCrudController
 {

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Módulo de Productos{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/moduloProducto.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid d-flex flex-row gap-3 modulo-layout">
+    <!-- Panel de Comanda -->
+    <div id="panel-comanda" class="comanda-panel p-3 rounded shadow-sm">
+        <h5 class="mb-3">COMANDA - <span id="nombre-mesa-activa"></span></h5>
+<div id="lineas-comanda"></div>
+        <!-- Botón Imprimir Ticket -->
+<button id="btn-imprimir-ticket">Imprimir Ticket</button>
+    </div>
+
+    <!-- Panel de Productos -->
+    <div class="modulo-producto p-3 rounded shadow-sm flex-grow-1">
+        <!-- Nivel 1: Tipo de producto -->
+        <div id="panel-nivel-1" class="mb-3 contenedor-botones">
+            <button class="categoria-btn" data-type="tipo" data-value="comida">COMIDA</button>
+            <button class="categoria-btn" data-type="tipo" data-value="bebida">BEBIDA</button>            
+        </div>
+        <!-- Nivel 2: Categorías -->
+        <div id="panel-nivel-2" class="mb-3 contenedor-botones"></div>
+        <!-- Nivel 3: Productos -->
+        <div id="panel-nivel-3" class="mb-3 contenedor-botones"></div>
+        <!-- Nivel 4: Opciones (solo para productos con extras) -->
+        <div id="panel-nivel-4" class="mb-3">
+            <div id="contenedor-opciones" class="contenedor-botones flex-column gap-2"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/moduloProducto.js') }}"></script>
+{% endblock %}
+

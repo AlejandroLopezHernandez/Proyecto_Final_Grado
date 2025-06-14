@@ -28,6 +28,7 @@ class UsuarioCrudController extends AbstractCrudController
     public function __construct(UserPasswordHasherInterface $passwordHasher, AdminUrlGenerator $adminUrlGenerator, LoggerInterface $logger, Security $security)
     {
         $this->passwordHasher = $passwordHasher;
+        $this->passwordHasher = $passwordHasher;
         $this->adminUrlGenerator = $adminUrlGenerator;
         $this->logger = $logger;
         $this->security = $security;

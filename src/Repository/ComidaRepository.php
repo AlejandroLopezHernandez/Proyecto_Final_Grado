@@ -16,6 +16,51 @@ class ComidaRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Comida::class);
     }
+    public function findCategoriasUnicas(): array
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('c.categoria');
+
+        $categorias = [];
+
+        foreach ($qb->getQuery()->getResult() as $fila) {
+            foreach ($fila['categoria'] as $cat) {
+                $categorias[] = $cat;
+            }
+        }
+
+        return array_unique($categorias);
+    }
+
+    public function findByCategoria(string $categoria): array
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->where('c.categoria LIKE :categoria')
+            ->setParameter('categoria', '%"' . $categoria . '"%');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findOpcionesByProductoId(int $id): array
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('c.opciones')
+            ->where('c.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery();
+
+        $result = $qb->getOneOrNullResult();
+
+        $opciones = $result['opciones'] ?? [];
+
+        // Aseguramos que sea array
+        if (is_string($opciones)) {
+            $opciones = json_decode($opciones, true);
+        }
+
+        return is_array($opciones) ? $opciones : [];
+    }
+
     public function comidasXtipo(): array
     {
         $comidas = $this->findAll(); // recuperamos todas las comidas

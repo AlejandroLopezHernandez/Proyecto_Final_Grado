@@ -39,7 +39,7 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/manager, roles: ROLE_MANAGER }
-        - { path: ^/main, roles: ROLE_CAMARERO }
+        - { path: ^/panel, roles: ROLE_CAMARERO }
 
 when@test:
     security:
