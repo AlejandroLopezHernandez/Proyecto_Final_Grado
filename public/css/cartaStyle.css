@@ -393,7 +393,52 @@ hr {
   margin-top: 15px;
   transition: all 0.3s;
 }
-
 #finalizar-comanda:hover {
   background-color: #e65c2e;
 }
+.mesa-select-container {
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .mesa-select-container::after {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 12px;
+  }
+  .mesa-select-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .mesa-select {
+    padding-right: 45px !important;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+    transition: border-color 0.3s ease;
+    cursor: pointer;
+  }
+  .mesa-select:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  }
+  
+  .mesa-select option {
+    padding: 10px;
+  }
