@@ -2,66 +2,115 @@
 
 {% block title %}Dashboard de manager{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .dashboard-container {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            padding: 20px;
+        }
+
+        .chart-card {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .chart-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #333;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            min-height: 300px;
+        }
+
+        #cuadroTiposComidas {
+            height: 500px !important;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
-<style>
-canvas{
-    max-height:500px;
-}
-#cuadroTiposComidas{
-    height:900px !important;
-}
-.container {
-    display: grid;
-    gap: 20px; /* Espaciado entre gráficos */
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Ajusta el tamaño de las columnas */
-    padding: 20px;
-}
+    <div class="container-fluid py-4">
+        <h1 class="mb-4">Dashboard de Manager</h1>
+        
+        <div class="dashboard-container">
+            <!-- Gráficos de categorías -->
+            <div class="chart-card">
+                <div class="chart-wrapper">
+                    <canvas id="cervezasXestilo"></canvas>
+                </div>
+            </div>
 
-.chart-container {
-    display: flex;
-    flex-direction: column; /* Asegura que el título esté arriba y el gráfico abajo */
-    align-items: center; /* Centra el contenido horizontalmente */
-    justify-content: flex-start; /* Asegura que el título quede arriba */
-    position: relative;
-    width: 100%; /* Se ajusta al tamaño definido por la cuadrícula */
-    height: 450px; /* Altura suficiente para incluir el título y el gráfico */
-    background: #f9f9f9; /* Fondo opcional para diferenciar los gráficos */
-    border: 1px solid #ccc; /* Bordes opcionales */
-    border-radius: 8px; /* Bordes redondeados */
-    padding: 10px;
-    text-align: center; /* Centra el texto del título */
-}
-.chart-container h2 {
-    margin-bottom: 10px; /* Espaciado entre el título y el gráfico */
-}
+            <div class="chart-card">
+                <div class="chart-wrapper">
+                    <canvas id="bebidasAlcoholicas"></canvas>
+                </div>
+            </div>
 
-.chart-container.pie-chart canvas {
-    aspect-ratio: 1; /* Mantén una proporción perfecta de 1:1 */
-    max-width: 300px; /* Ajusta el tamaño máximo del gráfico */
-    max-height: 300px; /* Ajusta el tamaño máximo del gráfico */
-}
-</style>
-    <h2>Dashboard de manager</h2>
-    <class="container">
+            <div class="chart-card">
+                <div class="chart-wrapper">
+                    <canvas id="cuadroTiposComidas"></canvas>
+                </div>
+            </div>
 
-<div class="chart-container">
-    <canvas id="cervezasXestilo"></canvas>
-</div><br><br>
-<div class="chart-container">
-    <canvas id="bebidasAlcoholicas"></canvas>
-</div>
-<div class="chart-container">
-    <canvas id="cuadroTiposComidas"></canvas>
-</div>
-<div class="chart-container">
-    <canvas id="cuadroComidasPrecio"></canvas>
-</div>
-<div class="chart-container">
-    <canvas id="cuadroBebidasPrecio"></canvas>
-</div>
-<div class="chart-container">
-    <canvas id="cuadroProveedoresProducto"></canvas>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="{{ asset('./js/managerEstadisticas.js')}}"></script>
+            <!-- Gráficos de precios -->
+            <div class="chart-card">
+                <div class="chart-wrapper">
+                    <canvas id="cuadroComidasPrecio"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-wrapper">
+                    <canvas id="cuadroBebidasPrecio"></canvas>
+                </div>
+            </div>
+
+            <!-- Gráficos de proveedores -->
+            <div class="chart-card">
+                <div class="chart-wrapper">
+                    <canvas id="cuadroProveedoresProducto"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-wrapper">
+                    <canvas id="cuadroComidaComandas"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-wrapper">
+                    <canvas id="cuadroRefrescosComandas"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-wrapper">
+                    <canvas id="cuadroBebidasComandas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ asset('js/managerEstadisticas.js') }}"></script>
 {% endblock %}

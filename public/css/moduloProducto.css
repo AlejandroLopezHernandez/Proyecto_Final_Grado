@@ -131,6 +131,37 @@ body {
     align-items: stretch;
 }
 
+#btn-imprimir-ticket {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #aa2403; /* rojo intenso */
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+/* Icono de impresora antes del texto (opcional) */
+#btn-imprimir-ticket::before {
+    content: "\1F5A8"; /* 🖨 */
+    font-size: 1.1rem;
+}
+
+/* Hover */
+#btn-imprimir-ticket:hover {
+    background-color: #d32f2f;
+}
+
+
+
+
 /* 🔧 Botones generales (nivel 1, 2, 3, 4) */
 .categoria-btn,
 .producto-btn,

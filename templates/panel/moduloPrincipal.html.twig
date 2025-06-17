@@ -8,8 +8,7 @@
     <nav class="NavegadorPrincipal">
         <div>
     <h1 style="text-align: center;">Terminal De Ventas</h1>
-</div>
-        <button onclick="window.location.href='{{ path('editar_mapa_mesas') }}'">Editar mapa de mesas</button>
+</div>        
     </nav>
 
     <div id="contenido-dinamico">        
@@ -19,13 +18,17 @@
 
             <nav class="navegadorLateral">           
                 <button id="btnVerMapaMesas" class="editor-btn">Plano de Mesas</button>
-                <button id="btnGuardarMapa" class="editor-btn">Guardar Mapa</button>
-                <button id="btnGuardarMapa" class="editor-btn">Guardar Mapa</button>
-                <button id="btnGuardarMapa" class="editor-btn">Guardar Mapa</button>                 
-                <button id="btnGuardarMapa" class="editor-btn">Guardar Mapa</button>                 
+                <button onclick="window.location.href='{{ path('editar_mapa_mesas') }}'"  class="editor-btn">Editar Mapa De Mesas</button>            
+                <button onclick="window.location.href='{{ path('ver_reservas') }}'"  id="btnVerReservas" class="editor-btn">Ver reservas</button>
+                <button onclick="window.open('{{ path('carta_cliente') }}', '_blank')"  class="editor-btn" >Ver Carta Cliente</button>
+                <button onclick="window.open('{{ path('ver_carta') }}', '_blank')"  class="editor-btn" >Ver Carta Camarero</button>
+                <button onclick="window.open('/comanda/ver', '_blank')" class="editor-btn">Ver Historial de Tickets</button>   
             </nav>        
     </div> 
-</div>    
+</div>
+
+
+
 {% endblock %}
 
 {% block stylesheets %}

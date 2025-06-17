@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         options: {
           responsive: true,
-          indexAxis: "y", // <- clave para hacerlo horizontal
+          indexAxis: "y",
           scales: {
             x: {
               beginAtZero: true,
@@ -145,8 +145,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .then((data) => {
       const labels = data.map((item) => item.categoria);
       const values = data.map((item) => item.numero_comidas);
-
-      // Colores alternos suaves para no sobrecargar visualmente
       const backgroundColors = data.map((_, i) =>
         i % 2 === 0 ? "rgba(242, 30, 6, 0.7)" : "rgba(7, 120, 240, 0.7)"
       );
@@ -170,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         options: {
           responsive: true,
-          indexAxis: "y", // horizontal
+          indexAxis: "y",
           scales: {
             x: {
               beginAtZero: true,
@@ -374,7 +372,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const labels = data.map((item) => item.nombre_proveedor);
       const values = data.map((item) => item.numero_productos);
 
-      // Colores alternos para mejorar visualmente
       const backgroundColors = data.map((_, i) =>
         i % 2 === 0 ? "rgba(255, 193, 102, 0.8)" : "rgba(255, 228, 181, 0.8)"
       );
@@ -440,3 +437,217 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 });
+document.addEventListener("DOMContentLoaded", function () {
+  fetch("/manager/ComidaMasVendida")
+    .then((response) => response.json())
+    .then((data) => {
+      const labels = data.map((item) => item.nombre);
+      const values = data.map((item) => item.total_vendido);
+
+      // Colores alternos para mejorar visualmente
+      const backgroundColors = data.map((_, i) =>
+        i % 2 === 0 ? "rgba(75, 192, 192, 0.8)" : "rgba(54, 162, 235, 0.8)"
+      );
+
+      const ctx = document
+        .getElementById("cuadroComidaComandas")
+        .getContext("2d");
+      new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Comidas más vendidas",
+              data: values,
+              backgroundColor: backgroundColors,
+              borderColor: "rgba(0, 128, 128, 0.6)",
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              ticks: {
+                maxRotation: 45,
+                minRotation: 45,
+                autoSkip: false
+              }
+            },
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: "Cantidad vendida"
+              },
+              ticks: {
+                precision: 0
+              }
+            }
+          },
+          plugins: {
+            title: {
+              display: true,
+              text: "Comidas más vendidas",
+              font: {
+                size: 18
+              }
+            },
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  return `${context.label}: ${context.parsed.y} unidades`;
+                }
+              }
+            }
+          }
+        }
+      });
+    });
+});
+// Gráfico Polar Area para Refrescos Más Vendidos
+fetch("/manager/RefrescosMasVendida")
+  .then((response) => response.json())
+  .then((data) => {
+    const ctx = document
+      .getElementById("cuadroRefrescosComandas")
+      .getContext("2d");
+
+    // Preparar datos
+    const labels = data.map((item) => item.nombre);
+    const valores = data.map((item) => item.total_vendido);
+    const colores = [
+      "rgba(255, 99, 132, 0.7)",
+      "rgba(54, 162, 235, 0.7)",
+      "rgba(255, 206, 86, 0.7)",
+      "rgba(75, 192, 192, 0.7)",
+      "rgba(153, 102, 255, 0.7)",
+      "rgba(255, 159, 64, 0.7)"
+    ];
+
+    new Chart(ctx, {
+      type: "polarArea",
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            data: valores,
+            backgroundColor: colores,
+            borderColor: "#fff",
+            borderWidth: 1.5
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: "right",
+            labels: {
+              font: {
+                size: 12,
+                family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+              },
+              padding: 20,
+              usePointStyle: true,
+              pointStyle: "circle"
+            }
+          },
+          title: {
+            display: true,
+            text: "Refrescos Más Vendidos",
+            font: {
+              size: 16,
+              weight: "bold",
+              family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+            },
+            padding: {
+              top: 10,
+              bottom: 20
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                return `${context.label}: ${context.raw} unidades`;
+              }
+            }
+          }
+        },
+        scales: {
+          r: {
+            ticks: {
+              display: false
+            },
+            grid: {
+              display: false
+            },
+            angleLines: {
+              display: true,
+              color: "rgba(200, 200, 200, 0.3)"
+            }
+          }
+        },
+        animation: {
+          animateRotate: true,
+          animateScale: true
+        },
+        elements: {
+          arc: {
+            borderWidth: 1.5
+          }
+        }
+      }
+    });
+  });
+fetch("/manager/BebidaMasVendida")
+  .then((response) => response.json())
+  .then((data) => {
+    const ctx = document
+      .getElementById("cuadroBebidasComandas")
+      .getContext("2d");
+
+    new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: data.map((item) => item.nombre),
+        datasets: [
+          {
+            label: "Ventas",
+            data: data.map((item) => item.total_vendido),
+            backgroundColor: "rgba(75, 192, 192, 0.2)",
+            borderColor: "rgba(75, 192, 192, 1)",
+            borderWidth: 2,
+            pointBackgroundColor: "rgba(75, 192, 192, 1)",
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            tension: 0.3
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: "Tendencia de Bebidas Vendidas",
+            font: { size: 16, weight: "bold" }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { precision: 0 }
+          }
+        }
+      }
+    });
+  });

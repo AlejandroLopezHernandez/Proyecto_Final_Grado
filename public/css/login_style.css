@@ -6,7 +6,10 @@ html, body{
 body{
     display:flex;
     flex-direction: column;
-    background-color: rgb(82, 184, 195);
+    background-image: url('/imagen/fondoLogin.png');
+    
+    background-position: center;
+    background-attachment: fixed;
 }
 .wrapper{
     display:flex;
@@ -20,24 +23,36 @@ main{
     justify-content: center;
     align-items: center;
 }
-h1{
+h1 {
     text-align: center;
-    margin: 20px 0 10px 0;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin: 40px 0 20px 0;
+    font-family: 'Georgia', Cambria, serif;
+    font-size: 6rem;
+    color: #ffffff; /* texto blanco para buen contraste */
+
+    /* Reborde sutil para separar el texto del fondo */
+    -webkit-text-stroke: 1.5px #000000;
+    text-shadow:
+        2px 2px 5px rgba(0,0,0,0.7),
+        0px 0px 10px rgba(0,0,0,0.3);
+
+    /* Transición suave para efectos hover si los necesitas después */
+    transition: all 0.3s ease-in-out;
 }
+
 #recuadro{
     text-align: center;
     height: 250px;
     width: 400px;
     padding: 20px;
-    background-color: rgb(207, 233, 169);
+    background-color: rgba(243, 185, 78, 0.9);
     border: 2px solid #000000;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.8);
     border-radius: 10px;
 }
 #btn_login{
-    background-color: rgb(154, 227, 125);
-    color: black;
+    background-color: #ffffff;
+    color: #2e7d32;
     border: none;
     padding: 10px 20px;
     font-size:16px;
@@ -45,9 +60,14 @@ h1{
     cursor: pointer;
     border: 1px solid black;
 }
+
+#btn_login:hover{
+    background-color: #2e7d32;
+    color: #ffffff;
+}
 footer{
-    background-color: rgb(207, 233, 169);
-    padding: 20px;
+    background-color: rgba(243, 185, 78, 0.9);
+    padding: 10px;
     font-size: 14px;
     color: black;
     text-align: center;

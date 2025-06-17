@@ -1,8 +1,6 @@
-// script.js para IndexCarta.html
-
 // Variables globales
 let comanda = [];
-const API_BASE_URL = "http://localhost:8000"; // Reemplaza con tu URL base
+const API_BASE_URL = "http://localhost:8000";
 
 // Elementos del DOM
 const comandaContainer = document.createElement("div");
@@ -30,7 +28,6 @@ verComandaBtn.appendChild(contadorComanda);
 
 // Event listeners
 verComandaBtn.addEventListener("click", toggleComandaContainer);
-// Añade esto al inicio del archivo, después de las variables globales
 const mesasDisponibles = Array.from({ length: 14 }, (_, i) => i + 1); // Mesas del 1 al 14
 
 // Modifica la función actualizarComandaUI para incluir el selector de mesa
@@ -91,7 +88,6 @@ function actualizarComandaUI() {
 
   comandaContainer.innerHTML = contenido;
 
-  // Agregar event listeners a los botones de eliminar
   document.querySelectorAll(".boton-eliminar").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       const id = e.target.getAttribute("data-id");
@@ -99,7 +95,6 @@ function actualizarComandaUI() {
     });
   });
 
-  // Agregar event listener al botón de finalizar comanda
   if (document.getElementById("finalizar-comanda")) {
     document
       .getElementById("finalizar-comanda")
@@ -363,7 +358,6 @@ async function cargarDatos() {
   // Cargar comidas por categoría
   for (const categoria of categoriasComida) {
     const comidas = await cargarComidasPorCategoria(categoria);
-    // Aquí podrías actualizar el DOM con las comidas cargadas
   }
 
   // Cargar tipos de bebidas
@@ -372,7 +366,6 @@ async function cargarDatos() {
   // Cargar bebidas por tipo
   for (const tipo of tiposBebidas) {
     const bebidas = await cargarBebidasPorTipo(tipo);
-    // Aquí podrías actualizar el DOM con las bebidas cargadas
   }
 
   // Inicializar botones de comanda

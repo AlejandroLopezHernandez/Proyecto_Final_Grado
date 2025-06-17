@@ -1,20 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FabricanteController!{% endblock %}
+{% block title %}{{ fabricante.nombre }} — Fabricante{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="container mt-4">
+    <h1 class="text-center">{{ fabricante.nombre }}</h1>
+    <p class="text-center text-muted">{{ fabricante.pais ?? 'País no especificado' }}</p>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {% if fabricante.imagen %}
+        <div class="text-center mb-4">
+            <img src="{{ asset('imagen/Fabricantes/' ~ fabricante.imagen) }}"
+                 alt="{{ fabricante.nombre }}"
+                 class="img-fluid rounded shadow"
+                 style="max-height: 300px; object-fit: cover;">
+        </div>
+    {% endif %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/var/www/symfony/Proyecto_Final_Grado/src/Controller/FabricanteController.php</code></li>
-        <li>Your template at <code>/var/www/symfony/Proyecto_Final_Grado/templates/fabricante/index.html.twig</code></li>
-    </ul>
+    {% if fabricante.descripcion %}
+        <div class="mb-4">
+            <h4>Historia y descripción</h4>
+            <p>{{ fabricante.descripcion }}</p>
+        </div>
+    {% endif %}
+
+    <div class="mt-4">
+    <h4>Bebidas del fabricante</h4>
+    {% if fabricante.bebidas|length > 0 %}
+        {% for bebida in fabricante.bebidas %}
+            <div class="comida-card d-flex justify-content-between align-items-start">
+                <div>
+                    <h5 class="mb-1">{{ bebida.nombre }}</h5>
+                    <p class="mb-0">
+                        {{ bebida.descripcion|length > 50 ? bebida.descripcion[:50] ~ '...' : bebida.descripcion }}
+                    </p>
+                </div>
+                <a href="{{ path('carta_cliente') ~ '#modal-bebida-' ~ bebida.id }}" class="btn btn-sm btn-outline-info">
+                    Ver en carta
+                </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-muted">Este fabricante aún no tiene bebidas asociadas.</p>
+    {% endif %}
+    </div>
+    
 </div>
 {% endblock %}

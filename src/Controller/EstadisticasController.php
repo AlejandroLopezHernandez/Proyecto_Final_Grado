@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\BebidaRepository;
+use App\Repository\ComandaRepository;
 use App\Repository\ComidaRepository;
 use App\Repository\EstiloRepository;
 use App\Repository\FabricanteRepository;
@@ -27,11 +28,8 @@ final class EstadisticasController extends AbstractController
     public function index(
         BebidaRepository $bebidaRepository,
         ComidaRepository $comidaRepository,
-        EstiloRepository $estiloRepository,
-        FabricanteRepository $fabricanteRepository,
         ProductoRepository $productoRepository,
-        ProveedorRepository $proveedorRepository,
-        ReservaRepository $reservaRepository,
+        ComandaRepository $comandaRepository,
         Security $security
     ): Response {
         $usuario = $security->getUser();
@@ -42,7 +40,10 @@ final class EstadisticasController extends AbstractController
         $datosComidaXprecio = $comidaRepository->comidasXprecio();
         $datosBebidaXprecio = $bebidaRepository->BebidasPorRangoPrecio();
         $datosProductosXproveedor = $productoRepository->contarProductosPorProveedor();
-
+        $cervezasMasVendidas = $comandaRepository->getCervezasMasVendidas();
+        $BebidasMasVendidas = $comandaRepository->getBebidasMasVendidas();
+        $ComidasMasVendidas = $comandaRepository->getComidasMasVendidas();
+        $RefrescosMasVendidos = $comandaRepository->getRefrescosMasVendidos();
         $this->logger->info("El manager ha accecido al dashboard", [
             'usuario' => $usuario->getUserIdentifier(),
             'action' => 'check',
@@ -56,6 +57,10 @@ final class EstadisticasController extends AbstractController
             'comidaXprecio' => $datosComidaXprecio,
             'bebidaXprecio' => $datosBebidaXprecio,
             'productosXproveedor' => $datosProductosXproveedor,
+            'cervezas_mas_vendidas' => $cervezasMasVendidas,
+            'bebidas_mas_vendidas' => $BebidasMasVendidas,
+            'comidas_mas_vendidas' => $ComidasMasVendidas,
+            'refrescos_mas_vendidos' => $RefrescosMasVendidos
         ]);
     }
     #[Route('/manager/cervezasXestilo', name: 'cervezasXestilo')]
@@ -100,5 +105,29 @@ final class EstadisticasController extends AbstractController
         $datosNproductosXproveedor = $productoRepository->contarProductosPorProveedor();
 
         return $this->json($datosNproductosXproveedor);
+    }
+    #[Route('/manager/cervezaMasVendida', name: 'cervezaMasVendida')]
+    public function cervezaMasVendida(ComandaRepository $comandaRepository): JsonResponse
+    {
+        $cervezasMasVendidas = $comandaRepository->getCervezasMasVendidas();
+        return $this->json($cervezasMasVendidas);
+    }
+    #[Route('/manager/ComidaMasVendida', name: 'ComidaMasVendida')]
+    public function ComidaMasVendida(ComandaRepository $comandaRepository): JsonResponse
+    {
+        $ComidaMasVendidas = $comandaRepository->getComidasMasVendidas();
+        return $this->json($ComidaMasVendidas);
+    }
+    #[Route('/manager/BebidaMasVendida', name: 'BebidaMasVendida')]
+    public function BebidaMasVendida(ComandaRepository $comandaRepository): JsonResponse
+    {
+        $BebidaMasVendidas = $comandaRepository->getBebidasMasVendidas();
+        return $this->json($BebidaMasVendidas);
+    }
+    #[Route('/manager/RefrescosMasVendida', name: 'RefrescosMasVendida')]
+    public function RefrescosMasVendida(ComandaRepository $comandaRepository): JsonResponse
+    {
+        $RefrescosMasVendidas = $comandaRepository->getRefrescosMasVendidos();
+        return $this->json($RefrescosMasVendidas);
     }
 }

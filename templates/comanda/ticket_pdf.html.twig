@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket Comanda {{ comanda.id }}</title>
+    <style>
+        body { font-family: monospace; font-size: 12px; }
+        .ticket { width: 300px; }
+        .ticket h3 { text-align: center; font-size: 16px; }
+        .linea { display: flex; justify-content: space-between; border-bottom: 1px dashed #ccc; }
+        .extras { font-size: 10px; margin-left: 10px; }
+        .total { text-align: right; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="ticket">
+    <h3>Restaurante El Cañaveral</h3>
+    <p>Fecha: {{ comanda.fecha ? comanda.fecha|date('d/m/Y H:i') : '' }}</p>
+    <p>ID: {{ comanda.id }}</p>
+    <hr>
+    {% set total = 0 %}
+    {% for item in comanda.productos ?? [] %}
+        <div class="linea">
+            <span>{{ item.nombre }}</span>
+            <span>{{ item.cantidad }} x {{ item.precio|number_format(2) }}€</span>
+        </div>
+        {% if item.extras is defined and item.extras|length > 0 %}
+            {% for extra in item.extras %}
+                <div class="extras">+ {{ extra }}</div>
+            {% endfor %}
+        {% endif %}
+        {% set total = total + (item.cantidad * item.precio) %}
+    {% endfor %}
+    <hr>
+    <div class="total">TOTAL: {{ total|number_format(2) }} €</div>
+</div>
+</body>
+</html>

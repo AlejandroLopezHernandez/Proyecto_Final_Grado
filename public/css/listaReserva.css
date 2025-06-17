@@ -1,24 +1,67 @@
-#listaReservas{
-background-color: rgb(207, 233, 169);
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
-#tablaInterna{
-    background-color: rgb(207, 233, 169);
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-image: url('/imagen/fondoRestaurante.png');
+    background-position: center;
+    background-attachment: fixed;
 }
-body{
-    background-color: rgb(82, 184, 195);
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
-h1{
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
     text-align: center;
-    margin: 20px 0 10px 0;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin: 40px 0 20px 0;
+    font-family: 'Georgia', Cambria, serif;
+    font-size: 6rem;
+    color: #ffffff;
+    -webkit-text-stroke: 1.5px #000000;
+    text-shadow:
+        2px 2px 5px rgba(0,0,0,0.7),
+        0px 0px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease-in-out;
 }
-#botonNuevaReserva{
-    background-color: rgb(154, 227, 125);
-    color: black;
-    border: none;
-    padding: 10px 20px;
-    font-size:16px;
+
+#listaReservas {
+    background-color: rgba(243, 185, 78, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #000000;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.8);
+}
+
+.card-header {
+    background-color: #2e7d32 !important;
+    color: white;
+}
+
+#tablaInterna {
+    background-color: transparent;
     border-radius: 5px;
-    cursor: pointer;
-    border: 1px solid black;
+}
+
+footer {
+    background-color: rgba(243, 185, 78, 0.9);
+    padding: 10px;
+    font-size: 14px;
+    color: black;
+    text-align: center;
+    border-top: 1px solid #ccc;
 }

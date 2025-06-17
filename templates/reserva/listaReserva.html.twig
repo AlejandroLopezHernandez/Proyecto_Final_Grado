@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{{ asset('css/listaReserva.css')}}">
 {% endblock %}
 {% block body %}
+    <div class="wrapper">
     <div class="container">
         <h1>Gestión de Reservas</h1>
         
@@ -16,10 +17,7 @@
                     {{ message }}
                 </div>
             {% endfor %}
-        {% endfor %}
-        
-        <a href="{{ path('app_nueva_reserva') }}" class="btn btn-primary mb-3" id="botonNuevaReserva">Nueva Reserva</a>
-        
+        {% endfor %} 
         <div class="card">
             <div class="card-header bg-info text-white">
                 <h5 class="mb-0">Reservas Actuales</h5>
@@ -72,5 +70,6 @@
                 {% endif %}
             </div>
         </div>
+    </div>
     </div>
 {% endblock %}

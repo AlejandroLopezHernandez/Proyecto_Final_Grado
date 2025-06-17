@@ -1,0 +1,135 @@
+body {
+    background-image: url('/imagen/2.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    color: #ff6600;
+    font-family: 'Georgia', serif;
+    
+}
+
+#tumama{
+    -webkit-text-stroke: 1.5px #000000;
+    text-shadow:
+        2px 2px 5px rgba(0,0,0,0.4),
+        0px 0px 10px rgba(0,0,0,0.1)
+}
+
+h1 {
+    text-align: center;
+    margin: 40px 0 20px 0;
+    font-family: 'Georgia', Cambria, serif;
+    font-size: 4rem;
+    color: rgb(88, 85, 85); /* texto blanco para buen contraste */
+
+    /* Reborde sutil para separar el texto del fondo */
+    -webkit-text-stroke: 1.5px #000000;
+    text-shadow:
+        2px 2px 5px rgba(0,0,0,0.4),
+        0px 0px 10px rgba(0,0,0,0.1);    
+}
+
+h2 {
+    color: #1e1e1e;
+    font-size: 1.8rem;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(243, 185, 78, 0.9);
+    padding-bottom: 5px;
+}
+
+/* Fichas de comida: semitransparente para contraste */
+.comida-card {
+    background-color: rgba(255, 255, 255, 0.05); /* fondo blanco traslúcido */
+    border: none;
+    color: #1e1e1e;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+/* Botón + info */
+.btn-outline-info {
+    border-color: rgba(243, 185, 78, 0.9);
+    color: rgba(0, 0, 0, 0.9);
+}
+.btn-outline-info:hover {
+    background-color: rgba(243, 185, 78, 0.9);
+    color: #1e1e1e;
+    font-weight: bold;
+}
+#btnReserva {
+    border-color: rgba(248, 186, 70, 0.9);
+    color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(237, 164, 28, 0.9);
+}
+#btnReserva:hover {
+    background-color: rgba(237, 164, 28, 0.9);
+    color: #1e1e1e;
+    font-weight: bold;
+}
+
+/* Navegación: Comida / Bebida */
+.nav-toggle .btn {
+    background-color: transparent;
+    font: bold;
+    color: rgba(0, 0, 0, 0.9);
+    border: 2px solid rgba(243, 185, 78, 0.9);
+}
+.nav-toggle .btn:hover {
+    background-color: rgba(243, 185, 78, 0.9);
+    color: #1e1e1e;
+}
+.nav-toggle .btn.active {
+    background-color: rgba(243, 185, 78, 0.9);
+    color: #1e1e1e;
+    font-weight: bold;
+}
+
+/* Modal */
+.modal-content {
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+}
+.modal-title {
+    color: rgba(243, 185, 78, 0.9);
+}
+
+img {
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(243, 185, 78, 0.4);
+}
+
+button.btn {
+    transition: all 0.3s ease;
+}
+
+.ingredientes-imagen {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.ingredientes {
+    min-width: 200px;
+    flex: 1 1 50%;
+}
+
+.imagen-comida {
+    flex: 1 1 200px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.img-modal {
+    width: 100%;
+    max-width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(243, 185, 78, 0.4);
+}

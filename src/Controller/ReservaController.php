@@ -21,7 +21,7 @@ class ReservaController extends AbstractController
     {
         $this->logger = $logger;
     }
-    #[Route('/reservas', name: 'app_reservas')]
+    #[Route('/reservas', name: 'ver_reservas')]
     public function index(ReservaRepository $reservaRepository): Response
     {
         $reservas = $reservaRepository->findAll();
@@ -52,7 +52,7 @@ class ReservaController extends AbstractController
 
             if ($exito) {
                 $this->addFlash('success', '¡Reserva demandada con éxito!Espere mail de confirmación');
-                return $this->redirectToRoute('ver_carta');
+                return $this->redirectToRoute('carta_cliente');
             } else {
                 $this->addFlash('error', 'No hay disponibilidad para esa fecha y hora según Google Reservas.');
             }

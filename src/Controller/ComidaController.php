@@ -25,7 +25,6 @@ class ComidaController extends AbstractController
     }
 
     #[Route('/comida/categoriasJson', name: 'comida_categorias')]
-
     public function getCategorias(ComidaRepository $repositorio)
     {
         // Obtener las categorías de comida desde la base de datos

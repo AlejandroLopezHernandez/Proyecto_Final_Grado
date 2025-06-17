@@ -1,0 +1,190 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carta Restaurante El Cañaveral{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/cartaDinamica.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/cartaDinamica.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Restaurante El Cañaveral</h1>
+    <button onclick="window.location.href='{{ path('app_nueva_reserva') }}'" id="btnReserva">Hacer una reserva</button>
+
+    <div class="d-flex justify-content-center mb-4 nav-toggle">
+        <button class="btn me-2 active" id="btn-comida">Comida</button>
+        <button class="btn" id="btn-bebida">Bebida</button>
+    </div>
+
+    <div id="comida-section">
+        {% for categoria in categorias %}
+            <h2 class="mt-5 border-bottom">{{ categoria.nombresCategorias() }}</h2>
+
+            {% for comida in comidas %}
+                {% if categoria.value in comida.categoria %}
+                    <div class="comida-card d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5 class="mb-1">{{ comida.nombre }}</h5>
+                            <p class="mb-0">
+                                {{ comida.descripcion|length > 50 ? comida.descripcion[:50] ~ '...' : comida.descripcion }}
+                            </p>
+                        </div>
+                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#modal-{{ comida.id }}">
+                            + info
+                        </button>
+                    </div>
+
+                    <div class="modal fade" id="modal-{{ comida.id }}" tabindex="-1" aria-labelledby="modalLabel{{ comida.id }}" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel{{ comida.id }}">{{ comida.nombre }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                          </div>
+                          <div class="modal-body">
+    <p><strong>Descripción:</strong> {{ comida.descripcion }}</p>
+    <p><strong>Precio:</strong> {{ comida.pvp }} €</p>
+    <p><strong>Dieta:</strong> {{ comida.dieta ? comida.dieta.name : 'No especificado' }}</p>
+
+    {% if comida.productos|length > 0 %}
+        <div class="ingredientes-imagen d-flex flex-wrap gap-3 align-items-start mt-3">
+            <div class="ingredientes flex-fill">
+                <p><strong>Ingredientes:</strong></p>
+                <ul class="mb-2">
+                    {% for producto in comida.productos %}
+                        <li>{{ producto.nombre }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="imagen-comida text-center">
+                <img src="{{ asset('imagen/Comidas/' ~ comida.nombre|replace({' ': ''}) ~ '.png') }}"
+                     alt="{{ comida.nombre }}"
+                     class="img-modal">
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+                        </div>
+                      </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+  <div id="bebida-section" style="display: none;">
+    {% for tipo in tiposBebida %}
+        <h2 class="mt-5 border-bottom">{{ tipo.nombreLegible() }}</h2>
+        {% set bebidasDelTipo = bebidas|filter(b => b.tipoBebida and b.tipoBebida.value == tipo.value) %}
+
+        {% if tipo.value in ['cerveza', 'destilados'] %}
+            {% set estilosMostrados = [] %}
+            {% for bebida in bebidasDelTipo %}
+                {% if bebida.estilo and bebida.estilo not in estilosMostrados %}
+                    {% set estilosMostrados = estilosMostrados|merge([bebida.estilo]) %}
+                    <h4 class="ms-2 mt-3" id="tumama">{{ bebida.estilo.nombre }}</h4>
+
+                    {% for bebidaEstilizada in bebidasDelTipo %}
+                        {% if bebidaEstilizada.estilo == bebida.estilo %}
+                            <div class="comida-card d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="mb-1">{{ bebidaEstilizada.nombre }}</h5>
+                                    <p class="mb-0">
+                                        {{ bebidaEstilizada.descripcion|length > 50 ? bebidaEstilizada.descripcion[:50] ~ '...' : bebidaEstilizada.descripcion }}
+                                    </p>
+                                </div>
+                                <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#modal-bebida-{{ bebidaEstilizada.id }}">
+                                    + info
+                                </button>
+                            </div>
+
+                            <div class="modal fade" id="modal-bebida-{{ bebidaEstilizada.id }}" tabindex="-1" aria-labelledby="modalLabelBebida{{ bebidaEstilizada.id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalLabelBebida{{ bebidaEstilizada.id }}">{{ bebidaEstilizada.nombre }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><strong>Descripción:</strong> {{ bebidaEstilizada.descripcion }}</p>
+                                            <p><strong>Precio:</strong> {{ bebidaEstilizada.pvp }} €</p>
+                                            <p><strong>Grado alcohólico:</strong> {{ bebidaEstilizada.gradoAlcoholico ?? 0 }}%</p>
+                                            <p><strong>Formato:</strong> {{ bebidaEstilizada.formato ? bebidaEstilizada.formato.nombresFormatos() : 'No especificado' }}</p>
+                                            <p><strong>Estilo:</strong>
+                                                <a href="{{ path('app_ficha_estilo', {id: bebidaEstilizada.estilo.id}) }}" target="_blank" >
+                                                    {{ bebidaEstilizada.estilo.nombre }}
+                                                </a>
+                                            </p>
+                                            <p><strong>Fabricante:</strong>
+    {% if bebidaEstilizada.fabricante %}
+        <a href="{{ path('app_ficha_fabricante', {id: bebidaEstilizada.fabricante.id}) }}" target="_blank" >
+            {{ bebidaEstilizada.fabricante.nombre }}
+        </a>
+    {% else %}
+        No especificado
+    {% endif %}
+</p>
+                                            {% if bebidaEstilizada.tipoBebida.value == 'cerveza' and bebidaEstilizada.lupulos %}
+                                                <p><strong>Lúpulos:</strong> {{ bebidaEstilizada.lupulos }}</p>
+                                            {% endif %}
+                                            <div class="text-center mt-3">
+                                                <img src="{{ asset('imagen/Bebidas/' ~ tipo.value ~ '/' ~ bebidaEstilizada.nombre|replace({' ': ''}) ~ '.png') }}"
+                                                     alt="{{ bebidaEstilizada.nombre }}"
+                                                     class="img-modal">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% for bebida in bebidasDelTipo %}
+                <div class="comida-card d-flex justify-content-between align-items-start">
+                    <div>
+                        <h5 class="mb-1">{{ bebida.nombre }}</h5>
+                        <p class="mb-0">
+                            {{ bebida.descripcion|length > 50 ? bebida.descripcion[:50] ~ '...' : bebida.descripcion }}
+                        </p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#modal-bebida-{{ bebida.id }}">
+                        + info
+                    </button>
+                </div>
+
+                <div class="modal fade" id="modal-bebida-{{ bebida.id }}" tabindex="-1" aria-labelledby="modalLabelBebida{{ bebida.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabelBebida{{ bebida.id }}">{{ bebida.nombre }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Descripción:</strong> {{ bebida.descripcion }}</p>
+                                <p><strong>Precio:</strong> {{ bebida.pvp }} €</p>
+                                <p><strong>Grado alcohólico:</strong> {{ bebida.gradoAlcoholico ?? 0 }}%</p>
+                                <p><strong>Formato:</strong> {{ bebida.formato ? bebida.formato.nombresFormatos() : 'No especificado' }}</p>
+                                <div class="text-center mt-3">
+                                    <img src="{{ asset('imagen/Bebidas/' ~ tipo.value ~ '/' ~ bebida.nombre|replace({' ': ''}) ~ '.png') }}"
+                                         alt="{{ bebida.nombre }}"
+                                         class="img-modal">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,20 +1,125 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EstiloController!{% endblock %}
+{% block title %}{{ estilo.nombre }} — Estilo{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .estilo-ficha {
+            background: #f8f4ec;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        .estilo-header {
+            font-family: 'Georgia', serif;
+            color: #3a3a3a;
+            border-bottom: 2px solid #deb887;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .estilo-datos ul {
+            padding-left: 1rem;
+        }
+
+        .estilo-datos li {
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .estilo-img img {
+            
+            object-fit: contain;
+            border: 4px solid #deb887;
+            border-radius: 6px;
+            background: #fff8e6;
+            padding: 0.5rem;
+        }
+
+        .estilo-bebidas li {
+            margin-bottom: 0.3rem;
+        }
+
+        .estilo-bebidas a {
+            text-decoration: none;
+            color: #6c3c18;
+        }
+
+        .estilo-bebidas a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-volver {
+            background-color: #6c3c18;
+            color: white;
+        }
+
+        .btn-volver:hover {
+            background-color: #4e2a0d;
+        }
+    </style>
+{% endblock %}
+
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="container mt-4 estilo-ficha">
+    <h1 class="text-center estilo-header">{{ estilo.nombre }}</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="row mt-4">
+        <div class="col-md-7 estilo-datos">
+            <ul class="list-unstyled">
+                {% if estilo.descripcion %}
+                    <li><strong>Descripción:</strong> {{ estilo.descripcion }}</li>
+                {% endif %}
+                {% if estilo.fermentacion %}
+                    <li><strong>Fermentación:</strong> {{ estilo.fermentacion.name|capitalize }}</li>
+                {% endif %}
+                {% if estilo.origen %}
+                    <li><strong>Origen:</strong> {{ estilo.origen }}</li>
+                {% endif %}
+                {% if estilo.maridaje %}
+                    <li><strong>Maridaje recomendado:</strong> {{ estilo.maridaje }}</li>
+                {% endif %}
+                {% if estilo.color %}
+                    <li><strong>Color:</strong> {{ estilo.color }}</li>
+                {% endif %}
+                {% if estilo.sabor %}
+                    <li><strong>Sabor:</strong> {{ estilo.sabor }}</li>
+                {% endif %}
+                {% if estilo.aroma %}
+                    <li><strong>Aroma:</strong> {{ estilo.aroma }}</li>
+                {% endif %}
+                {% if estilo.carbonatacion %}
+                    <li><strong>Carbonatación:</strong> {{ estilo.carbonatacion }}</li>
+                {% endif %}
+                {% if estilo.estiloPadre %}
+                    <li><strong>Estilo padre:</strong> {{ estilo.estiloPadre.nombre }}</li>
+                {% endif %}
+            </ul>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/var/www/symfony/Proyecto_Final_Grado/src/Controller/EstiloController.php</code></li>
-        <li>Your template at <code>/var/www/symfony/Proyecto_Final_Grado/templates/estilo/index.html.twig</code></li>
-    </ul>
+             {% if estilo.bebidas|length > 0 %}
+                <h5 class="mt-4">Bebidas asociadas:</h5>
+                <ul class="estilo-bebidas">
+                    {% for bebida in estilo.bebidas %}
+                        <li>
+                            <a href="{{ path('carta_cliente') ~ '#modal-bebida-' ~ bebida.id }}" target="_blank">
+                                {{ bebida.nombre }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+         <div class="col-md-5 text-center estilo-img">
+            <img src="{{ asset('imagen/Estilos/' ~ estilo.fermentacion.name|lower ~ '/' ~ estilo.nombre|replace({' ': ''}) ~ '.png') }}"
+                 alt="{{ estilo.nombre }}"
+                 class="img-fluid rounded shadow">
+        </div>
+    </div>
+
+    <a href="{{ path('carta_cliente') }}" class="btn btn-secondary mt-4">← Volver a la carta</a>
 </div>
 {% endblock %}

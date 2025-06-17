@@ -17,13 +17,13 @@ security:
             lazy: true
             provider: app_user_provider
             form_login:
-                login_path: app_login
+                login_path: /
                 check_path: app_login
                 success_handler: App\Security\LoginSuccessHandler
-                default_target_path: /main
+                default_target_path: /
             logout:
                 path: /logout
-            access_denied_url: /login
+            access_denied_url: /
             stateless: false
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -40,6 +40,7 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/manager, roles: ROLE_MANAGER }
         - { path: ^/panel, roles: ROLE_CAMARERO }
+        - { path: ^/panel/productos, roles: ROLE_CAMARERO }
 
 when@test:
     security:

@@ -336,20 +336,3 @@ class ReservaCrudController extends AbstractCrudController
         ]);
     }
 }
-    // Opcional: Personalizar acciones
-    /*
-    public function configureActions(Actions $actions): Actions
-    {
-        return $actions
-            ->add(Crud::PAGE_INDEX, Action::DETAIL)
-            ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
-                return $action->setLabel('Nueva Reserva')->setIcon('fa fa-plus');
-            })
-            ->update(Crud::PAGE_INDEX, Action::EDIT, function (Action $action) {
-                return $action->setLabel('Editar')->setIcon('fa fa-edit');
-            })
-            ->update(Crud::PAGE_INDEX, Action::DELETE, function (Action $action) {
-                return $action->setLabel('Eliminar')->setIcon('fa fa-trash');
-            });
-    }
-    */

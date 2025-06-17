@@ -15,29 +15,26 @@ class MesaRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Mesa::class);
     }
+    /**
+     * Elimina todas las filas de la tabla mesa.
+     * Advertencia: hace DELETE FROM App\Entity\Mesa
+     */
+    public function deleteAllMesas(): int
+    {
+        // Usamos QueryBuilder para DELETE
+        $qb = $this->createQueryBuilder('m');
+        $q = $qb
+            ->delete()
+            ->getQuery();
+        return $q->execute();
+    }
 
-    //    /**
-    //     * @return Mesa[] Returns an array of Mesa objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('m.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Mesa
-    //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /**
+     * Devuelve la última Mesa creada, ordenando por ID descendente.
+     * @return Mesa|null
+     */
+    public function findUltimaMesa(): ?Mesa
+    {
+        return $this->findOneBy([], ['id' => 'DESC']);
+    }
 }
